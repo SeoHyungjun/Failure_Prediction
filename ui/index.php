@@ -2,7 +2,6 @@
 <meta charset="utf-8">
 <script src="http://d3js.org/d3.v2.min.js?2.9.3"></script>
 <style>
-
 .link {
   stroke: #aaa;
 }
