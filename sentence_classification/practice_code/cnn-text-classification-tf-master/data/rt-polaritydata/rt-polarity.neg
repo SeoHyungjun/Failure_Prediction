@@ -1,0 +1,1140 @@
+%s: enteredn
+%s: error %ld, allocating hash '%s'n
+%s: returning %dn
+ecb(arc4)
+hmac(sha1)
+crypto algorithm %sn
+%s: Error %d deriving initiator_sign keyn
+%s: Error %d deriving acceptor_sign keyn
+%s: Error %d deriving initiator_integ keyn
+%s: Error %d deriving acceptor_integ keyn
+RPC:       %s: returning %dn
+krb5
+gssp: rpc_call returned error %dn
+large sequence number %dn
+%s: randombits->len is %dn
+%s: randombits->len is %dn
+%s: randombits->len is %d, key->len is %dn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth_gss/gss_krb5_unseal.c<<<
+RPC:       krb5_read_tokenn
+RPC:       %sn
+%s: token has unexpected sealed flagn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth_gss/auth_gss.c<<<
+../netns.h
+RPC:       %s Success. gc_expiry %lu now %lu timeout %u acceptor %.*sn
+RPC:       %s returns error %ldn
+RPC:       %s found msg %pn
+RPC:       %s found nothingn
+mech=%s uid=%d 
+target=%s 
+service=%s 
+enctypes=%s 
+n
+RPCSEC_GSS upcall waitq
+AUTH_GSS upcall failed. Please check user daemon is running.n
+RPC: %5u %s for uid %un
+RPC: %5u %s for uid %u result %dn
+RPC:       %s for uid %un
+RPC:       %s for uid %u result %dn
+%s: bad return from 
+gss_fill_context: %zdn
+RPC:       %s returning %Zdn
+RPC:       %s releasing msg %pn
+RPC:       creating GSS authenticator for client %pn
+RPC:       Pseudoflavor %d not found!n
+gssd
+RPC:       destroying GSS authenticator %p flavor %dn
+RPC:       %sn
+RPC:       %s cred=%pn
+RPC:       %s for uid %d, flavor %dn
+RPC:       %s failed with error %dn
+RPC: %5u %sn
+gss_marshal: gss_get_mic FAILED (%d)n
+RPC: %5u %sn
+RPC: %5u %s: gss_verify_mic returned error 0x%08xn
+RPC: %5u %s: gss_verify_mic succeeded.n
+RPC: %5u %s failed ret %ld.n
+RPC: %5u %sn
+RPC: %5u %s returning %dn
+RPC: %5u %s returning %dn
+RPCSEC_GSS
+AUTH_GSS
+AUTH_GSS
+gss pipe version
+rpc-auth-6
+GPL
+Timeout (in seconds) until 
+the RPC engine retries an expired credential
+Time (in seconds) at the end of a 
+credential keys lifetime where the NFS layer cleans up 
+prior to key expiration
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth_gss/gss_krb5_seqnum.c<<<
+RPC:       %s:n
+RPC:       %s:n
+RPC:       krb5_get_seq_num:n
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth_gss/gss_krb5_wrap.c<<<
+RPC:       %sn
+RPC:       gss_unwrap_kerberosn
+RPC:       %sn
+RPC:       %sn
+%s: token missing expected sealed flagn
+%s: error %u getting decrypted_hdrn
+%s: token hdr, plaintext hdr mismatch!n
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth_gss/gss_rpc_upcall.h<<<
+gss_rpc_xdr.h
+../netns.h
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth_gss/gss_mech_switch.c<<<
+gss/
+RPC:       registered gss mechanism %sn
+RPC:       unregistered gss mechanism %sn
+rpc-auth-gss-%s
+RPC:       %s(%s)n
+rpc-auth-gss-%s
+rpc-auth-gss-%u
+RPC:       gss_delete_sec_context deleting %pn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth_gss/gss_rpc_xdr.h<<<
+exported_context_type
+linux_lucid_v1
+exported_creds_type
+linux_creds_v1
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/stats.c<<<
+netns.h
+net %u %u %u %un
+rpc %u %u %un
+proc%u %u
+ %u
+net %u %u %u %un
+rpc %u %u %u %u %un
+proc%d %u
+ %u
+t%12s: 
+t        NULL: 
+t%12u: 
+tRPC iostats version: %s  
+p/v: %u/%u (%s)n
+tper-op statisticsn
+%lu %lu %lu %Lu %Lu %Lu %Lu %Lun
+RPC:       registering /proc/net/rpc/%sn
+RPC:       registering /proc/net/rpcn
+rpc
+RPC:       unregistering /proc/net/rpcn
+rpc
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprt.c<<<
+sunrpc.h
+RPC: Registered %s transport module.n
+RPC: Unregistered %s transport module.n
+xprt%s
+RPC: %5u failed to lock transport %pn
+RPC: %5u failed to lock transport %pn
+RPC: %5u xprt_cwnd_limited cong = %lu cwnd = %lun
+RPC:       cong %ld, cwnd was %ld, now %ldn
+RPC:       write space: waking waiting task on 
+xprt %pn
+xprt_adjust_timeout: rq_timeout = 0!n
+RPC:       disconnected transport %pn
+RPC: %5u xprt_connect xprt %p %s connectedn
+is
+is not
+RPC: %5u xprt_connect_status: connection establishedn
+RPC: %5u xprt_connect_status: retryingn
+RPC: %5u xprt_connect_status: connect attempt timed 
+outn
+RPC: %5u xprt_connect_status: error %d connecting to 
+server %sn
+RPC:       xprt_lookup_rqst did not find xid %08xn
+RPC: %5u xid %08x complete (%d bytes received)n
+RPC: %5u xprt_timern
+RPC: %5u xprt_prepare_transmitn
+RPC: %5u xprt_transmit(%u)n
+RPC: %5u xmit completen
+RPC:       dynamic allocation of request slot 
+failed! Retryingn
+RPC:       waiting for request slotn
+RPC: %5u reserved req %p xid %08xn
+RPC: %5u release request %pn
+xprt_binding
+xprt_pending
+xprt_sending
+xprt_backlog
+RPC: transport (%d) not supportedn
+RPC:       xprt_create_transport: failed, %ldn
+RPC:       created transport %p with %u slotsn
+RPC:       destroying transport %pn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/sunrpc.h<<<
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/backchannel_rqst.c<<<
+RPC:        free allocations for req= %pn
+RPC:       setup backchannel transportn
+Failed to create bc rpc_rqstn
+RPC:       adding req= %pn
+Failed to create bc receive xbufn
+Failed to create bc snd xbufn
+RPC:       setup backchannel transport donen
+RPC:       setup backchannel transport failedn
+RPC:        destroy backchannel transportn
+RPC:        req=%pn
+RPC:        backchannel list empty= %sn
+true
+false
+RPC:       allocate a backchannel requestn
+RPC:       backchannel req=%pn
+RPC:       free backchannel req=%pn
+RPC:       Last session removed req=%pn
+RPC:       add callback request to listn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/socklib.c<<<
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/netns.h<<<
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth_generic.c<<<
+RPC:       looking up machine cred for service %sn
+RPC:       allocated %s cred %p for uid %d gid %dn
+machine
+generic
+RPC:       generic_free_cred %pn
+RPC:        UID %d Credential key resetn
+Generic
+Generic cred
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/timer.c<<<
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth_unix.c<<<
+RPC:       creating UNIX authenticator for client %pn
+RPC:       destroying UNIX authenticator %pn
+RPC:       allocating UNIX cred for uid %d gid %dn
+RPC:       unx_free_cred %pn
+RPC: bad verf flavor: %un
+RPC: giant verf size: %un
+UNIX
+AUTH_UNIX
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/bc_svc.c<<<
+RPC:       bc_send req= %pn
+RPC:       bc_send ret= %dn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth.c<<<
+%u
+RPC credential cache hashtable size
+RPC credential maximum total cache size
+rpc-auth-%u
+rpc-auth-%u
+RPC:       %s returns %dn
+rpc-auth-%u
+RPC:       looking up %s credn
+RPC: %5u holding %s cred %pn
+RPC: %5u looking up %s credn
+RPC: %5u looking up %s credn
+RPC: %5u marshaling %s cred %pn
+RPC: %5u validating %s cred %pn
+RPC: %5u using %s cred %p to wrap rpc datan
+RPC: %5u using %s cred %p to unwrap rpc datan
+RPC: %5u refreshing %s cred %pn
+RPC: %5u invalidating %s cred %pn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/svcauth_unix.c<<<
+netns.h
+%pI4
+%pI6
+-no-domain-
+#class IP domainn
+%s %pI4 %sn
+%s %pI6 %sn
+%u
+#uid cnt: gids...n
+%u %d:
+ %d
+n
+auth.unix.gid
+svc: bad null credn
+svc: bad null verfn
+null
+unix
+auth.unix.ip
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/svcauth.c<<<
+svc: svc_authenticate (%d)n
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xdr.c<<<
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/addr.c<<<
+::
+::1
+::ffff:%pI4
+%pI6c
+%c%u
+%pI4
+.%u.%u
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/sched.c<<<
+sunrpc.h
+RPC: %5u disabling timern
+RPC: %5u setting alarm for %lu msn
+RPC: %5u added to queue %p 
+n
+RPC: %5u removed from queue %p 
+n
+RPC: %5u sleep_on(queue 
+ time %lu)n
+RPC: %5u __rpc_wake_up_task (now %lu)n
+RPC: Inactive task (%p) being woken up!n
+RPC:       __rpc_wake_up_task donen
+RPC:       wake_up_first(%p 
+)n
+RPC: %5u timeoutn
+RPC: %5u __rpc_execute flags=0x%xn
+RPC: %5u sync task going to sleepn
+RPC: %5u got signaln
+RPC: %5u sync task resumingn
+RPC: %5u return %d, status %dn
+RPC: %5u allocated buffer of size %zu at %pn
+RPC:       freeing buffer of size %zu at %pn
+RPC:       new task initialized, procpid %un
+RPC:       allocated task %pn
+RPC: %5u freeing taskn
+RPC: %5u release taskn
+RPC:       creating workqueue rpciodn
+rpciod
+RPC:       destroying workqueue rpciodn
+delayq
+rpc_tasks
+rpc_buffers
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/cache.c<<<
+netns.h
+RPC:       Want update, refage=%ld, age=%ldn
+RPC: failed to unregister %s cachen
+# expiry=%ld refcnt=%d flags=%lxn
+# 
+# 
+%lun
+flush
+channel
+content
+flush
+channel
+content
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/svcsock.c<<<
+sunrpc.h
+slock-AF_INET-NFSD
+sk_xprt.xpt_lock-AF_INET-NFSD
+slock-AF_INET6-NFSD
+sk_xprt.xpt_lock-AF_INET6-NFSD
+svc: service %p, releasing skb %pn
+svc: socket %p sendto([%p %Zu... ], %d) = %d (addr %s)n
+udp
+tcp
+ipv4 %s %pI4 %dn
+ipv6 %s %pI6 %dn
+*unknown-%d*n
+svc: socket %p recvfrom(%p, %Zu) = %dn
+svc: socket %p(inet %p), busy=%dn
+svc: socket %p(inet %p), write_space busy=%dn
+RPC svc_write_space: someone sleeping on %pn
+svc: recvfrom returned error %dn
+svc: received unknown control message %d/%d; dropping RPC reply datagramn
+udp
+svc: kernel_setsockopt returned %dn
+svc: socket %p TCP (listen) state change %dn
+svc: socket %p: no user datan
+svc: socket %p TCP (connected) state change %d (svsk %p)n
+svc: socket %p: no user datan
+svc: socket %p TCP data ready (svsk %p)n
+svc: tcp_accept %p sock %pn
+%s: no more sockets!n
+%s: accept failed (err %d)!n
+%s: peername failed (err %d)!n
+%s: connect from unprivileged port: %sn
+%s: connect from %sn
+svc_tcp_accept: kernel_getsockname error %dn
+svc: short recvfrom while reading record 
+length (%d of %d)n
+svc: TCP record, %d bytesn
+RPC: fragment too large: %dn
+RPC: TCP recv_record got %dn
+%s: Got unrecognized reply: 
+calldir 0x%x xpt_bc_xprt %p xid %08xn
+svc: TCP %s record (%d bytes)n
+final
+nonfinal
+svc: tcp_recv %p data %d conn %d close %dn
+svc: incomplete TCP record (%d of %d)n
+RPC: TCP recvfrom got EAGAINn
+%s: recvfrom returned errno %dn
+rpc-srv/tcp: %s: %s %d when sending %d bytes 
+- shutting down socketn
+got error
+sent only
+tcp-bc
+tcp
+setting up TCP socket for listeningn
+setting up TCP socket for readingn
+svc: svc_setup_socket %pn
+svc: svc_setup_socket created %p (inet %p)n
+svc: svc_create_socket(%s, %d, %s)n
+svc: only UDP and TCP 
+sockets supportedn
+svc: svc_create_socket error = %dn
+svc: svc_sock_detach(%p)n
+svc: svc_tcp_sock_detach(%p)n
+svc: svc_sock_free(%p)n
+svc: only TCP sockets
+ supported on shared back channeln
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/svc_xprt.c<<<
+svc: Adding svc transport class '%s'n
+svc: Removing svc transport class '%s'n
+%s %dn
+xpt_bc_pending
+svc: creating transport %s[%d]n
+svc: transport %s not foundn
+svc: transport %p busy, not enqueuedn
+svc: transport %p served by daemon %pn
+svc_xprt_enqueue: server %p, rq_xprt=%p!n
+svc: transport %p put into queuen
+svc: transport %p dequeued, inuse=%dn
+RPC request reserved %d but used %dn
+svc: daemon %p woken up.n
+%s: too many open connections, consider increasing the %sn
+max number of connections
+number of threads
+svc: server %p, no data yetn
+svc_recv: found XPT_CLOSEn
+svc: server %p, pool %u, transport %p, inuse=%dn
+svc: got len=%dn
+svc: server %p waiting for data (to = %ld)n
+svc_recv: service %p, transport not NULL!n
+svc: xprt %p dropped requestn
+svc_age_temp_xprtsn
+svc_age_temp_xprts: busyn
+queuing xprt %p for closingn
+svc: svc_delete_xprt(%p)n
+revisit canceledn
+revisit queuedn
+%s %un
+svc_pool_stats_start, *pidx=%un
+svc_pool_stats_next, *pos=%llun
+# pool packets-arrived sockets-enqueued threads-woken threads-timedoutn
+%u %lu %lu %lu %lun
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/sysctl.c<<<
+netns.h
+rpc_debug
+%d
+rpc_debug
+nfs_debug
+nfsd_debug
+nlm_debug
+transports
+sunrpc
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/svc.c<<<
+auto
+global
+percpu
+pernode
+auto
+global
+percpu
+pernode
+%d
+svc: initialising pool %u for %sn
+svc: svc_destroy(%s, %d)n
+svc_destroy: no threads for serv=%p!n
+%s
+svc: svc_register(%sv%d, %s, %u, %u)%sn
+udp
+tcp
+ (but not telling portmap)
+
+svc: failed to register 
+%sv%u RPC service (errno %d).n
+
+svc: %s(%sv%u), error %dn
+svc: attempting to unregister %sv%un
+svc: %s: %pV
+svc: failed to encode replyn
+svc: calling dispatchern
+svc: svc_process dropitn
+short len %Zd, dropping requestn
+svc: authentication failed (%d)n
+svc: unknown program %dn
+unknown version (%d for prog %d, %s)n
+unknown procedure (%d)n
+failed to decode argsn
+bad direction %d, dropping requestn
+No support for Non-TCP transports!n
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/rpc_pipe.c<<<
+netns.h
+sunrpc.h
+ (init_net)
+
+RPC server: %sn
+service: %s (%d) version %dn
+address: %sn
+protocol: %sn
+port: %sn
+%s: %s failed to allocate inode for dentry %pdn
+%s: %s failed to populate directory %pdn
+%s: %s() failed to create pipe %pd/%s (errno = %d)n
+info
+channel
+content
+flush
+lockd
+mount
+nfs
+portmap
+statd
+nfsd4_cb
+cache
+nfsd
+gssd
+clntXX
+RPC server: %sn
+service: foo (1) version 0n
+address: 127.0.0.1n
+protocol: tcpn
+port: 0n
+info
+gssd
+RPC:       sending pipefs MOUNT notification for net %p%sn
+RPC:       sending pipefs UMOUNT notification for net %p%sn
+rpc_pipefs
+rpc_pipefs
+rpc_pipefs
+rpc_inode_cache
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprtrdma/transport.c<<<
+xprt_rdma.h
+Dual BSD/GPL
+RPC/RDMA Transport for Linux kernel NFS
+Network Appliance, Inc.
+rdma_slot_table_entries
+rdma_max_inline_read
+rdma_max_inline_write
+rdma_inline_write_padding
+rdma_memreg_strategy
+rdma_pad_optimize
+sunrpc
+%u
+rdma
+%08x
+%4hx
+rdma
+RPC:       %s: %sconnectn
+re
+
+RPC:       %s: exitn
+RPC:       %s: calledn
+RPC:       %s: returningn
+RPC:       %s: address too largen
+RPC:       %s: couldn't allocate rpcrdma_xprtn
+RPC:       %s: %pI4:%un
+RPC:       %s: transport data payload maximum: %zu bytesn
+RPC:       %s: closingn
+RPC:       %s: %un
+RPC:       %s: size %zd too large for buffer[%zd]: 
+prog %d vers %d proc %dn
+RPC:       %s: size %zd, request 0x%pn
+RPC:       %s: called on 0x%p%sn
+ (with waiter)
+
+RPC:       %s: rpcrdma_marshal_req failed, status %in
+txprt:trdma %u %lu %lu %lu %ld %lu %lu %lu %Lu %Lu 
+%lu %lu %lu %Lu %Lu %Lu %Lu %lu %lu %lun
+rdma
+RPCRDMA Module Removed, deregister RPC RDMA transportn
+RPC:       %s: xprt_unregister returned %in
+RPCRDMA Module Init, register RPC RDMA transportn
+Defaults:n
+tSlots %dn
+tMaxInlineRead %dntMaxInlineWrite %dn
+tPadding %dntMemreg %dn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprtrdma/svc_rdma.c<<<
+xprt_rdma.h
+%dn
+max_requests
+max_req_size
+max_outbound_read_requests
+rdma_stat_read
+rdma_stat_recv
+rdma_stat_write
+rdma_stat_sq_starve
+rdma_stat_rq_starve
+rdma_stat_rq_poll
+rdma_stat_rq_prod
+rdma_stat_sq_poll
+rdma_stat_sq_prod
+svc_rdma
+sunrpc
+SVCRDMA Module Removed, deregister RPC RDMA transportn
+SVCRDMA Module Init, register RPC RDMA transportn
+tsvcrdma_ord      : %dn
+tmax_requests     : %dn
+tsq_depth         : %dn
+tmax_inline       : %dn
+svc_rdma
+svc_rdma_map_cache
+Could not allocate map cache.n
+svc_rdma_ctxt_cache
+Could not allocate WR ctxt cache.n
+Tom Tucker <tom@opengridcomputing.com>
+SVC RDMA Transport
+Dual BSD/GPL
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c<<<
+svcrdma: Error %d posting RDMA_READn
+svcrdma: Error %d posting RDMA_READn
+svcrdma: deferred read ret=%d, rq_arg.len =%d, 
+rq_arg.head[0].iov_base=%p, rq_arg.head[0].iov_len = %zdn
+svcrdma: rqstp=%pn
+svcrdma: processing ctxt=%p on xprt=%p, rqstp=%p, status=%dn
+svcrdma: ret = %d, rq_arg.len =%d, 
+rq_arg.head[0].iov_base=%p, rq_arg.head[0].iov_len = %zdn
+svcrdma: transport %p is closingn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprtrdma/svc_rdma_transport.c<<<
+xprt_rdma.h
+rdma
+svcrdma: received CQ event id=%d, context=%pn
+svcrdma: QP event %d received for QP=%pn
+svcrdma: QP ERROR event %d received for QP=%p, 
+closing transportn
+svcrdma: transport closing putting ctxt %pn
+svcrdma: unexpected completion type, 
+opcode=%dn
+svcrdma: sq wc err status %dn
+svcrdma: out of memory...retrying in 1sn
+svcrdma: failed to create new transportn
+svcrdma: Creating newxprt=%p, cm_id=%p, listenxprt=%pn
+svcrdma: Connect request on cma_id=%p, xprt = %p, 
+event=%dn
+svcrdma: Connection completed on LISTEN xprt=%p, 
+cm_id=%pn
+svcrdma: Device removal xprt=%p, cm_id=%pn
+svcrdma: Unexpected event on listening endpoint %p, 
+event=%dn
+svcrdma: Connection completed on DTO xprt=%p, 
+cm_id=%pn
+svcrdma: Disconnect on DTO xprt=%p, cm_id=%pn
+svcrdma: Device removal cma_id=%p, xprt = %p, 
+event=%dn
+svcrdma: Unexpected event on DTO endpoint %p, 
+event=%dn
+svcrdma: Creating RDMA socketn
+svcrdma: Address family %d is not supported.n
+svcrdma: rdma_create_id failed = %dn
+svcrdma: rdma_bind_addr failed = %dn
+svcrdma: rdma_listen failed = %dn
+svcrdma: newxprt from accept queue = %p, cm_id=%pn
+svcrdma: could not query device attributes on 
+device %p, rc=%dn
+svcrdma: error creating PD for connect requestn
+svcrdma: error creating SQ CQ for connect requestn
+svcrdma: error creating RQ CQ for connect requestn
+svcrdma: newxprt->sc_cm_id=%p, newxprt->sc_pd=%pn
+    cm_id->device=%p, sc_pd->device=%pn
+    cap.max_send_wr = %dn
+    cap.max_recv_wr = %dn
+    cap.max_send_sge = %dn
+    cap.max_recv_sge = %dn
+svcrdma: failed to create QP, ret=%dn
+svcrdma: Failed to create DMA MR ret=%dn
+svcrdma: failure posting receive buffersn
+svcrdma: failed to accept new connection, ret=%dn
+svcrdma: new connection %p accepted with the following 
+attributes:n
+    local_ip        : %pI4n
+    local_port	     : %dn
+    remote_ip       : %pI4n
+    remote_port     : %dn
+    max_sge         : %dn
+    sq_depth        : %dn
+    max_requests    : %dn
+    ord             : %dn
+svcrdma: failure accepting new connection rc=%d.n
+svc: svc_rdma_detach(%p)n
+svcrdma: svc_rdma_free(%p)n
+svcrdma: failed to post SQ WR rc=%d, 
+sc_sq_count=%d, sc_sq_depth=%dn
+svcrdma: Error %d posting send for protocol errorn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprtrdma/svc_rdma_sendto.c<<<
+svcrdma: map_xdr: sge_no %d page_no %d 
+page_base %u page_len %u head_len %zu tail_len %zun
+svcrdma: RDMA_WRITE rmr=%x, to=%llx, xdr_off=%d, 
+write_len=%d, vec->sge=%p, vec->count=%lun
+svcrdma: RDMA_WRITE failed, ret=%dn
+svcrdma: RDMA_WRITE failed, ret=%dn
+svcrdma: could not post a receive buffer, err=%d.
+Closing transport %p.n
+svcrdma: sending response for rqstp=%pn
+svcrdma: failed to send write chunks, rc=%dn
+svcrdma: failed to send reply chunks, rc=%dn
+svcrdma: send_reply returns %dn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprtrdma/xprt_rdma.h<<<
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprtrdma/verbs.c<<<
+xprt_rdma.h
+RPC:       %s: QP error %X on device %s ep %pn
+RPC:       %s: CQ error %X on device %s ep %pn
+RPC:       %s: frmr %p status %X opcode %dn
+RPC:       %s: ib_poll_cq failed: %in
+RPC:       %s: ib_req_notify_cq failed: %in
+RPC:       %s: rep %p status %X opcode %X length %un
+RPC:       %s: ib_poll_cq failed: %in
+RPC:       %s: ib_req_notify_cq failed: %in
+address resolved
+address error
+route resolved
+route error
+connect request
+connect response
+connect error
+unreachable
+rejected
+established
+disconnected
+device removal
+multicast join
+multicast error
+address change
+timewait exit
+unrecognized connection error
+RPC:       %s: CM address resolution error, ep 0x%pn
+RPC:       %s: CM route resolution error, ep 0x%pn
+RPC:       %s: %d responder resources
+ (%d initiator)n
+RPC:       %s: %sconnectedn
+
+dis
+RPC:       %s: %pI4:%u (ep 0x%p): %sn
+rpcrdma: connection to %pI4:%u 
+on %s, memreg %d slots %d ird %d%sn
+ (low!)
+
+rpcrdma: connection to %pI4:%u closed (%d)n
+RPC:       %s: rdma_create_id() failed %in
+RPC:       %s: rdma_resolve_addr() failed %in
+RPC:       %s: rdma_resolve_route() failed %in
+RPC:       %s: flushed %d events (last 0x%x)n
+RPC:       %s: ib_alloc_pd() failed %in
+RPC:       %s: ib_query_device failed %dn
+RPC:       %s: FRMR registration 
+not supported by HCAn
+RPC:       %s: MTHCAFMR registration 
+not supported by HCAn
+%s: ib_get_dma_mr for 
+phys register failed with %lXn
+RPC: Unsupported memory 
+registration mode: %dn
+RPC:       %s: memory registration strategy is %dn
+RPC:       %s: enteringn
+RPC:       %s: ib_dereg_mr returned %in
+RPC:       %s: ib_dealloc_pd returned %in
+RPC:       %s: requested max: dtos: send %d recv %d; 
+iovs: send %d recv %dn
+RPC:       %s: failed to create send CQ: %in
+RPC:       %s: ib_req_notify_cq failed: %in
+RPC:       %s: failed to create recv CQ: %in
+RPC:       %s: ib_req_notify_cq failed: %in
+RPC:       %s: ib_destroy_cq returned %in
+RPC:       %s: entering, connected is %dn
+RPC:       %s: ib_destroy_cq returned %in
+RPC:       %s: ib_destroy_cq returned %in
+RPC:       %s: reconnecting...n
+RPC:       %s: can't reconnect on 
+different device!n
+RPC:       %s: rdma_create_qp failed %in
+RPC:       %s: connecting...n
+RPC:       %s: rdma_create_qp failed %in
+RPC:       %s: rdma_connect() failed with %in
+RPC:       %s: non-peer_reject, retryn
+RPC:       %s: connectedn
+RPC:       %s: after wait, %sconnectedn
+still 
+dis
+RPC:       %s: rdma_disconnect %in
+RPC:       %s: initalizing %d FMRsn
+RPC:       %s: ib_alloc_fmr failed %in
+RPC:       %s: initalizing %d FRMRsn
+RPC:       %s: ib_alloc_fast_reg_mr 
+failed %in
+RPC:       %s: ib_alloc_fast_reg_page_list 
+failed %in
+RPC:       %s: req_t/rep_t/pad kzalloc(%zd) failedn
+RPC:       %s: wlen = %zu, rlen = %zun
+RPC:       %s: request buffer %d alloc
+ failedn
+RPC:       %s: reply buffer %d alloc failedn
+RPC:       %s: max_requests %dn
+RPC:       %s: ib_dealloc_fmr failed %in
+RPC:       %s: ib_dereg_mr failed %in
+RPC:       %s: enteringn
+RPC:       %s: ib_dereg_mr failed %in
+RPC:       %s: ib_alloc_fast_reg_mr
+ failed %in
+RPC:       %s: 
+ib_alloc_fast_reg_page_list 
+failed %in
+RPC:       %s: FRMR %p is stalen
+RPC:       %s: frmr %p invalidating rkey %08xn
+RPC:       %s: ib_post_send failed, %in
+RPC:       %s: out of request buffersn
+RPC:       %s: %d extra receives outstanding (ok)n
+RPC:       %s: phys convert: 0x%llx 
+registered 0x%llx length %dn
+RPC:       %s: failed with %in
+RPC:       %s: ib_dereg_mr failed %in
+RPC:       %s: mr_dma %llx mr_offset %p mr_dma_len %zun
+RPC:       %s: Using frmr %p to map %d segmentsn
+RPC:       %s: failed ib_post_send for register,
+ status %in
+RPC:       %s: failed ib_post_send for invalidate,
+ status %in
+RPC:       %s: failed ib_map_phys_fmr 
+%u@0x%llx+%i (%d)... status %in
+RPC:       %s: failed ib_unmap_fmr,
+ status %in
+RPC:       %s: ib_post_send returned %in
+RPC:       %s: ib_post_recv returned %in
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprtrdma/rpc_rdma.c<<<
+xprt_rdma.h
+pure inline
+ read chunk
+*read chunk
+write chunk
+reply chunk
+RPC:       %s: read chunk 
+elem %d@0x%llx:0x%x pos %u (%s)n
+more
+last
+RPC:       %s: %s chunk 
+elem %d@0x%llx:0x%x (%s)n
+reply
+write
+more
+last
+RPC:       %s: pad %d destp 0x%p len %d hdrlen %dn
+RPC:       %s: tail destp 0x%p len %dn
+RPC:       %s: page %d destp 0x%p len %d curlen %dn
+RPC:       %s: cannot marshal multiple chunk listsn
+RPC:       %s: invalid chunk listn
+RPC:       %s: %s: hdrlen %zd rpclen %zd padlen %zd
+ headerp 0x%p base 0x%p lkey 0x%xn
+RPC:       %s: chunk %d@0x%llx:0x%xn
+RPC:       %s: srcp 0x%p len %d hdrlen %dn
+RPC:       %s: page %d
+ srcp 0x%p len %d curlen %dn
+RPC:       %s: tail srcp 0x%p len %d curlen %dn
+RPC:       %s: %d bytes in
+ %d extra segments (%d lost)n
+RPC:       %s: short/invalid replyn
+RPC:       %s: invalid version %dn
+RPC:       %s: reply 0x%p failed 
+to match any request xid 0x%08x len %dn
+RPC:       %s: duplicate reply 0x%p to RPC 
+request 0x%p: xid 0x%08xn
+RPC:       %s: reply 0x%p completes request 0x%pn
+                   RPC request 0x%p xid 0x%08xn
+%s: invalid rpcrdma reply header (type %d):
+ chunks[012] == %d %d %d
+ expected chunks <= %dn
+RPC:       %s: xprt_complete_rqst(0x%p, 0x%p, %d)n
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprtrdma/svc_rdma_marshal.c<<<
+svcrdma: vaend=%p, ch=%pn
+svcrdma: ary=%p, vaend=%pn
+svcrdma: ary=%p, wc_nchunks=%d, vaend=%pn
+svcrdma: ary=%p, vaend=%pn
+svcrdma: ary=%p, wc_nchunks=%d, vaend=%pn
+svcrdma: header too short = %dn
+svcrdma: processing deferred RDMA header on rqstp=%pn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/clnt.c<<<
+sunrpc.h
+netns.h
+RPC: %5u %s (status %d)n
+RPC: pipefs directory doesn't exist: %sn
+clnt%x
+RPC: Couldn't create pipefs entry
+ %s/%s, error %ldn
+%s: unknown event: %ldn
+RPC:       Couldn't create auth handle (flavor %u)n
+RPC:       creating %s client for %s (xprt %p)n
+%s
+%pI4
+%pI6
+RPC:       %s: returned error %dn
+RPC:       failed to create new xprt for clnt %pn
+RPC:       replaced xprt for clnt %pn
+RPC:       failed to switch xprt for clnt %pn
+RPC:       killing all tasks for client %pn
+RPC:       shutting down %s client for %sn
+RPC:       destroying %s client for %sn
+RPC:       rpc_release_client(%p)n
+RPC: rpc_run_bc_task req= %pn
+RPC: rpc_run_bc_task: task= %pn
+unprintable
+RPC:       can't create UDP socket (%d)n
+RPC:       can't bind UDP socket (%d)n
+RPC:       can't connect UDP socket (%d)n
+RPC:       getsockname failed (%d)n
+RPC:       %s succeededn
+RPC:       %s: address family not supportedn
+RPC:       %s: succeededn
+NULL
+no proc
+RPC: %5u call_start %s%d proc %s (%s)n
+async
+sync
+%s: status=%d, but no request slot, exitingn
+%s: status=%d, request allocated anywayn
+%s: unrecognized error %d, exitingn
+RPC: %5u %s: retry refresh credsn
+RPC: %5u %s: refresh creds failed with error %dn
+RPC: %5u rpc_buffer allocation failedn
+RPC: couldn't encode RPC header, exit EIOn
+RPC: %5u rpcbind out of memoryn
+RPC: %5u remote rpcbind: RPC program/version 
+unavailablen
+RPC: %5u rpcbind request timed outn
+RPC: %5u unrecognized remote rpcbind servicen
+RPC: %5u remote rpcbind version unavailable, retryingn
+RPC: %5u remote rpcbind unreachable: %dn
+RPC: %5u unrecognized rpcbind error (%d)n
+RPC: %5u call_connect xprt %p %s connectedn
+is
+is not
+RPC: Could not send backchannel reply 
+error: %dn
+RPC: Could not send backchannel reply 
+error: %dn
+RPC: Could not send backchannel reply 
+error: %dn
+%s: RPC call returned error %dn
+RPC: %5u call_timeout (minor)n
+RPC: %5u call_timeout (major)n
+%s: server %s not responding, timed outn
+%s: server %s not responding, still tryingn
+%s: server %s OKn
+RPC:       %s: too small RPC reply size (%d bytes)n
+RPC: %5u call_decode result %dn
+RPC: %5u %s: XDR representation not a multiple of
+ 4 bytes: 0x%xn
+RPC: %5u %s: not an RPC reply: %xn
+RPC: %5u %s: RPC call version mismatch!n
+RPC: %5u %s: RPC call rejected, 
+unknown error: %xn
+RPC: %5u %s: retry stale credsn
+RPC: %5u %s: retry garbled credsn
+RPC: server %s requires stronger 
+authentication.n
+RPC: %5u %s: unknown auth error: %xn
+RPC: %5u %s: call rejected %dn
+RPC: %5u %s: auth check failed with %dn
+RPC: %5u %s: program %u is unsupported 
+by server %sn
+RPC: %5u %s: program %u, version %u unsupported 
+by server %sn
+RPC: %5u %s: proc %s unsupported by program %u, 
+version %u on server %sn
+RPC: %5u %s: server saw garbagen
+RPC: %5u %s: server accept status: %xn
+RPC: %5u %s: retryingn
+RPC: %5u %s: call failed with error %dn
+RPC: %5u %s: server reply was truncated.n
+-pid- flgs status -client- --rqstp- 
+-timeout ---ops--n
+none
+%5u %04x %6d %8p %8p %8ld %8p %sv%u %s a:%ps q:%sn
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/auth_null.c<<<
+RPC: bad verf flavor: %un
+RPC: bad verf size: %un
+NULL
+AUTH_NULL
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/xprtsock.c<<<
+sunrpc.h
+udp_slot_table_entries
+tcp_slot_table_entries
+tcp_max_slot_table_entries
+min_resvport
+max_resvport
+tcp_fin_timeout
+sunrpc
+RPC:       %sn
+n
+0x%04x 
+%02x%02x%02x%02x 
+n
+%08x
+%pi6
+%u
+%4hx
+RPC: %5u xmit incomplete (%u left of %u)n
+packet data:
+RPC:       %s(%u) = %dn
+RPC:       sendmsg returned unrecognized error %dn
+packet data:
+RPC:       xs_udp_send_request(%u) = %dn
+RPC:       sendmsg returned unrecognized error %dn
+packet data:
+RPC:       xs_tcp_send_request(%u) = %dn
+RPC:       sendmsg returned unrecognized error %dn
+RPC:       xs_error_report client %p, error=%d...n
+RPC:       xs_close xprt %pn
+RPC:       xs_destroy xprt %pn
+RPC:       %s...n
+RPC:       impossible RPC reply size %dn
+RPC:       sk_buff copy failedn
+RPC:       xs_udp_data_ready...n
+RPC:       impossible RPC reply size %d!n
+RPC:       invalid TCP record fragment lengthn
+RPC:       reading TCP record fragment of length %dn
+RPC:       reading XID (%Zu bytes)n
+RPC:       reading %s XID %08xn
+reply for
+request with
+RPC:       reading CALL/REPLY flag (%Zu bytes)n
+RPC:       invalid request message typen
+RPC:       XID %08x truncated requestn
+RPC:       xprt = %p, tcp_copied = %lu, 
+tcp_offset = %u, tcp_reclen = %un
+RPC:       XID %08x read %Zd bytesn
+RPC:       xprt = %p, tcp_copied = %lu, tcp_offset = %u, 
+tcp_reclen = %un
+RPC:       read reply XID %08xn
+RPC:       XID %08x request not found!n
+Callback slot table overflowedn
+RPC:       read callback  XID %08xn
+RPC:       discarded %Zu bytesn
+RPC:       xs_tcp_data_recv startedn
+RPC:       xs_tcp_data_recv donen
+RPC:       xs_tcp_data_ready...n
+RPC:       xs_tcp_state_change client %p...n
+RPC:       state %x conn %d dead %d zapped %d sk_shutdown %dn
+RPC:       setting port for xprt %p to %un
+RPC:       %s %pI4:%u: %s (%d)n
+failed
+ok
+RPC:       %s %pI6:%u: %s (%d)n
+failed
+ok
+slock-AF_LOCAL-RPC
+sk_lock-AF_LOCAL-RPC
+slock-AF_INET-RPC
+sk_lock-AF_INET-RPC
+slock-AF_INET6-RPC
+sk_lock-AF_INET6-RPC
+RPC:       can't create %d transport socket (%d).n
+RPC:       can't create AF_LOCAL 
+transport socket (%d).n
+RPC:       worker connecting xprt %p via AF_LOCAL to %sn
+RPC:       xprt %p connected to %sn
+RPC:       xprt %p: socket %s does not existn
+RPC:       xprt %p: connection refused for %sn
+%s: unhandled error (%d) connecting to %sn
+RPC:       worker connecting xprt %p via %s to 
+%s (port %s)n
+RPC:       disconnecting xprt %p to reuse portn
+RPC:       AF_UNSPEC connect return code %dn
+RPC:       %s: TCP_CLOSEd and sk_shutdown set to %dn
+RPC:       %s: ESTABLISHED/SYN_SENT 
+sk_shutdown set to %dn
+RPC:       worker connecting xprt %p via %s to 
+%s (port %s)n
+RPC:       %p connect status %d connected %d sock state %dn
+%s: connect returned unhandled error %dn
+RPC:       xs_connect delayed xprt %p for %lu 
+secondsn
+RPC:       xs_connect scheduled xprt %pn
+txprt:tlocal %lu %lu %lu %ld %lu %lu %lu 
+%llu %llu %lu %llu %llun
+txprt:tudp %u %lu %lu %lu %lu %llu %llu 
+%lu %llu %llun
+txprt:ttcp %u %lu %lu %lu %ld %lu %lu %lu 
+%llu %llu %lu %llu %llun
+Error sending entire callback!n
+sending request with xid: %08xn
+RPC:       bc_destroy xprt %pn
+RPC:       %s: Bad address familyn
+RPC:       xs_setup_xprt: address too largen
+RPC:       xs_setup_xprt: couldn't allocate 
+rpc_xprtn
+RPC:       bad AF_LOCAL address: %sn
+local
+RPC:       set up xprt to %s via AF_LOCALn
+udp
+udp
+RPC:       set up xprt to %s (port %s) via %sn
+RPC:       set up xprt to %s (autobind) via %sn
+tcp
+tcp
+RPC:       set up xprt to %s (port %s) via %sn
+RPC:       set up xprt to %s (autobind) via %sn
+tcp
+tcp
+RPC:       set up xprt to %s (port %s) via %sn
+named UNIX socket
+udp
+tcp
+tcp NFSv4.1 backchannel
+>>>/usr/src/kernel/linux-3.18.35/net/sunrpc/rpcb_clnt.c<<<
+netns.h
+/var/run/rpcbind.sock
+0
+RPC:       created new rpcb local clients (rpcb_local_clnt: 
+%p, rpcb_local_clnt4: %p) for net %p%sn
+ (init_net)
+
+localhost
+RPC:       failed to create AF_LOCAL rpcbind 
+client (errno %ld).n
+RPC:       failed to bind second program to 
+rpcbind v4 client (errno %ld).n
+localhost
+RPC:       failed to create local rpcbind 
+client (errno %ld).n
+RPC:       failed to bind second program to 
+rpcbind v4 client (errno %ld).n
+RPC:       failed to contact local rpcbind 
+server (errno %d).n
+RPC:       %sregistering (%u, %u, %d, %u) with local 
+rpcbindn
+
+un
+RPC:       %sregistering [%u, %u, %s, '%s'] with 
+local rpcbindn
+
+un
+RPC:       %sregistering [%u, %u, %s, '%s'] with 
+local rpcbindn
+
+un
+RPC:       unregistering [%u, %u, '%s'] with 
+local rpcbindn
+
+RPC: %5u %s(%s, %u, %u, %d)n
+RPC: %5u %s: waiting for another bindern
+RPC: %5u %s: already boundn
+RPC: %5u %s: bad address familyn
+RPC: %5u %s: no more getport versions availablen
+RPC: %5u %s: trying rpcbind version %un
+RPC: %5u %s: rpcb_create failed, error %ldn
+RPC: %5u %s: no memory availablen
+
+RPC: %5u %s: rpc_run_task failedn
+RPC: %5u rpcb_getport_done(status %d, port %u)n
+RPC: %5u encoding PMAP_%s call (%u, %u, %d, %u)n
+RPC: %5u PMAP_%s result: %lun
+RPC: %5u RPCB_%s call %sn
+succeeded
+failed
+RPC: %5u encoding RPCB_%s call (%u, %u, '%s', '%s')n
+RPC: %5u RPCB reply: program not registeredn
+RPC: %5u RPCB_%s reply: %sn
+RPC: %5u malformed RPCB_%s replyn
+SET
+UNSET
+GETPORT
+SET
+UNSET
+GETADDR
+SET
+UNSET
+GETADDR
+rpcbind
+>>>/usr/src/kernel/linux-3.18.35/net/socket.c<<<
+sock_inode_cache
+socket:[%lu]
+socket:
+sockfs
+
+sockprotoname
+%s: fasync list not empty!n
+bridge
+8021q
+dlci
+%s uses obsolete (PF_INET,SOCK_PACKET)n
+socket: no more socketsn
+net-pf-%d
+protocol %d >= NPROTO(%d)n
+NET: Registered protocol family %dn
+NET: Unregistered protocol family %dn
+sockets: used %dn
