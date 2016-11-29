@@ -144,7 +144,7 @@ var vis = body.append("svg")
 .attr("width", width)
 .attr("height", height);
 
-d3.json("miserables.json", function(json) {
+d3.json("test.json", function(json) {
     data = json;
     for (var i=0; i<data.links.length; ++i) {
         o = data.links[i];

@@ -6,6 +6,6 @@
     <link rel="stylesheet" href="style.css" type="text/css">
   </head>
   <body>
-    <script type="text/javascript" src="graph.js"></script>
+    <script type="text/javascript" src="my_graph.js"></script>
   </body>
 </html>
