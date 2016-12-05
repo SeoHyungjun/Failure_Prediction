@@ -39,8 +39,9 @@ if FLAGS.eval_train:
     x_raw, y_test = data_helpers.load_data_and_labels(FLAGS.positive_data_file, FLAGS.negative_data_file)
     y_test = np.argmax(y_test, axis=1)
 else:
-    x_raw = ["a masterpiece four years in the making", "everything is off."]
-    y_test = [1, 0]
+#    x_raw = ["a masterpiece four years in the making", "everything is off."]
+    x_raw = ["scsi", "ip 192.168.111.1", "201.232.111.100"]
+    y_test = [1, 0, 0]
 
 # Map data into vocabulary
 vocab_path = os.path.join(FLAGS.checkpoint_dir, "..", "vocab")
@@ -70,22 +71,37 @@ with graph.as_default():
 
         # Tensors we want to evaluate
         predictions = graph.get_operation_by_name("output/predictions").outputs[0]
+        scores = graph.get_operation_by_name("output/scores").outputs[0]
+        softmax_scores = graph.get_operation_by_name("output/softmax_scores").outputs[0]
 
         # Generate batches for one epoch
         batches = data_helpers.batch_iter(list(x_test), FLAGS.batch_size, 1, shuffle=False)
 
         # Collect the predictions here
         all_predictions = []
+        all_scores = []
+        all_softmax_scores = []
+        all_batch_softmax_scores = []
 
         for x_test_batch in batches:
             batch_predictions = sess.run(predictions, {input_x: x_test_batch, dropout_keep_prob: 1.0})
             all_predictions = np.concatenate([all_predictions, batch_predictions])
+
+            batch_scores = sess.run(scores, {input_x: x_test_batch, dropout_keep_prob: 1.0})
+            all_scores = all_scores + [batch_scores]
+
+            batch_softmax_scores = sess.run(softmax_scores, {input_x: x_test_batch, dropout_keep_prob: 1.0})
+            all_softmax_scores = all_batch_softmax_scores + [batch_softmax_scores]
+
+
 
 # Print accuracy if y_test is defined
 if y_test is not None:
     correct_predictions = float(sum(all_predictions == y_test))
     print("Total number of test examples: {}".format(len(y_test)))
     print("Accuracy: {:g}".format(correct_predictions/float(len(y_test))))
+    print("all_scores : \n{}".format(all_scores))
+    print("all_softmax_scores : \n{}".format(all_softmax_scores))
 
 # Save the evaluation to a csv
 predictions_human_readable = np.column_stack((np.array(x_raw), all_predictions))

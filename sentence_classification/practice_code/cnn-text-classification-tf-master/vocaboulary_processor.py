@@ -52,7 +52,7 @@ max_document_length = max([len(x.split(" ")) for x in x_text])
 vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length)
 x = np.array(list(vocab_processor.fit_transform(x_text)))
 
-#compare between i=0 and i=1, so can find default is matched into 4
+#compare between i=0 and i=1, so can find "default" is embeded into 4(index number)
 print ("put the number")
 i = int(input())
 len_of_i_x_text = len(x_text[i].split(" "))
@@ -60,3 +60,5 @@ print ("x_text[%d] = %s" % (i, x_text[i]))
 print ("documetn len = %d" % len_of_i_x_text)
 print ("\napply fit_transform\n")
 print ("     x[%d] = %s\n" % (i, x[i]))
+print ("     x = %s\n" % x)
+

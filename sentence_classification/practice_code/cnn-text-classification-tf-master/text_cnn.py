@@ -90,16 +90,19 @@ class TextCNN(object):
             # X = shape(the number of sentence*384)
             # W = shape(384*2)
             # scores = shape(the number of sentence * 2)
-            #        = [[probability value that sentence1 is class1, probability value that sentence1 is class2], [p(S2->1), p(S2->2)], .....]
+            #        = [[probability value that sentence1 is class1, probability value that sentence1 is class2], [p(S2->1), p(S2->2)], .....], not percent, just value
 
             self.predictions = tf.argmax(self.scores, 1, name="predictions")
             # code interpret #
             # return index of individual row that have highest value
             # ex) predictions = [0, 1, 1, 0, 1, .....]
+            self.softmax_scores = tf.nn.softmax(self.scores, -1, name="softmax_scores")
+
 
         # CalculateMean cross-entropy loss
         with tf.name_scope("loss"):
             losses = tf.nn.softmax_cross_entropy_with_logits(self.scores, self.input_y)
+            # losses = [loss of sentence 1(float), loss of sentence 2(float), ....]
             self.loss = tf.reduce_mean(losses) + l2_reg_lambda * l2_loss
 
         # Accuracy

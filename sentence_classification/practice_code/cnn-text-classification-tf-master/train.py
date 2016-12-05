@@ -26,7 +26,7 @@ tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularizaion lambda (default: 0
 
 # Training parameters
 tf.flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 64)")
-tf.flags.DEFINE_integer("num_epochs", 200, "Number of training epochs (default: 200)")
+tf.flags.DEFINE_integer("num_epochs", 100, "Number of training epochs (default: 200)")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps (default: 100)")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps (default: 100)")
 
@@ -104,9 +104,9 @@ with tf.Graph().as_default():
             num_filters=FLAGS.num_filters,
             l2_reg_lambda=FLAGS.l2_reg_lambda)
         
-        # sequence_length = len(one sentence) = the number of word
+        # sequence_length = max(len(one sentence)) = max(the number of word)
         # num_classes = the number of label
-        # vocab_szie = the number of work in dictionary
+        # vocab_size = the number of word in dictionary
         # embedding_size = the size of word vector
         # filter_sizes = size of filter(height)
 
@@ -175,8 +175,6 @@ with tf.Graph().as_default():
             time_str = datetime.datetime.now().isoformat()
             print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
             # print data flow #
-            print ("****input_x****\n%s\n" % vars(cnn.input_x))
-            print ("****embedded_chars****\n%s\n" % vars(cnn.embedded_chars))
 
             train_summary_writer.add_summary(summaries, step)
 
