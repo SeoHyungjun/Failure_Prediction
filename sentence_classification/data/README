@@ -6,3 +6,6 @@ filter_under_2char.c : filtering code
 -filtering-
 ex) disk
 cat dict_origin/disk | ./filter_under_2char > dict/disk
+
+-compile-
+make
