@@ -31,7 +31,8 @@ int main(int argc, char *argv[])
         struct loginfo parselog;
         int len = 0;
 
-        fscanf(stdin, "%[^\n]%*c", buffer);
+        if(-1 == fscanf(stdin, "%[^\n]%*c", buffer))
+            break;
 
         memset(&parselog, 0x00, sizeof(struct loginfo));
         parse(buffer, &parselog);

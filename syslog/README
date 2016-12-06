@@ -1,0 +1,16 @@
+--file list--
+syslog_dump : /var/log/syslog dump
+parse_fac_sev_msg.c : facility, severity, message parsing code
+
+--parsing--
+1. dump file
+cat syslog_dump | ./parse_fac_sev_msg
+
+2. syslog file
+tail -f /var/log/syslog | ./parse_fac_sev_msg
+
+--log format--
+facility.severity date host daemon: message
+
+--compile--
+make
