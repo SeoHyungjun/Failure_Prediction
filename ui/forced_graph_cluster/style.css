@@ -22,3 +22,31 @@ line.link {
   stroke-opacity: 0.5;
   pointer-events: none;
 }
+
+.btn {
+  background: #d6e1e8;
+  background-image: -webkit-linear-gradient(top, #d6e1e8, #abbac4);
+  background-image: -moz-linear-gradient(top, #d6e1e8, #abbac4);
+  background-image: -ms-linear-gradient(top, #d6e1e8, #abbac4);
+  background-image: -o-linear-gradient(top, #d6e1e8, #abbac4);
+  background-image: linear-gradient(to bottom, #d6e1e8, #abbac4);
+  -webkit-border-radius: 12;
+  -moz-border-radius: 12;
+  border-radius: 12px;
+  text-shadow: 1px 1px 3px #666666;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}

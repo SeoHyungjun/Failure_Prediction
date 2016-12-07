@@ -83,6 +83,12 @@ function network(data, prev, index, expand) {
             }
             if(n.status == 1)
                 l.status = 1;
+            if(n.status == 0) {
+                l.status = 0;
+                //n.status = 0;
+                //console.log("changed status");
+            }
+
             l.nodes.push(n);
         }
         // always count group size as we also use it to tweak the force graph strengths/distances
@@ -183,6 +189,15 @@ d3.json("test.json", function(json) {
     .attr("opacity", 1);
 });
 
+function init_nodes_status_by_0() {
+    for(var k = 0; k < data.nodes.length; ++k) {
+        if(data.nodes[k]['status'] == 1)
+            data.nodes[k]['status'] = 0;
+    }
+
+    init();
+}
+
 function init() {
     if (force) force.stop();
 
@@ -235,7 +250,8 @@ function init() {
     }) // 색 입히는 코드
     .on("click", function(d) { // hull을 클릭하면 expand 는 false
         console.log("hull click", d, arguments, this, expand[d.group]);
-        expand[d.group] = false; init();
+        expand[d.group] = false;
+        init();
     });
 
     link = linkg.selectAll("line.link").data(net.links, linkid);
@@ -248,9 +264,16 @@ function init() {
     .attr("y2", function(d) { return d.target.y; })
     .style("stroke-width", function(d) { return d.size || 1; });
 
-    node = nodeg.selectAll("circle.node").data(net.nodes, nodeid);
-    node.exit().remove();
-    node.enter().append("circle")
+    nodeg.selectAll("circle.node").remove();
+    node = nodeg.selectAll("circle.node")
+    //.data(net.nodes, nodeid)
+    .data(function(){
+        //console.log(net.nodes);
+        console.log(net.nodes[0]);
+        return net.nodes;
+    }, nodeid)
+    //node.exit().remove();
+    .enter().append("circle")
     // if (d.size) -- d.size > 0 when d is a group node.
     .attr("class", function(d) { return "node" + (d.size?"":" leaf"); })
     .attr("r", function(d) { return d.size ? d.size + dr : dr+1; })
