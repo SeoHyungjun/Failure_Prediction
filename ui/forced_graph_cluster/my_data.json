@@ -2,7 +2,7 @@
 	"nodes": [{
 		"name": "Server1-1",
 		"group": 1,
-        "status": 0
+        "status": 1
 	}, {
 		"name": "Server1-2",
 		"group": 1,
@@ -30,7 +30,7 @@
 	}, {
 		"name": "Server3-1",
 		"group": 3,
-        "status": 0
+        "status": 1
 	}, {
 		"name": "Server3-2",
 		"group": 3,
@@ -38,11 +38,11 @@
 	}, {
 		"name": "Server3-3",
 		"group": 3,
-        "status": 0
+        "status": 1
 	}, {
 		"name": "Server3-4",
 		"group": 3,
-        "status": 0
+        "status": 1
 	}],
 	"links": [{
 		"source": 0,
