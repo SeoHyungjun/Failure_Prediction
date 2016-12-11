@@ -57,9 +57,9 @@ function network(data, prev, index, expand) {
     for (var k=0; k<data.nodes.length; ++k) {
         var n = data.nodes[k],
         i = index(n),
-        l = gm[i] || (gm[i]=gn[i]) || (gm[i]={group:i, size:0, nodes:[], status:0});
+        l = gm[i] || (gm[i]=gn[i]) || (gm[i]={group:i, size:0, nodes:[]});
 
-        if (expand[i]) { // exapnd 가 true면 쪼개져야함
+        if (expand[i]) {
             // the node should be directly visible
             nm[n.name] = nodes.length;
             nodes.push(n);
@@ -68,27 +68,17 @@ function network(data, prev, index, expand) {
                 n.x = gn[i].x + Math.random();
                 n.y = gn[i].y + Math.random();
             }
-        } else { // 하나로 뭉쳐야함
+        } else {
             // the node is part of a collapsed cluster
             if (l.size == 0) {
                 // if new cluster, add to set and position at centroid of leaf nodes
                 nm[i] = nodes.length;
-                //console.log(l);
-                //console.log(nodes[0], nodes[1]);
                 nodes.push(l);
                 if (gc[i]) {
                     l.x = gc[i].x / gc[i].count;
                     l.y = gc[i].y / gc[i].count;
                 }
             }
-            if(n.status == 1)
-                l.status = 1;
-            if(n.status == 0) {
-                l.status = 0;
-                //n.status = 0;
-                //console.log("changed status");
-            }
-
             l.nodes.push(n);
         }
         // always count group size as we also use it to tweak the force graph strengths/distances
@@ -120,38 +110,23 @@ function network(data, prev, index, expand) {
 
 function convexHulls(nodes, index, offset) {
     var hulls = {};
-    var caution_group = new Array();
+
     // create point sets
     for (var k=0; k<nodes.length; ++k) {
         var n = nodes[k];
-        if (n.size)
-            continue;
-
+        if (n.size) continue;
         var i = index(n),
         l = hulls[i] || (hulls[i] = []);
         l.push([n.x-offset, n.y-offset]);
         l.push([n.x-offset, n.y+offset]);
         l.push([n.x+offset, n.y-offset]);
         l.push([n.x+offset, n.y+offset]);
-
-        if (n.status == 1){
-            caution_group.push(i);
-        }
-    }
-
-    var status_group = new Array(hulls.length);
-    for (var k=0; k<status_group.length; ++k)
-        status_group[k] = 0;
-
-    for (var k=0; k<caution_group.length; ++k) {
-        status_group[caution_group[k]] = 1;
     }
 
     // create convex hulls
     var hullset = [];
     for (i in hulls) {
-        //console.log("group i's status : %d", status_group[i]);
-        hullset.push({group: i, path: d3.geom.hull(hulls[i]), status : status_group[i]});
+        hullset.push({group: i, path: d3.geom.hull(hulls[i])});
     }
 
     return hullset;
@@ -167,9 +142,10 @@ var body = d3.select("body");
 
 var vis = body.append("svg")
 .attr("width", width)
-.attr("height", height);
+.attr("height", height)
+.attr("class", "main");
 
-d3.json("test.json", function(json) {
+d3.json("miserables.json", function(json) {
     data = json;
     for (var i=0; i<data.links.length; ++i) {
         o = data.links[i];
@@ -188,15 +164,6 @@ d3.json("test.json", function(json) {
     .duration(1000)
     .attr("opacity", 1);
 });
-
-function init_nodes_status_by_0() {
-    for(var k = 0; k < data.nodes.length; ++k) {
-        if(data.nodes[k]['status'] == 1)
-            data.nodes[k]['status'] = 0;
-    }
-
-    init();
-}
 
 function init() {
     if (force) force.stop();
@@ -235,23 +202,16 @@ function init() {
     .friction(0.5)   // friction adjusted to get dampened display: less bouncy bouncy ball [Swedish Chef, anyone?]
     .start();
 
-
     hullg.selectAll("path.hull").remove();
     hull = hullg.selectAll("path.hull")
     .data(convexHulls(net.nodes, getGroup, off))
     .enter().append("path")
     .attr("class", "hull")
     .attr("d", drawCluster)
-    .style("fill", function(d) {
-        var color = "#99d8c9";
-        if(d.status == 1)
-            color = "#fc9272";
-        return color;
-    }) // 색 입히는 코드
-    .on("click", function(d) { // hull을 클릭하면 expand 는 false
+    .style("fill", function(d) { return fill(d.group); }) // 색 입히는 코드
+    .on("click", function(d) {
         console.log("hull click", d, arguments, this, expand[d.group]);
-        expand[d.group] = false;
-        init();
+        expand[d.group] = false; init();
     });
 
     link = linkg.selectAll("line.link").data(net.links, linkid);
@@ -264,28 +224,16 @@ function init() {
     .attr("y2", function(d) { return d.target.y; })
     .style("stroke-width", function(d) { return d.size || 1; });
 
-    nodeg.selectAll("circle.node").remove();
-    node = nodeg.selectAll("circle.node")
-    //.data(net.nodes, nodeid)
-    .data(function(){
-        //console.log(net.nodes);
-        console.log(net.nodes[0]);
-        return net.nodes;
-    }, nodeid)
-    //node.exit().remove();
-    .enter().append("circle")
+    node = nodeg.selectAll("circle.node").data(net.nodes, nodeid);
+    node.exit().remove();
+    node.enter().append("circle")
     // if (d.size) -- d.size > 0 when d is a group node.
     .attr("class", function(d) { return "node" + (d.size?"":" leaf"); })
     .attr("r", function(d) { return d.size ? d.size + dr : dr+1; })
     .attr("cx", function(d) { return d.x; })
     .attr("cy", function(d) { return d.y; })
-    .style("fill", function(d) {
-        var color = "#2ca25f";
-        if(d.status == 1)
-            color = "#de2d26";
-        return color;
-    })
-    .on("click", function(d) { // circle 하나 클릭하면 expand를 반대 값으로
+    .style("fill", function(d) { return fill(d.group); })
+    .on("click", function(d) {
         console.log("node click", d, arguments, this, expand[d.group]);
         expand[d.group] = !expand[d.group];
         init();

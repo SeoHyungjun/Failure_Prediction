@@ -18,6 +18,9 @@ if __name__ == '__main__':
 
     for line in follow(logfile):
         print line,
+        with open("../logfile", "a+") as f:
+            f.write(line)
+
         status = line.split(".")[1].split(":")[0]
         if (status == "emerg" or status == "alert" or status == "crit" or status == "err" or status == "warning") :
             with open("test.json", "r+") as f :
