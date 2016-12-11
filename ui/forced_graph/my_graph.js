@@ -11,6 +11,34 @@ var curve = d3.svg.line()
 
 var fill = d3.scale.category20();
 
+window.onload = function setDataSource() {
+	if (!!window.EventSource) {
+		var source = new EventSource("../notify_to_graph.php");
+
+        source.addEventListener("message", function(e) {
+            console.log(e);
+            console.log('message:' + e.data);
+            alert("Warning a server is in danger!");
+            data.nodes[0]['status'] = 1;
+            init();
+        }, false);
+        source.addEventListener("open", function(e) {
+			console.log("OPENED");
+		}, false);
+
+		source.addEventListener("error", function(e) {
+			console.log("ERROR");
+            console.log('Err:' + e.data);
+			if (e.readyState == EventSource.CLOSED) {
+				console.log("CLOSED");
+			}
+		}, false);
+
+	} else {
+		document.getElementById("notSupported").style.display = "block";
+	}
+}
+
 function noop() { return false; }
 
 function nodeid(n) {
@@ -53,29 +81,24 @@ function network(data, prev, index, expand) {
         });
     }
 
+    // define gm
+    for(var k=0; k<data.nodes.length; ++k) {
+        var n = data.nodes[k];
+        var i = index(n);
+        gm[i] = gn[i] || (gm[i]={group:i, size:0, nodes:[], status:0});
+        gm[i].status = 0;
+    }
+
     // determine nodes
     for (var k=0; k<data.nodes.length; ++k) {
-        var before_group = -1;
         var n = data.nodes[k],
         i = index(n),
-        l = gm[i] || (gm[i]=gn[i]) || (gm[i]={group:i, size:0, nodes:[], status:0});
-
-        if(before_group != i) {
-            l.status = 0;
-            for(var j=0; j < l.nodes.length; j++) {
-                if(l.nodes[j].status == 1) {
-                    l.status=1;
-                }
-            }
-        }
-        before_group=i;
-
-/*
-        if(n.status == 1)
+        //l = gm[i] || (gm[i]=gn[i]) || (gm[i]={group:i, size:0, nodes:[], status:0});
+        l = gm[i];
+        if(n.status == 1) {
             l.status = 1;
-        if(n.status == 0)
-            l.status = 0;
-*/
+        }
+
         if (expand[i]) { // exapnd 가 true면 쪼개져야함
             // the node should be directly visible
             nm[n.name] = nodes.length;
@@ -88,6 +111,7 @@ function network(data, prev, index, expand) {
         } else { // 하나로 뭉쳐야함
             // the node is part of a collapsed cluster
             if (l.size == 0) {
+
                 // if new cluster, add to set and position at centroid of leaf nodes
                 nm[i] = nodes.length;
                 //console.log(l);
@@ -98,10 +122,6 @@ function network(data, prev, index, expand) {
                     l.y = gc[i].y / gc[i].count;
                 }
             }
-
-            //n.status = 0;
-            //console.log("changed status");
-
             l.nodes.push(n);
         }
         // always count group size as we also use it to tweak the force graph strengths/distances

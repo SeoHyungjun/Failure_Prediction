@@ -41,6 +41,7 @@
             float: left;
             margin-left: 50px;
             margin-top:  10px;
+            border: 1px solid;
         }
     </style>
     <head>
@@ -60,18 +61,15 @@
                 </div>
                 <div id="usage-graph">
                     <iframe align="center" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="../usage_graph/usage_graph.html"></iframe>
+
                 </div>
             </div>
-            <script type="text/javascript">
-                $(window).load(function () {
-                    var $contents = $('#log-frame-id').contents();
-                    $contents.scrollTop($contents.height());
-                });
-            </script>
             <div id="log-table">
-                <iframe name="log-frame" id="log-frame-id" align="center" width="100%" height="100%" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" onload="scroll_to_end()" src="../log_track/log_track.php" ></iframe>
+                <iframe name="log-frame" id="log-frame-id" align="center" width="100%" height="100%" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0"  src="../log_track/log_track.php" ></iframe>
             </div>
 
         </div>
+
+
     </body>
 </html>

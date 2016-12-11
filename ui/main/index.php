@@ -141,9 +141,7 @@
                     <p>세종대학교 율곡관 205A<br>서울특별시 광진구 군자동 능동로</p>
                     <ul class="list-unstyled">
                         <li><i class="fa fa-phone fa-fw"></i> 010-4311-7287</li>
-                        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:koain@naver.con">koain@naver.com</a>
-                        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:thdrhkdgur1@naver.com">thdrhkdgur1@naver.com</a>
-                        </li>
+                        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:koain@naver.con">koain@naver.com</a></li>
                     </ul>
                     <br>
                     <ul class="list-inline">
@@ -158,7 +156,7 @@
                         </li>
                     </ul>
                     <hr class="small">
-                    <p class="text-muted">Copyright &copy; Kim Young Woo &amp; Song Kwang Hyck </p>
+                    <p class="text-muted">Copyright &copy; Kim Young Woo</p>
                 </div>
             </div>
         </div>
