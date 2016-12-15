@@ -1,0 +1,209 @@
+Adapter SCSI ID. Default 7 (0-15)
+Maximum bus speed. Default 1 (0-7) Speeds: 0=20, 1=13.3, 2=10, 3=8, 4=6.7, 5=5.8, 6=5, 7=4 Mhz
+Device mode.
+Adapter mode.
+Number of tags (1<<x). Default 3 (0-5)
+Reset delay in seconds. Default 1 (0-180)
+Using safe settings.n
+setup: AdapterId=%08x MaxSpeed=%08x DevMode=%08x 
+AdapterMode=%08x Tags=%08x ResetDelay=%08xn
+srb_get_free: srb=%pn
+srb_free_insert: srb=%pn
+srb_waiting_insert: (0x%p) <%02i-%i> srb=%pn
+srb_waiting_append: (0x%p) <%02i-%i> srb=%pn
+srb_going_append: (0x%p) <%02i-%i> srb=%pn
+srb_going_remove: (0x%p) <%02i-%i> srb=%pn
+srb_waiting_remove: (0x%p) <%02i-%i> srb=%pn
+srb_going_to_waiting_move: (0x%p) <%02i-%i> srb=%pn
+srb_waiting_to_going_move: (0x%p) <%02i-%i> srb=%pn
+waiting_timeout: Queue woken up by timer. acb=%pn
+build_srb: (0x%p) <%02i-%i>n
+build_srb: [0] len=%d buf=%p use_sg=%d !MAP=%08xn
+build_srb: [n] len=%d buf=%p use_sg=%d segs=%dn
+build_srb: [n] map sg %p->%08x(%05x)n
+queue_command: (0x%p) <%02i-%i> cmnd=0x%02xn
+queue_command: Ignore target <%02i-%i>n
+queue_command: No such device <%02i-%i>
+queue_command: No free srb'sn
+queue_command: (0x%p) donen
+dc395x_bios_param..............n
+dump: srb=%p cmd=%p OOOPS!n
+dump: srb=%p cmd=%p 
+cmnd=0x%02x <%02i-%i>n
+  sglist=%p cnt=%i idx=%i len=%zun
+  state=0x%04x status=0x%02x phase=0x%02x (%sconn.)n
+
+not
+dump: SCSI{status=0x%04x fifocnt=0x%02x 
+signals=0x%02x irqstat=0x%02x sync=0x%02x target=0x%02x 
+rselid=0x%02x ctr=0x%08x irqen=0x%02x config=0x%04x 
+config2=0x%02x cmd=0x%02x selto=0x%02x}n
+dump: DMA{cmd=0x%04x fifocnt=0x%02x fstat=0x%02x 
+irqstat=0x%02x irqen=0x%02x cfg=0x%04x tctr=0x%08x 
+ctctr=0x%08x addr=0x%08x:0x%08x}n
+dump: gen{gctrl=0x%02x gstat=0x%02x gtmr=0x%02x} 
+pci{status=0x%04x}n
+clear_fifo: (%i bytes) on phase %02x in %sn
+reset_dev_param: acb=%pn
+eh_bus_reset: (0%p) target=<%02i-%i> cmd=%pn
+eh_bus_reset
+eh_abort: (0x%p) target=<%02i-%i> cmd=%pn
+eh_abort: No such devicen
+eh_abort: Command was waitingn
+eh_abort: Command in progressn
+eh_abort: Command not foundn
+build_sdtr: msgout_buf BUSY (%i: %02x %02x)n
+build_wdtr: msgout_buf BUSY (%i: %02x %02x)n
+Chip forgot to produce SelTO IRQ!n
+... but no cmd pending? Oops!n
+start_scsi: (0x%p) <%02i-%i> srb=%pn
+start_scsi: (0x%p) BUSY %02x %04xn
+start_scsi: (0x%p) Attempt to start a
+command while another command (0x%p) is active.
+start_scsi: (0x%p) Failed (busy)n
+start_scsi: Refuse cmds (reset wait)n
+start_scsi
+start_scsi: (0x%p) 
+Out of tags target=<%02i-%i>)n
+start_scsi: (0x%p) <%02i-%i> cmnd=0x%02x tag=%in
+start_scsi: (0x%p) <%02i-%i> Failed - busyn
+COP after COP completed? %04xn
+handle_interrupt: Selection timeoutn
+Host does not support target mode!n
+Oops: BusService (%04x %02x) w/o ActiveDCB!n
+MsgOut Abort Device.....n
+Interrupt from DMA engine: 0x%02x!n
+This means DMA error! Try to handle ...n
+Ignoring DMA error (probably a bad thing) ...n
+msgout_phase0: (0x%p)n
+msgout_phase1: (0x%p)n
+msgout_phase1
+msgout_phase1: (0x%p) Phase unexpectedn
+msgout_phase1: (0x%p) NOP msgn
+command_phase0: (0x%p)n
+command_phase1: (0x%p)n
+command_phase1
+Inconsistent SRB S/G lengths (Tot=%i, Count=%i) !!n
+sg_update_list: Transferred %i of %i bytes, %i remainn
+cleanup/in
+cleanup/out
+data_out_phase0: (0x%p) <%02i-%i>n
+data_out_phase0: 
+DMA{fifocnt=0x%02x fifostat=0x%02x} 
+SCSI{fifocnt=0x%02x cnt=0x%06x status=0x%04x} total=0x%06xn
+data_out_phase0: FIFO contains %i %sn
+SCSI{fifocnt=0x%02x cnt=0x%08x} 
+DMA{fifocnt=0x%04x cnt=0x%02x ctr=0x%08x}n
+words
+bytes
+data_out_phase0: Discard 1 byte (0x%02x)n
+data_out_phase0: 
+Work around chip bug (%i)?n
+data_out_phase1: (0x%p) <%02i-%i>n
+data_out_phase1
+data_in_phase0: (0x%p) <%02i-%i>n
+data_in_phase0: (0x%p) 
+Parity Errorn
+DIP0: Wait for DMA FIFO to flush ...n
+DIP0: Had to wait for DMA ...n
+Deadlock in DIP0 waiting for DMA FIFO empty!!n
+data_in_phase0: 
+DMA{fifocnt=0x%02x fifostat=0x%02x}n
+data_in_phase0: 
+SCSI{fifocnt=0x%02x%s ctr=0x%08x} 
+DMA{fifocnt=0x%02x fifostat=0x%02x ctr=0x%08x} 
+Remain{totxfer=%i scsi_fifo+ctr=%i}n
+words
+bytes
+data_in_phase0: PIO (%i %s) 
+for remaining %i bytes:
+words
+bytes
+ %02x
+ %02x
+n
+Deadlock in DataInPhase0 waiting for DMA!!n
+data_in_phase1: (0x%p) <%02i-%i>n
+data_io_transfer: (0x%p) <%02i-%i> %c len=%i, sg=(%i/%i)n
+data_io_transfer: Using tmp_srb!n
+data_io_transfer: Xfer pending! 
+Expect trouble!n
+ %02x
+ |00
+n
+status_phase0: (0x%p) <%02i-%i>n
+status_phase1: (0x%p) <%02i-%i>n
+msgin_reject: 0x%02x <%02i-%i>n
+msgin_qtag: (0x%p) tag=%i srb=%pn
+msgin_qtag: tag_mask=0x%08x does not reserve tag %i!n
+msgin_qtag: (0x%p) <%02i-%i>n
+msgin_qtag: Unknown tag %i - abortn
+msgin_set_async: No sync transfers <%02i-%i>n
+msgin_set_async(rej): Try WDTR anywayn
+msgin_set_sync: <%02i> Sync: %ins 
+(%02i.%01i MHz) Offset %in
+msgin_set_sync: Increase sync nego period to %insn
+Target %02i: %s Sync: %ins Offset %i (%02i.%01i MB/s)n
+Wide16
+
+msgin_set_sync: answer w/%ins %in
+msgin_set_sync: Also try WDTRn
+msgin_set_nowide: <%02i>n
+msgin_set_nowide: Rejected. Try SDTR anywayn
+msgin_set_wide: <%02i>n
+msgin_set_wide: Wide nego initiated <%02i>n
+msgin_set_wide: Wide (%i bit) negotiated <%02i>n
+msgin_set_wide: Also try SDTR.n
+msgin_phase0: (0x%p)n
+msgin_phase0: Ignore Wide Residual!n
+msgin_phase0: (0x%p) 
+SAVE POINTER rem=%i Ignoren
+msgin_phase0: RESTORE POINTER. Ignoren
+msgin_phase0: (0x%p) 
+<%02i-%i> ABORT msgn
+msgin_phase0: Identify msgn
+msgin_phase1: (0x%p)n
+msgin_phase1
+disconnect: No such devicen
+disconnectEx
+disconnect: (0x%p)n
+disconnect
+disconnect: Unexpected reselection <%02i-%i>n
+disconnect: SRB_ABORT_SENTn
+disconnect: (0x%p) Unexpectedn
+disconnect: (0x%p) 
+<%02i-%i> SelTOn
+disconnect: (0x%p) Retryn
+disconnect: SCSI bus stat 
+ 0x%02x: ACK set! Other controllers?n
+reselect: acb=%pn
+reselect
+reselect: Arb lost Resel won, 
+but active_srb == NULLn
+reselect: (0x%p) <%02i-%i> 
+Arb lost but Resel win rsel=%i stat=0x%04xn
+reselect: Expects identify msg. 
+Got %i!n
+reselect: From non existent device 
+<%02i-%i>n
+reselect: in spite of forbidden 
+disconnection? <%02i-%i>n
+reselect: w/o disconnected cmds <%02i-%i>n
+reselect: select <%i>n
+pci_unmap_srb: list=%08x(%05x)n
+pci_unmap_srb: segs=%i buffer=%pn
+pci_unmap_srb_sense: buffer=%08xn
+srb_done: (0x%p) <%02i-%i>n
+srb_done: srb=%p sg=%i(%i/%i) buf=%pn
+srb_done: AUTO_REQSENSE1n
+ReqSense: NOT_READY cmnd=0x%02x <%02i-%i> stat=%i scan=%i 
+ReqSense: UNIT_ATTENTION cmnd=0x%02x <%02i-%i> stat=%i scan=%i 
+ReqSense: ILLEGAL_REQUEST cmnd=0x%02x <%02i-%i> stat=%i scan=%i 
+ReqSense: MEDIUM_ERROR cmnd=0x%02x <%02i-%i> stat=%i scan=%i 
+ReqSense: HARDWARE_ERROR cmnd=0x%02x <%02i-%i> stat=%i scan=%i 
+sense=0x%02x ASC=0x%02x ASCQ=0x%02x 
+(0x%08x 0x%08x)n
+sense=0x%02x No ASC/ASCQ (0x%08x)n
+srb_done: AUTO_REQSENSE2n
+QUEUE_FULL for dev <%02i-%i> with %i cmndsn
+srb_done: (0x%p) <%02i-%i> 
