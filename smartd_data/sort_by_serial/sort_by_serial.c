@@ -24,6 +24,7 @@ int parser(char *filename, char *out)
 {
     FILE *fp = fopen(filename, "r");
     char oldwd[256] = {0, };
+    char title[6000] = {0, };
 
     if(!fp)
         return 0;
@@ -33,7 +34,7 @@ int parser(char *filename, char *out)
     getwd(oldwd);
     chdir(out);
 
-    fscanf(fp, "%*[^\n]\n"); //delete title
+    fscanf(fp, "%[^\n]\n", title); //delete title
 
     while(1)
     {
@@ -43,8 +44,9 @@ int parser(char *filename, char *out)
         char model[100] = {0, };
         char etc[4096] = {0, };
         FILE *out_fp = NULL;
+        char out_name[120] = {0, };
 
-        ret = fscanf(fp, "%[^,],%[^,],%[^,]%[^\n]\n", date, serial, model, etc);
+        ret = fscanf(fp, "%[^,],%[^,],%[^,],%[^\n]\n", date, serial, model, etc);
         if(-1 == ret)
             break;
 
@@ -53,7 +55,16 @@ int parser(char *filename, char *out)
         chdir(model);
 
         nospace(serial);
-        out_fp = fopen(serial, "a");
+
+        sprintf(out_name, "%s.csv", serial);
+        if(!access(out_name, 0))
+            out_fp = fopen(out_name, "a");
+        else
+        {
+            out_fp = fopen(out_name, "w");
+            fprintf(out_fp, "%s\n",title);
+        }
+
         fprintf(out_fp, "%s,%s,%s,%s\n", date, serial, model, etc);
         fclose(out_fp);
         chdir("..");

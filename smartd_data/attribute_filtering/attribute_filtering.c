@@ -22,15 +22,20 @@ void checkdir(char *path)
 
 struct check
 {
-    int id;
-    int indata;
+    char name[50];
     int check;
 };
+
+struct check g_chk[90];
+int g_dircnt = 0;
+int g_dirproc = 0;
+char g_dirpath[256];
 
 int parser(char *filename)
 {
     char readline[6000] = {0, };
     FILE *fp = NULL;
+    int is_title = 1;
 
     fp = fopen(filename, "r");
 
@@ -39,14 +44,14 @@ int parser(char *filename)
         int i;
         char *pos = readline;
         int len;
-        struct check chk[300] = {0, };
 
-        if(-1 == fscanf(fp, "%[^\n]\n", readline))
+
+        if(-1 == fscanf(fp, "%[^\n]%*c", readline))
             break;
 
         for(i=0; i<5; i++)
         {
-            sscanf(pos, "%*[^,]%n", &len);
+            sscanf(pos, "%*[^,]%*c%n", &len);
             pos += len;
         }
 
@@ -57,14 +62,22 @@ int parser(char *filename)
             if(',' == *pos)
             {
                 pos++;
+                g_chk[i].check = 0;
+                if('\0' == *(pos+1))
+                    g_chk[i+1].check = 0;
                 continue;
             }
 
             sscanf(pos, "%[^,]%n", data, &len);
             pos += len;
+            if(is_title)
+                sprintf(g_chk[i].name, "%s", data);
 
             if('\0' == *pos)
+            {
+                is_title = 0;
                 break;
+            }
             else if(',' == *pos)
                 pos++;
             else
@@ -74,6 +87,7 @@ int parser(char *filename)
             }
         }
     }
+
 
     fclose(fp);
 
@@ -86,13 +100,16 @@ int searchdir(char *path)
     int ndent = 0;
     int i;
     char oldwd[256] = {0, };
-    
+
     ndent = scandir(path, &dent, NULL, alphasort);
     if(NULL == dent)
         return 0;
 
     getwd(oldwd);
     chdir(path);
+
+    if(0 == g_dircnt)
+        g_dircnt = ndent;
 
     for(i=0; i<ndent; i++)
     {
@@ -106,11 +123,16 @@ int searchdir(char *path)
 
         if(S_ISDIR(st.st_mode))
         {
+            sprintf(g_dirpath, "%s", realpath(dent[i]->d_name, NULL));
             searchdir(realpath(dent[i]->d_name, NULL));
+            g_dirproc++;
         }
         else if(S_ISREG(st.st_mode))
             if(parser(realpath(dent[i]->d_name, NULL)))
-                printf("%s\n", realpath(dent[i]->d_name, rpath));
+            {
+                printf("[dir: %04d/%04d][file: %05d/%05d][path: %s]\n", g_dircnt, g_dirproc, i, ndent, g_dirpath);
+                //printf("%s\n", realpath(dent[i]->d_name, rpath));
+            }
     }
 
     chdir(oldwd);
@@ -120,6 +142,7 @@ int searchdir(char *path)
 
 int main(int argc, char *argv[])
 {
+    int i;
     if(2 != argc)
     {
         fprintf(stderr, "%s [target driectory] > out file\n", argv[0]);
@@ -127,7 +150,14 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    for(i=0; i<90; i++)
+        g_chk[i].check = 1;
+
     searchdir(realpath(argv[1], NULL));
+
+    for(i=0; i<90; i++)
+        if(g_chk[i].check)
+            printf("%s\n", g_chk[i].name);
 
     return 0;
 }
