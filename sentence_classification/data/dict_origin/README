@@ -1,0 +1,2 @@
+disk = drivers_ide + drivers_md + drivers_ata + drivers_scsi
+network = drivers_net + net
