@@ -44,7 +44,7 @@ print("")
 
 
 
-# Data formatting(loading, embedding by dictionary, and shuffle)
+# Data formatting(loading, embedding by dictionary, shuffle, and split)
 # ====================================================================
 
 # Load data(reading, parsing, labeling data)
@@ -57,13 +57,17 @@ x_sentences, y_type = formatting_data.load_data_and_labels(FLAGS.drive_log_file,
 max_document_length = max([len(sentence.split(" ")) for sentence in x_sentences])
 vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length)
 sentences_indexs = np.array(list(vocab_processor.fit_transform(x_sentences)))
-# learn.preprocessing.VocablularyProcessor chane word to index
+# 'learn.preprocessing.VocablularyProcessor.fit_transform' change word to index
 # e.g. When max_document_length == 4
 # ["I like pizza", "i don't like pasta", ..] => [[1, 2, 3, 0] [1, 4, 2, 5], ..]
 
 # Randomly shuffle data
 np.random.seed()
-shuffle_indices = np.random.permutation(np.arange(3))
+shuffle_indices = np.random.permutation(np.arange(len(y_type)))
+# shuffle_indices = [3, 2, 8, 10, 38, 1, ...]
+x_shuffled = sentences_indexs[shuffle_indices]
+y_shuffled = y_type[shuffle_indices]
+
 
 
 # Training
