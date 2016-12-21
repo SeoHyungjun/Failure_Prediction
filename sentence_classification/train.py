@@ -7,6 +7,7 @@ import formatting_data
 
 from tensorflow.contrib import learn
 
+import sys
 
 # Parameters(set flag. print flag)
 # ====================================================================
@@ -24,9 +25,9 @@ tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability")
 tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularization lambda")
 
 # Training parameters
-tf.flags.DEFINE_integer("N_fold", 10, "N fold cross validation")
-tf.flags.DEFINE_integer("batch_size", 64, "Batch Size")
-tf.flags.DEFINE_integer("num_epochs", 100, "Number of training epochs")
+tf.flags.DEFINE_integer("num_fold", 3, "N fold cross validation")
+tf.flags.DEFINE_integer("batch_size", 1, "Batch Size")
+tf.flags.DEFINE_integer("num_epochs", 2, "Number of training epochs")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps")
 
@@ -63,8 +64,18 @@ sentences_indexs = np.array(list(vocab_processor.fit_transform(x_sentences)))
 # ["I like pizza", "i don't like pasta", ..] => [[1, 2, 3, 0] [1, 4, 2, 5], ..]
 
 # make N fold(shuffle, split N fold)
-for N in range(FLAGS.N_fold):
-  x_train, x_val, y_train, y_val = formatting_data.make_N_fold(sentences_indexs, y_type, FLAGS.N_fold)
+if FLAGS.num_fold <= 0:
+  print("Number of fold should be larger than 0")
+  sys.exit()
+for N in range(FLAGS.num_fold):
+  print("Doing {} fold".format(N+1))
+  x_train, x_val, y_train, y_val = formatting_data.make_N_fold(sentences_indexs, y_type, FLAGS.num_fold)
+# x_train, x_val, y_train, y_val == numpy.array
+
+# Generate batches(training set)
+  batches = formatting_data.batch_iter(list(zip(x_train, y_train)), FLAGS.batch_size, FLAGS.num_epochs)
+# split data by batch_size, do as much as num_epochs on same data
+
 
 # Training
 # ====================================================================
@@ -74,6 +85,8 @@ for N in range(FLAGS.N_fold):
       log_device_placement=FLAGS.log_device_placement)
     sess = tf.Session(config=session_conf)
     with sess.as_default():
-      print("on making TextCNN")
       #cnn = TextCNN()
+      for batch in batches:
+        x_batch, y_batch = zip(*batch)
+        print(x_batch)
 
