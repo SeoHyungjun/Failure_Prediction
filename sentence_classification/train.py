@@ -77,5 +77,3 @@ for N in range(FLAGS.N_fold):
       print("on making TextCNN")
       #cnn = TextCNN()
 
-
-
