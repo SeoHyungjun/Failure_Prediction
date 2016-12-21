@@ -44,7 +44,7 @@ print("")
 
 
 
-# Data formatting(loading, embedding by dictionary, make N fold)
+# Data formatting(loading, change word to index, make N fold)
 # ====================================================================
 
 # Load data(reading, parsing, labeling data)
@@ -54,7 +54,7 @@ x_sentences, y_type = formatting_data.load_data_and_labels(FLAGS.drive_log_file,
 # y_type      = [1, 0],                   [0, 1]                   , ...]
 len_y = len(y_type)
 
-# Build vocabulary(embedding)
+# Build vocabulary(change work to index by dictionary)
 max_document_length = max([len(sentence.split(" ")) for sentence in x_sentences])
 vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length)
 sentences_indexs = np.array(list(vocab_processor.fit_transform(x_sentences)))
