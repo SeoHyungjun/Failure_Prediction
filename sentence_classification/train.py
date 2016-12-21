@@ -62,6 +62,8 @@ sentences_indexs = np.array(list(vocab_processor.fit_transform(x_sentences)))
 # ["I like pizza", "i don't like pasta", ..] => [[1, 2, 3, 0] [1, 4, 2, 5], ..]
 
 # Randomly shuffle data
+np.random.seed()
+shuffle_indices = np.random.permutation(np.arange(3))
 
 
 # Training
