@@ -5,6 +5,8 @@ import numpy as np
 
 import formatting_data
 
+from tensorflow.contrib import learn
+
 
 # Parameters(set flag. print flag)
 # ====================================================================
@@ -42,16 +44,24 @@ print("")
 
 
 
-# Data formatting(parsing, embedding by dictionary, and shuffle)
+# Data formatting(loading, embedding by dictionary, and shuffle)
 # ====================================================================
 
-# Load data
+# Load data(reading, parsing, labeling data)
 print("Loading data...")
 x_sentences, y_type = formatting_data.load_data_and_labels(FLAGS.drive_log_file, FLAGS.net_log_file)
-# x_sentences = ['drive doesn't working', 'network doens't working', ...]
+# x_sentences = ["drive doesn't working", "network doens't working", ...]
 # y_type      = [1, 0],                   [0, 1]                   , ...]
 
+# Build vocabulary(embedding)
+max_document_length = max([len(sentence.split(" ")) for sentence in x_sentences])
+vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length)
+sentences_indexs = np.array(list(vocab_processor.fit_transform(x_sentences)))
+# learn.preprocessing.VocablularyProcessor chane word to index
+# e.g. When max_document_length == 4
+# ["I like pizza", "i don't like pasta", ..] => [[1, 2, 3, 0] [1, 4, 2, 5], ..]
 
+# Randomly shuffle data
 
 
 # Training
