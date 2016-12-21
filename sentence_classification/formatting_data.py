@@ -1,6 +1,6 @@
 import numpy as np
 import re
-
+import sys
 
 def clean_str(string):
   """
@@ -49,10 +49,15 @@ def load_data_and_labels(drive_log_file, net_log_file):
   return [x_sentences, y_type]
 
 
-def make_N_fold(sentences_indexs, y_type, val_sample_percentage):
+def make_N_fold(sentences_indexs, y_type, N_fold):
   """
   Make N fold for 'N fold cross validation'
   """
+  len_y = len(y_type)
+  if len_y < 2: 
+    print("Too small data set. Need more data... exit.")
+    sys.exit()
+
   # Randomly shuffle data
   np.random.seed()
   shuffle_indices = np.random.permutation(np.arange(len_y))
@@ -61,9 +66,11 @@ def make_N_fold(sentences_indexs, y_type, val_sample_percentage):
   y_shuffled = y_type[shuffle_indices]
 
   # Split train/test set
+  val_sample_percentage = float(1) / float(N_fold)
   val_sample_index = -1 * int(val_sample_percentage * float(len_y))
-  x_train, x_val = x_shuffled[:val_sample_percentage], x_shuffled[val_sample_index:]
-  y_train, y_val = y_shuffled[:val_sample_percentage], y_shuffled[val_sample_index:]
+  if val_sample_index == 0: val_sample_index = -1
+  x_train, x_val = x_shuffled[:val_sample_index], x_shuffled[val_sample_index:]
+  y_train, y_val = y_shuffled[:val_sample_index], y_shuffled[val_sample_index:]
   return x_train, x_val, y_train, y_val
 
 

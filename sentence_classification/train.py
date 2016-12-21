@@ -12,7 +12,6 @@ from tensorflow.contrib import learn
 # ====================================================================
 
 # Data loading
-tf.flags.DEFINE_float("val_sample_percentage", .1, "Percentage of the training data to use for validation")
 tf.flags.DEFINE_string("drive_log_file", "./data/dict/test_disk", "Data source for the drive log file")
 tf.flags.DEFINE_string("net_log_file", "./data/dict/test_net", "Data source for the net log file")
 
@@ -25,6 +24,7 @@ tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability")
 tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularization lambda")
 
 # Training parameters
+tf.flags.DEFINE_integer("N_fold", 10, "N fold cross validation")
 tf.flags.DEFINE_integer("batch_size", 64, "Batch Size")
 tf.flags.DEFINE_integer("num_epochs", 100, "Number of training epochs")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps")
@@ -44,7 +44,7 @@ print("")
 
 
 
-# Data formatting(loading, embedding by dictionary, shuffle, and split)
+# Data formatting(loading, embedding by dictionary, make N fold)
 # ====================================================================
 
 # Load data(reading, parsing, labeling data)
@@ -62,25 +62,12 @@ sentences_indexs = np.array(list(vocab_processor.fit_transform(x_sentences)))
 # e.g. When max_document_length == 4
 # ["I like pizza", "i don't like pasta", ..] => [[1, 2, 3, 0] [1, 4, 2, 5], ..]
 
-"""
-# Randomly shuffle data
-np.random.seed()
-shuffle_indices = np.random.permutation(np.arange(len_y))
-# shuffle_indices = [3, 2, 8, 10, 38, 1, ...]
-x_shuffled = sentences_indexs[shuffle_indices]
-y_shuffled = y_type[shuffle_indices]
-
-# Split train/test set
-# TODO: Need cross-validation
-val_sample_index = -1 * int(FLAGS.val_sample_percentage * float(len_y))
-x_train, x_val = x_shuffled[:val_sample_percentage], x_shuffled[val_sample_index:]
-y_train, y_val = y_shuffled[
-"""
-x_train, x_val, y_train, y_val = formatting_data.make_N_fold(sentences_indexs, y_type)
-
-print(x_train)
+# make N fold(shuffle, split N fold)
+for N in range(FLAGS.N_fold):
+  x_train, x_val, y_train, y_val = formatting_data.make_N_fold(sentences_indexs, y_type, FLAGS.N_fold)
 
 # Training
 # ====================================================================
+
 
 
