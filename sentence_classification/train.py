@@ -31,8 +31,8 @@ tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after 
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps")
 
 # Tensorflow H/W option
-tf.flags.DEFINE_boolean("allow_soft_placemnet", True, "Allow device soft device placement")
-tf.flags.DEFINE_boolean("log_device_plcaement", False, "Log placement of ops on devices")
+tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device placement")
+tf.flags.DEFINE_boolean("log_device_placement", False, "Log placement of ops on devices")
 
 # print flags
 FLAGS = tf.flags.FLAGS          # Make Tensorflow Flag object
@@ -68,6 +68,14 @@ for N in range(FLAGS.N_fold):
 
 # Training
 # ====================================================================
+  with tf.Graph().as_default():
+    session_conf = tf.ConfigProto(
+      allow_soft_placement=FLAGS.allow_soft_placement,
+      log_device_placement=FLAGS.log_device_placement)
+    sess = tf.Session(config=session_conf)
+    with sess.as_default():
+      print("on making TextCNN")
+      #cnn = TextCNN()
 
 
 
