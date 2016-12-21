@@ -42,12 +42,15 @@ print("")
 
 
 
-# Data formatting
+# Data formatting(parsing, embedding by dictionary, and shuffle)
 # ====================================================================
 
 # Load data
 print("Loading data...")
-x_text, y = formatting_data.load_data_and_labels(FLAGS.drive_log_file, FLAGS.net_log_file)
+x_sentences, y_type = formatting_data.load_data_and_labels(FLAGS.drive_log_file, FLAGS.net_log_file)
+# x_sentences = ['drive doesn't working', 'network doens't working', ...]
+# y_type      = [1, 0],                   [0, 1]                   , ...]
+
 
 
 

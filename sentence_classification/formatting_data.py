@@ -27,7 +27,7 @@ def clean_str(string):
 
 def load_data_and_labels(drive_log_file, net_log_file):
   """
-  Load log file, split sentences into [ ['S1', 'S2', ..], [[L1], [L2], ..] ]
+  Load log file, split sentences into [ [S1, S2, ..], [[L1], [L2], ..] ]
   as following
   [ ['drive doesn't working', 'network doens't working', ...]  [[1, 0], [0, 1],,,] ]
   """
@@ -36,11 +36,18 @@ def load_data_and_labels(drive_log_file, net_log_file):
   drive_sentences = open(drive_log_file, "r").readlines()
   net_sentences = open(net_log_file, "r").readlines()
 
-  drive_sentences = [clean_str(s) for s in drive_sentences]
+  # Split by words and parsing
+  x_sentences = drive_sentences + net_sentences
+  x_sentences = [clean_str(sentence) for sentence in x_sentences]
 
-  print(drive_sentences)
+  # Generate labels
+  drive_labels = [[1, 0] for _ in drive_sentences]
+  net_labels =  [[0, 1] for _ in net_sentences]
+  y_type = np.concatenate([drive_labels, net_labels], 0)
 
-  print(re.sub(r"\w", "\"", "aasdfasdfjasdl'"))
+  return [x_sentences, y_type]
 
-  return 1, 2
+
+
+
 
