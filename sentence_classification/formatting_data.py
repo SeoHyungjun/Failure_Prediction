@@ -8,7 +8,7 @@ def clean_str(string):
   """
   # strip() is filtering white space character(e.g. '\n')
   # re.sub() substitude specific character
-  string = re.sub(r"[^A-Za-z0-9(),!?\'\`]", " ", string) #remove special chars
+  string = re.sub(r"[^A-Za-z0-9(),!?\'\`]", " ", string) #replace special chars
   string = re.sub(r"\'s", " \'s", string)                # It's    => It 's
   string = re.sub(r"\'ve", " \'ve", string)              # They've => They 've
   string = re.sub(r"n\'t", " n\'t", string)              # don't   => don 't
