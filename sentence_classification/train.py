@@ -12,7 +12,7 @@ from tensorflow.contrib import learn
 # ====================================================================
 
 # Data loading
-tf.flags.DEFINE_float("dev_sample_percentage", .1, "Percentage of the training data to use for validation")
+tf.flags.DEFINE_float("val_sample_percentage", .1, "Percentage of the training data to use for validation")
 tf.flags.DEFINE_string("drive_log_file", "./data/dict/test_disk", "Data source for the drive log file")
 tf.flags.DEFINE_string("net_log_file", "./data/dict/test_net", "Data source for the net log file")
 
@@ -52,6 +52,7 @@ print("Loading data...")
 x_sentences, y_type = formatting_data.load_data_and_labels(FLAGS.drive_log_file, FLAGS.net_log_file)
 # x_sentences = ["drive doesn't working", "network doens't working", ...]
 # y_type      = [1, 0],                   [0, 1]                   , ...]
+len_y = len(y_type)
 
 # Build vocabulary(embedding)
 max_document_length = max([len(sentence.split(" ")) for sentence in x_sentences])
@@ -61,14 +62,25 @@ sentences_indexs = np.array(list(vocab_processor.fit_transform(x_sentences)))
 # e.g. When max_document_length == 4
 # ["I like pizza", "i don't like pasta", ..] => [[1, 2, 3, 0] [1, 4, 2, 5], ..]
 
+"""
 # Randomly shuffle data
 np.random.seed()
-shuffle_indices = np.random.permutation(np.arange(len(y_type)))
+shuffle_indices = np.random.permutation(np.arange(len_y))
 # shuffle_indices = [3, 2, 8, 10, 38, 1, ...]
 x_shuffled = sentences_indexs[shuffle_indices]
 y_shuffled = y_type[shuffle_indices]
 
+# Split train/test set
+# TODO: Need cross-validation
+val_sample_index = -1 * int(FLAGS.val_sample_percentage * float(len_y))
+x_train, x_val = x_shuffled[:val_sample_percentage], x_shuffled[val_sample_index:]
+y_train, y_val = y_shuffled[
+"""
+x_train, x_val, y_train, y_val = formatting_data.make_N_fold(sentences_indexs, y_type)
 
+print(x_train)
 
 # Training
 # ====================================================================
+
+
