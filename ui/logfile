@@ -1,2 +1,4 @@
 user.warning: Dec 11 06:19:30 yw_ubuntu org.debian.apt[849]:   from gi.repository import PackageKitGlib as pk
 user.warning: Dec 11 06:30:30 yw_ubuntu org.debian.apt[849]: 06:30:30 AptDaemon [INFO]: Quitting due to inactivity
+user.info: Dec 15 14:38:48 localhost root: Just info
+user.crit: Dec 15 14:39:10 localhost root: Critical msg
