@@ -30,7 +30,7 @@ tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularization lambda")
 
 # Training parameters
 tf.flags.DEFINE_integer("num_fold", 1, "N fold cross validation")
-tf.flags.DEFINE_integer("batch_size", 4, "Batch Size")
+tf.flags.DEFINE_integer("batch_size", 1, "Batch Size")
 tf.flags.DEFINE_integer("num_epochs", 1, "Number of training epochs")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps")
@@ -133,7 +133,7 @@ for N in range(FLAGS.num_fold):
 
    ### 4. out directory
       timestamp = datetime.datetime.now().strftime("%m'%d(%H:%M:%S)")
-      out_dir = os.path.abspath(os.path.join((os.path.curdir, "runs", timestamp))
+      out_dir = os.path.abspath(os.path.join("/root/Desktop/sen_classification_result", timestamp))
       print("Writing to {}\n".format(out_dir))
       train_summary_dir = os.path.join(out_dir, "summaries", "train")
       dev_summary_dir = os.path.join(out_dir, "summaries", "dev")
@@ -146,20 +146,67 @@ for N in range(FLAGS.num_fold):
    ### 5. saver(operation) and writer. writer is class
       train_summary_writer = tf.train.SummaryWriter(train_summary_dir, sess.graph)
       dev_summary_writer = tf.train.SummaryWriter(dev_summary_dir, sess.graph)
-      saver = tf.train.Saver
+      saver = tf.train.Saver(tf.all_variables())
 
    ### 6. save vocabulary index dictionary
       vocab_processor.save(os.path.join(out_dir,"vocab"))
 
 
+# Training
+# ====================================================================
+
+    ### 1. defining one step
+      def train_step(x_batch, y_batch, writer=None):
+        """
+        A single training step
+        """
+        feed_dict = {
+          cnn.input_x : x_batch,
+          cnn.input_y : y_batch,
+          cnn.dropout_keep_prob : FLAGS.dropout_keep_prob
+        }
+        # should contain 'train_op' in sess.run() agrument => increase global step
+        _, step, summaries, loss, accuracy = sess.run(
+          [train_op, global_step, train_summary_op, cnn.loss, cnn.accuracy],
+          feed_dict)
+        time_str = datetime.datetime.now().strftime("%m'%d(%H:%M:%S)")
+        print("{}: step {}, loss{:g}, acc {:g}".format(time_str, step, loss, accuracy))
+        if writer:
+          writer.add_summary(summaries, step)
+
+      def dev_step(x_batch, y_batch, writer=None):
+        """
+        Evaluates model on a dev set
+        """
+        feed_dict = {
+          cnn.input_x : x_batch,
+          cnn.input_y : y_batch,
+          cnn.dropout_keep_prob : 1.0
+        }
+        step, summaries, loss, accuracy = sess.run(
+          [global_step, dev_summary_op, cnn.loss, cnn.accuracy],
+          feed_dict)
+        time_str = datetime.datetime.now().strftime("%m'%d(%H:%M:%S)")
+        print("{}: step {}, loss{:g}, acc {:g}".format(time_str, step, loss, accuracy))
+        if writer:
+          writer.add_summary(summaries, step)
+
+    ### 2. training batch by batch. as much as epochs with same data
+      sess.run(tf.initialize_all_variables())
       for batch in batches:
         x_batch, y_batch = zip(*batch)
+        train_step(x_batch, y_batch, writer=train_summary_writer)
+        current_step = tf.train.global_step(sess, global_step)
+        if current_step % FLAGS.evaluate_every == 0:
+          print("\nEvaluation:")
+          dev_step(x_val, y_val, writer=dev_summary_writer)
+          print("")
+        if current_step % FLAGS.checkpoint_every == 0:
+          path = saver.save(sess, checkpoint_prefix, global_step=current_step)
+          print("Saved model checkpoint to {}\n".format(path))
 
-        sess.run(tf.initialize_all_variables())
         
-        
+        """
         pool_drop, scores, predictions, accuracy  = sess.run([cnn.pool_drop, cnn.scores, cnn.predictions, cnn.accuracy], feed_dict = {cnn.input_x : x_batch, cnn.input_y : y_batch, cnn.dropout_keep_prob : FLAGS.dropout_keep_prob})
         print("pool_drop = {}\n\n scores = {}\n\n predictions = {} \n\n accuracy = {}".format(pool_drop, scores, predictions, accuracy))
-
-
-    print(datetime.datetime.now().strftime("%m'%d(%H:%M:%S)"))
+        """
