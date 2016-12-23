@@ -1,13 +1,15 @@
 #! /usr/bin/env python3 
 
+import sys
+import os
+import datetime
+
 import tensorflow as tf
 import numpy as np
 from tensorflow.contrib import learn
 
-import sys
-
 import formatting_data
-from model_CNN import TextCNN
+from text_cnn import TextCNN
 
 
 # Parameters(set flag. print flag)
@@ -18,7 +20,7 @@ tf.flags.DEFINE_string("drive_log_file", "./data/dict/test_disk", "Data source f
 tf.flags.DEFINE_string("net_log_file", "./data/dict/test_net", "Data source for the net log file")
 
 # Model Hyperparameters
-tf.flags.DEFINE_integer("word_vector_size", 128, "lenth of each word vector")
+tf.flags.DEFINE_integer("word_vector_length", 128, "lenth of each word vector")
 tf.flags.DEFINE_string("filter_heights", "2,3", "Comma-separated filter heights")
 tf.flags.DEFINE_integer("num_filters", 3, "Number of filters per filter size")
 tf.flags.DEFINE_string("num_hidden_nodes", "0", "Number of hidden layer's nodes")
@@ -44,7 +46,6 @@ print("\nParameters:")
 for attr, value in sorted(FLAGS.__flags.items()):
   print("{}={}".format(attr.upper(), value))
 print("")
-
 
 
 # Data formatting(loading, change word to index, make N fold)
@@ -80,7 +81,7 @@ for N in range(FLAGS.num_fold):
 # make generater : split data by batch_size, do as much as num_epochs on same data
 
 
-# Training
+# Configure Training
 # ====================================================================
   with tf.Graph().as_default():
     # set session conf
@@ -89,26 +90,67 @@ for N in range(FLAGS.num_fold):
       log_device_placement=FLAGS.log_device_placement)
     sess = tf.Session(config=session_conf)
     with sess.as_default():
-      # Make CNN model
+    ### 1. Make CNN model
       cnn = TextCNN(
         max_sentence_length=x_train.shape[1],
         num_hidden_nodes=list(map(int, FLAGS.num_hidden_nodes.split(","))),
         num_classes=y_train.shape[1],
         vocab_size=len(vocab_processor.vocabulary_),
-        word_vector_size=FLAGS.word_vector_size,
+        word_vector_length=FLAGS.word_vector_length,
         filter_heights=list(map(int, FLAGS.filter_heights.split(","))),
         num_filters=FLAGS.num_filters,
         l2_reg_lambda=FLAGS.l2_reg_lambda)
 
-      # Define Traning procedure
+    ### 2. Define Traning procedure
       """
       set optimizer, calculate gradient
       """
       global_step = tf.Variable(0, name="global_step", trainable=False)
       optimizer = tf.train.AdamOptimizer(FLAGS.learning_rate)
       grads_and_vars = optimizer.compute_gradients(cnn.loss)
-      # loss : RMSE value + L2 regularization
+      # grads_and_vars have gradient when each value is changed.
+      # value mean (trainable == true)
       train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
+
+
+   ### 3. summary
+      # (Optional) ~
+      grad_summaries = []
+      for g, v in grads_and_vars:
+        if g is not None:
+          grad_hist_summary = tf.histogram_summary("{}/grad/hist".format(v.name), g)
+          sparsity_summary = tf.scalar_summary("{}/grad/sparsity".format(v.name), tf.nn.zero_fraction(g))
+          grad_summaries.append(grad_hist_summary)
+          grad_summaries.append(sparsity_summary)
+      grad_summaries_merged = tf.merge_summary(grad_summaries)
+      # ~ (Optional)
+      loss_summary = tf.scalar_summary("loss", cnn.loss)
+      accuracy_summary = tf.scalar_summary("accuracy", cnn.accuracy)
+      # Train, Dev
+      train_summary_op = tf.merge_summary([loss_summary, accuracy_summary, grad_summaries_merged])
+      dev_summary_op = tf.merge_summary([loss_summary, accuracy_summary, grad_summaries_merged])
+
+
+   ### 4. out directory
+      timestamp = datetime.datetime.now().strftime("%m'%d(%H:%M:%S)")
+      out_dir = os.path.abspath(os.path.join((os.path.curdir, "runs", timestamp))
+      print("Writing to {}\n".format(out_dir))
+      train_summary_dir = os.path.join(out_dir, "summaries", "train")
+      dev_summary_dir = os.path.join(out_dir, "summaries", "dev")
+      # checkpoint(where model is saved)
+      checkpoint_dir = os.path.abspath(os.path.join(out_dir, "checkpoints"))
+      checkpoint_prefix = os.path.join(checkpoint_dir, "model")
+      if not os.path.exists(checkpoint_dir):
+        os.makedirs(checkpoint_dir)
+
+   ### 5. saver(operation) and writer. writer is class
+      train_summary_writer = tf.train.SummaryWriter(train_summary_dir, sess.graph)
+      dev_summary_writer = tf.train.SummaryWriter(dev_summary_dir, sess.graph)
+      saver = tf.train.Saver
+
+   ### 6. save vocabulary index dictionary
+      vocab_processor.save(os.path.join(out_dir,"vocab"))
+
 
       for batch in batches:
         x_batch, y_batch = zip(*batch)
@@ -116,6 +158,8 @@ for N in range(FLAGS.num_fold):
         sess.run(tf.initialize_all_variables())
         
         
-        pool_drop, scores, predictions, a, accuracy  = sess.run([cnn.pool_drop, cnn.scores, cnn.predictions, cnn.a, cnn.accuracy], feed_dict = {cnn.input_x : x_batch, cnn.input_y : y_batch, cnn.dropout_keep_prob : FLAGS.dropout_keep_prob})
-        print("pool_drop = {}\n\n scores = {}\n\n predictions = {} \n\n a = {}\n\n accuracy = {}".format(pool_drop, scores, predictions, a, accuracy))
-        print(cnn.height)
+        pool_drop, scores, predictions, accuracy  = sess.run([cnn.pool_drop, cnn.scores, cnn.predictions, cnn.accuracy], feed_dict = {cnn.input_x : x_batch, cnn.input_y : y_batch, cnn.dropout_keep_prob : FLAGS.dropout_keep_prob})
+        print("pool_drop = {}\n\n scores = {}\n\n predictions = {} \n\n accuracy = {}".format(pool_drop, scores, predictions, accuracy))
+
+
+    print(datetime.datetime.now().strftime("%m'%d(%H:%M:%S)"))

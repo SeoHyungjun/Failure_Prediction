@@ -8,7 +8,7 @@ class TextCNN(object):
   Uses an embedding layer, followed by a convolutional, max-pooling, hidden layer and softmax layer.
   """
   def __init__(
-    self, max_sentence_length, num_classes, vocab_size,
+    self, max_sentence_length, num_hidden_nodes, num_classes, vocab_size,
     word_vector_length, filter_heights, num_filters, l2_reg_lambda=0.0):
 
     # Placeholders for input, output and dropout(input:sentences, output:classes)
@@ -63,7 +63,7 @@ class TextCNN(object):
 
 
     # Combine all the pooled features
-    num_filters_total = num_filters * len(filter_sizes)
+    num_filters_total = num_filters * len(filter_heights)
     self.pooled_result = tf.concat(3, pooled_outputs)
     self.pooled_result_flat = tf.reshape(self.pooled_result, [-1, num_filters_total])
     # pooled_result == [[[ [sentence 1 features] [sentence 2 features] .. ]]]
@@ -79,9 +79,9 @@ class TextCNN(object):
 
     # 3. Hidden_NN layer
     pre_num_node = num_filters_total
-    self.NN_result = [None] * (len(num_nodes) + 1)
+    self.NN_result = [None] * (len(num_hidden_nodes) + 1)
     self.NN_result[0] = self.pool_drop
-    for index, num_node in enumerate(num_nodes):
+    for index, num_node in enumerate(num_hidden_nodes):
       if num_node == 0:
         index= -1
         break
