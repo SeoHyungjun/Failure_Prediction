@@ -128,5 +128,6 @@ class TextCNN(object):
       correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
       # e.g. correct_predictions = [ True, Ture, False, ....]
       self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
+      # e.g. tf.cast([False true]) == [0  1.]
       
 ## ============================================================= ##
