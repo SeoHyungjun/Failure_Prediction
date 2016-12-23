@@ -16,13 +16,13 @@ from text_cnn import TextCNN
 # ====================================================================
 
 # Data loading
-tf.flags.DEFINE_string("drive_log_file", "./data/dict/test_disk", "Data source for the drive log file")
-tf.flags.DEFINE_string("net_log_file", "./data/dict/test_net", "Data source for the net log file")
+tf.flags.DEFINE_string("drive_log_file", "./data/dict/disk", "Data source for the drive log file")
+tf.flags.DEFINE_string("net_log_file", "./data/dict/net", "Data source for the net log file")
 
 # Model Hyperparameters
 tf.flags.DEFINE_integer("word_vector_length", 128, "lenth of each word vector")
 tf.flags.DEFINE_string("filter_heights", "2,3", "Comma-separated filter heights")
-tf.flags.DEFINE_integer("num_filters", 3, "Number of filters per filter size")
+tf.flags.DEFINE_integer("num_filters", 32, "Number of filters per filter size")
 tf.flags.DEFINE_string("num_hidden_nodes", "0", "Number of hidden layer's nodes")
 tf.flags.DEFINE_float("learning_rate", 1e-3, "Step size of optimizer")
 tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability")
@@ -30,8 +30,8 @@ tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularization lambda")
 
 # Training parameters
 tf.flags.DEFINE_integer("num_fold", 1, "N fold cross validation")
-tf.flags.DEFINE_integer("batch_size", 1, "Batch Size")
-tf.flags.DEFINE_integer("num_epochs", 1, "Number of training epochs")
+tf.flags.DEFINE_integer("batch_size", 64, "Batch Size")
+tf.flags.DEFINE_integer("num_epochs", 2, "Number of training epochs")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps")
 
