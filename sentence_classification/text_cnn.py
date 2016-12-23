@@ -86,7 +86,7 @@ class TextCNN(object):
         index= -1
         break
       with tf.name_scope("Hidden_NN{}".format(index+1)):
-        num_nodes = num node
+        num_nodes = num_node
         W = tf.get_variable(
           "W",
           shape = [pre_num_node, num_node],
@@ -94,7 +94,7 @@ class TextCNN(object):
         b = tf.Variable(tf.constant(0.1, shape=[num_node]), name="b")
         l2_loss += tf.nn.l2_loss(W)
         l2_loss += tf.nn.l2_loss(b)
-        self.NN_result[index+1] = tf.sigmoid(tf.nn.xw_plus_b(self.NN_result[index}, W, b))
+        self.NN_result[index+1] = tf.sigmoid(tf.nn.xw_plus_b(self.NN_result[index], W, b))
         # Add dropout
         with tf.name_scope("NN_dropout"):
           self.NN_result[index+1] = tf.nn.dropout(self.NN_result[index+1], self.dropout_keep_prob)
@@ -128,3 +128,5 @@ class TextCNN(object):
       correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
       # e.g. correct_predictions = [ True, Ture, False, ....]
       self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
+      
+## ============================================================= ##
