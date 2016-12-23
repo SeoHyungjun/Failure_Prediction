@@ -1,0 +1,119 @@
+#!/bin/sh
+#
+# fpd 	Failure Prediction data crawling client daemon
+#
+# chkconfig: 2345 50 50
+# description: Failure Prediction data crawling client daemon \
+# 				It crawls smart data and syslog data.
+#
+### BEGIN INIT INFO
+# Provides: fpd
+# Required-Start: $local_fs $network $syslog
+# Required-Stop: $local_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+### END INIT INFO
+
+. /etc/init.d/functions
+
+retval=0
+prog="fpd"
+
+exec=/usr/bin/fpd
+PIDFILE=/var/run/fpd.pid
+LOGFILE=/var/log/fpd.log
+LOCKFILE=/var/lock/subsys/$prog
+
+start() {
+	if [ -f "$PIDFILE" ] && ! kill -0 $(cat "$PIDFILE"); then
+		echo "Service already running" >&2
+		return 1
+	fi
+
+	echo -n $"Starting $prog: "
+	
+	PID=`$exec > /dev/null 2>&1 & echo $!`
+	
+	if [ -z $PID ]; then
+		failure $"$prog Start Failed!"
+		echo
+	else
+		touch $LOCKFILE
+		echo $PID > $PIDFILE
+		success $"$prog Startup!"
+		echo
+	fi
+
+}
+
+stop() {
+	if [ ! -f "$PIDFILE" ] || ! kill -0 $(cat "$PIDFILE"); then
+		echo "Service not running" >&2
+		return 1
+	fi
+
+	echo -n $"Stopping $prog: "
+	kill -15 $(cat "$PIDFILE") 
+	retval=$?
+	if [ $retval -eq 0 ]; then
+		rm -f $PIDFILE
+		rm -f $LOCKFILE
+		success $"$prog Stopped"
+		echo
+	else
+		failure $"$prog Stop Failed"
+		echo
+	fi
+}
+
+restart() {
+	stop
+	start
+}
+
+uninstall() {
+	echo -n "Are you really sure you want to uninstall this service? [yes|No] "
+	local SURE
+	read SURE
+	if [ "$SURE" = "yes" ]; then
+		stop
+		rm -f "$PIDFILE"
+		rm -f "$LOCKFILE"
+		rm -f "$exec"
+		echo "Notice: log file is not be removed: '$LOGFILE'" >&2
+
+		if [ `grep -c 'CentOS' /etc/issue` -eq 1 ]; then #OS check
+			chkconfig --del fpd
+		else # Ubuntu
+			update-rc.d -f fpd remove
+		fi
+
+		rm -fv "$0"
+	fi
+}
+
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	status)
+		status -p $PIDFILE $prog 
+		;;
+	restart)
+		restart
+		;;
+	uninstall)
+		uninstall
+		;;
+	*)
+		echo $"Usage: $0 {start|stop|restart|status|uninstall}"
+		exit 1
+esac
+
+exit 0
+
+

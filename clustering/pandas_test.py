@@ -13,7 +13,7 @@ for file in files :
 		raw_data = pd.read_csv(full_file_path, parse_dates=['date'], index_col='date')
 		tmp_data = pd.DataFrame()
 		tmp_data['serial_number'] = raw_data['serial_number']
-		tmp_data['5'] = raw_data['smart_5_raw']
+		tmp_data['5'] = raw_data['smart_5_normalized']
 		tmp_data['187'] = raw_data['smart_187_raw']
 		tmp_data['188'] = raw_data['smart_188_raw']
 		tmp_data['197'] = raw_data['smart_197_raw']
