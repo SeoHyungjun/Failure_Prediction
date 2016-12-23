@@ -71,25 +71,60 @@ class TextCNN(object):
     # features collected by all filters of variety sizes
 
     # Add dropout
-    with tf.name_scope("Conv_dropout"):
-      self.conv_drop = tf.nn.dropout(self.pooled_result_flat, self.dropout_keep_prob)
-
-    # Final (unnormalized) score
+    with tf.name_scope("pool_dropout"):
+      self.pool_drop = tf.nn.dropout(self.pooled_result_flat, self.dropout_keep_prob)
 
 
+## ============================================================= ##
+
+    # 3. Hidden_NN layer
+    pre_num_node = num_filters_total
+    self.NN_result = [None] * (len(num_nodes) + 1)
+    self.NN_result[0] = self.pool_drop
+    for index, num_node in enumerate(num_nodes):
+      if num_node == 0:
+        index= -1
+        break
+      with tf.name_scope("Hidden_NN{}".format(index+1)):
+        num_nodes = num node
+        W = tf.get_variable(
+          "W",
+          shape = [pre_num_node, num_node],
+          initializer=tf.contrib.layers.xavier_initializer())
+        b = tf.Variable(tf.constant(0.1, shape=[num_node]), name="b")
+        l2_loss += tf.nn.l2_loss(W)
+        l2_loss += tf.nn.l2_loss(b)
+        self.NN_result[index+1] = tf.sigmoid(tf.nn.xw_plus_b(self.NN_result[index}, W, b))
+        # Add dropout
+        with tf.name_scope("NN_dropout"):
+          self.NN_result[index+1] = tf.nn.dropout(self.NN_result[index+1], self.dropout_keep_prob)
+        pre_num_node = num_node
 
 
+## ============================================================= ##
+
+    # 4. output node(scores, predictions)
+    with tf.name_scope("output"):
+      W = tf.get_variable(
+        "W",
+        shape = [pre_num_node, num_classes],
+        initializer=tf.contrib.layers.xavier_initializer())
+      b = tf.Variable(tf.constant(0.1, shape=[num_classes]), name="b")
+      l2_loss += tf.nn.l2_loss(W)
+      l2_loss += tf.nn.l2_loss(b)
+      # tf.nn.l2_loss(a) = sum(a^2)/2, element-wise
+      self.scores = tf.nn.xw_plus_b(self.NN_result[index+1], W, b, name="scores")
+      self.predictions = tf.argmax(self.scores, 1, name="predictions")
 
 
+## ============================================================= ##
 
+    #  5. loss(entropy) and Accuracy
+    with tf.name_scope("loss"):
+      losses = tf.nn.softmax_cross_entropy_with_logits(self.scores, self.input_y)
+      self.loss = tf.reduce_mean(losses) + (l2_reg_lambda * l2_loss)
 
-
-
-
-
-
-
-
-
-
-
+    with tf.name_scope("accuracy"):
+      correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
+      # e.g. correct_predictions = [ True, Ture, False, ....]
+      self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
