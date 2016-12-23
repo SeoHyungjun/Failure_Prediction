@@ -103,6 +103,4 @@ def batch_iter(data, batch_size, num_epochs):
       yield data[start_index:end_index]
   # A[n:m] => not contain A[m]
   # even though start_index is out of list's range. if end_index <= len(list), 'out of range' error doesn't occur. data[start_index:end_index]
-
-
-
+    print("End \'{}\' epoch\n".format(epoch + 1))
