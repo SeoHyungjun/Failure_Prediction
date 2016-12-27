@@ -114,6 +114,7 @@ class TextCNN(object):
       l2_loss += tf.nn.l2_loss(b)
       # tf.nn.l2_loss(a) = sum(a^2)/2, element-wise
       self.scores = tf.nn.xw_plus_b(self.NN_result[index+1], W, b, name="scores")
+      self.softmax = tf.nn.softmax(self.scores, name="softmax_scores")
       self.predictions = tf.argmax(self.scores, 1, name="predictions")
 
 

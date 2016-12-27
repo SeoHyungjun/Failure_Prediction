@@ -5,7 +5,6 @@
 #include <netinet/in.h>
 
 #include <string.h>
-
 #include <syslog.h>
 
 int connection(char *ip, int port)
@@ -38,6 +37,11 @@ int proc()
     int sock;
     FILE *logfd = NULL;
 /*
+int proc(int argc, char *argv[])
+{
+    int sock;
+    FILE *logfd = NULL;
+
     if(3 != argc)
     {
         fprintf(stderr, "%s [server ip] [port]\n", argv[0]);
@@ -69,7 +73,7 @@ int proc()
         if(-1 == fscanf(logfd, "%[^\n]%*c", buffer))
             break;
 
-        // printf("%s\n", buffer);
+       // printf("%s\n", buffer);
 
         //sscanf(buffer, "%[^.].%[^:]:%*[^:]:%*[^:]:%*[^:]:%[^\n]\n%n", parselog.fac, parselog.sev, parselog.msg, &len);
         write(sock, buffer, strlen(buffer));
