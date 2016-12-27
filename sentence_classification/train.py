@@ -31,7 +31,7 @@ tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularization lambda")
 # Training parameters
 tf.flags.DEFINE_integer("num_fold", 10, "N fold cross validation")
 tf.flags.DEFINE_integer("batch_size", 64, "Batch Size")
-tf.flags.DEFINE_integer("num_epochs", 1, "Number of training epochs")
+tf.flags.DEFINE_integer("num_epochs", 15, "Number of training epochs")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps")
 
@@ -131,12 +131,14 @@ for N in range(FLAGS.num_fold):
       dev_summary_op = tf.merge_summary([loss_summary, accuracy_summary])
 
 
-   ### 4. out directory
-      timestamp = datetime.datetime.now().strftime("%m'%d(%H:%M:%S)")
-      out_dir = os.path.abspath(os.path.join("/root/Desktop/sen_classification_result", timestamp))
+   ### 4. set out directory
+      timestamp = datetime.datetime.now().strftime("%m'%d(%H:%M)")
+      out_dir = os.path.abspath(os.path.join("/root/Desktop/textCNN_result", timestamp))
       print("Writing to {}\n".format(out_dir))
       train_summary_dir = os.path.join(out_dir, "summaries", "train")
       dev_summary_dir = os.path.join(out_dir, "summaries", "dev")
+      flag_conf = os.path.join(out_dir, "flag.conf")
+      accuracy_result = os.path.join(out_dir, "accuracy_result")
       # checkpoint(where model is saved)
       checkpoint_dir = os.path.abspath(os.path.join(out_dir, "checkpoints"))
       checkpoint_prefix = os.path.join(checkpoint_dir, "model")
@@ -148,9 +150,12 @@ for N in range(FLAGS.num_fold):
       dev_summary_writer = tf.train.SummaryWriter(dev_summary_dir, sess.graph)
       saver = tf.train.Saver(tf.all_variables())
 
-   ### 6. save vocabulary index dictionary
+   ### 6. save vocabulary index dictionary, save flags
       vocab_processor.save(os.path.join(out_dir,"vocab"))
-
+      with open(flag_conf, "w") as fd:
+        for attr, value in sorted(FLAGS.__flags.items()):
+          str_flag = "{} = {}".format(attr.upper(), value)
+          fd.write(str_flag + "\n")
 
 # Training
 # ====================================================================
@@ -170,7 +175,7 @@ for N in range(FLAGS.num_fold):
           [train_op, global_step, train_summary_op, cnn.loss, cnn.accuracy],
           feed_dict)
         time_str = datetime.datetime.now().strftime("%m'%d(%H:%M:%S)")
-        print("{}: step {}, loss{:g}, acc {:g}".format(time_str, step, loss, accuracy))
+        #print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
         if writer:
           writer.add_summary(summaries, step)
 
@@ -187,9 +192,11 @@ for N in range(FLAGS.num_fold):
           [global_step, dev_summary_op, cnn.loss, cnn.accuracy],
           feed_dict)
         time_str = datetime.datetime.now().strftime("%m'%d(%H:%M:%S)")
-        print("{}: step {}, loss{:g}, acc {:g}".format(time_str, step, loss, accuracy))
+        str_eval = "{}: step {}, loss{:g}, acc {:g}".format(time_str, step, loss, accuracy)
+        print(str_eval)
         if writer:
           writer.add_summary(summaries, step)
+        return str_eval
 
     ### 2. training batch by batch. as much as epochs with same data
       sess.run(tf.initialize_all_variables())
@@ -198,12 +205,14 @@ for N in range(FLAGS.num_fold):
         train_step(x_batch, y_batch, writer=train_summary_writer)
         current_step = tf.train.global_step(sess, global_step)
         if current_step % FLAGS.evaluate_every == 0:
-          print("\nEvaluation:")
-          dev_step(x_val, y_val, writer=dev_summary_writer)
-          print("")
+          print("Evaluation:")
+          eval_result = dev_step(x_val, y_val, writer=dev_summary_writer)
+          fd_accuracy = open(accuracy_result, "a")
+          fd_accuracy.write(eval_result + "\n")
+          fd_accuracy.close()
         if current_step % FLAGS.checkpoint_every == 0:
           path = saver.save(sess, checkpoint_prefix, global_step=current_step)
-          print("Saved model checkpoint to {}\n".format(path))
+          print("Saved model to {}\n".format(path))
 
         
         """
