@@ -6,7 +6,6 @@
 # processname : fpd
 #
 #
-. /etc/init.d/functions
 
 DAEMON=../daemon/fpd
 SCRIPT=fpd
@@ -28,6 +27,7 @@ fi
 
 if [ `grep -c 'CentOS' /etc/issue` -eq 1 ]; then #OS check
 	UPDATE_RC="chkconfig"
+    . /etc/init.d/functions
 elif [ `grep -c 'Ubuntu' /etc/issue` -eq 1 ]; then
 	UPDATE_RC="update-rc.d"
 else

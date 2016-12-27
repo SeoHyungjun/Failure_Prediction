@@ -24,6 +24,10 @@ PIDFILE=/var/run/fpd.pid
 LOGFILE=/var/log/fpd.log
 LOCKFILE=/var/lock/subsys/$prog
 
+if [ `grep -c 'CentOS' /etc/issue` -eq 1 ]; then #OS check
+   . /etc/init.d/functions
+fi
+
 start() {
 	if [ -f "$PIDFILE" ] && ! kill -0 $(cat "$PIDFILE"); then
 		echo "Service already running" >&2
@@ -31,18 +35,31 @@ start() {
 	fi
 
 	echo -n $"Starting $prog: "
-	
+
 	PID=`$exec > /dev/null 2>&1 & echo $!`
-	
-	if [ -z $PID ]; then
-		failure $"$prog Start Failed!"
-		echo
-	else
-		touch $LOCKFILE
-		echo $PID > $PIDFILE
-		success $"$prog Startup!"
-		echo
-	fi
+
+	touch $LOCKFILE
+	success $"$proc Start Up!"
+	echo
+
+#	if [ -f "$PIDFILE" ]; then
+#		touch $LOCKFILE
+#		success $"$proc StartUp!"
+#		echo
+#	else
+#		failure $"$prog Start Failed!"
+#		echo
+#	fi
+
+#	if [ -z $PID ]; then
+#		failure $"$prog Start Failed!"
+#		echo
+#	else
+#		touch $LOCKFILE
+#		echo $PID > $PIDFILE
+#		success $"$prog Startup!"
+#		echo
+#	fi
 
 }
 
