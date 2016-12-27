@@ -133,7 +133,7 @@ for N in range(FLAGS.num_fold):
 
    ### 4. set out directory
       timestamp = datetime.datetime.now().strftime("%m'%d(%H:%M)")
-      out_dir = os.path.abspath(os.path.join("/root/Desktop/textCNN_result", timestamp))
+      out_dir = os.path.join(os.path.expanduser("~"), "Desktop/textCNN_result", timestamp)
       print("Writing to {}\n".format(out_dir))
       train_summary_dir = os.path.join(out_dir, "summaries", "train")
       dev_summary_dir = os.path.join(out_dir, "summaries", "dev")
