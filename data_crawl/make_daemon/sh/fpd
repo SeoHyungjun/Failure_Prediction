@@ -24,6 +24,14 @@ PIDFILE=/var/run/fpd.pid
 LOGFILE=/var/log/fpd.log
 LOCKFILE=/var/lock/subsys/$prog
 
+if [ `grep -c 'CentOS' /etc/issue` -eq 1 ]; then #OS check
+    . /etc/init.d/functions
+elif [ `grep -c 'Ubuntu' /etc/issue` -eq 1 ]; then
+else
+	echo "Error: fpd support only centos or ubuntu"
+	exit 1
+fi
+
 start() {
 	if [ -f "$PIDFILE" ] && ! kill -0 $(cat "$PIDFILE"); then
 		echo "Service already running" >&2

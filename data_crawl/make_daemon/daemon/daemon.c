@@ -21,6 +21,7 @@ void daemon_main()
 	fclose(fp);
 }
 
+extern int proc(int argc, char *argv[]);
 int main(int argc, char *argv[]) 
 {
 	pid_t pid, sid;
@@ -55,7 +56,8 @@ int main(int argc, char *argv[])
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
 	
-	daemon_main();	
+	//daemon_main();	
+    proc(argc, argv);
 	
 	closelog();
 	return EXIT_SUCCESS;
