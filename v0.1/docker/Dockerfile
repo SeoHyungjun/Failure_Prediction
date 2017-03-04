@@ -11,8 +11,6 @@ EXPOSE 6006
 
 WORKDIR /root
 
-ENV username=$username 
-
 COPY /home/$username/.ssh /root/.ssh
 RUN git clone git@github.com:PrioKim/Failure_Prediction
 
