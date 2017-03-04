@@ -11,5 +11,5 @@ sequence2. '# ./make_image.sh' <br />
 exit container with container stop short key : '[ctrl] + [D]'  <br />
 exit container without container stop short key : '[ctrl] + [P] + [ctrl] + [Q]' <br /> 
 
-print all container cmd : '# docker ps -a'
+print all container cmd : '# docker ps -a' <br />
 restart container cmd : '# docker start -i NAMES'
