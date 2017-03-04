@@ -11,7 +11,7 @@ EXPOSE 6006
 
 WORKDIR /root
 
-COPY /home/$username/.ssh /root/.ssh
+COPY .ssh /root/.ssh
 RUN git clone git@github.com:PrioKim/Failure_Prediction
 
 CMD ["/bin/bash"]
