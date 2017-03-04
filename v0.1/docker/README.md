@@ -8,8 +8,8 @@ sequence2. '# ./make_image.sh' <br />
 
 
 ##Docker control
-exit container with container stop short key : '<ctrl> + <D>'  <br />
-exit container without container stop short key : '<ctrl> + <P> + <ctrl> + <Q>' <br /> 
+exit container with container stop short key : '[ctrl] + [D]'  <br />
+exit container without container stop short key : '[ctrl] + [P] + [ctrl] + [Q]' <br /> 
 
 print all container cmd : '# docker ps -a'
 restart container cmd : '# docker start -i NAMES'
