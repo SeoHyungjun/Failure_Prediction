@@ -10,7 +10,10 @@ RUN apt-get install -y python3-pip python3-dev git vim && pip3 install --upgrade
 EXPOSE 6006
 
 WORKDIR /root
-COPY .ssh /root/.ssh
+
+ENV username=$username 
+
+COPY /home/$username/.ssh /root/.ssh
 RUN git clone git@github.com:PrioKim/Failure_Prediction
 
 CMD ["/bin/bash"]
