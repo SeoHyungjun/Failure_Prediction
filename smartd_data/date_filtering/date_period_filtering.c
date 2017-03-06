@@ -103,14 +103,14 @@ int searchdir(char *path, char *sdate, char *edate)
 
 int main(int argc, char *argv[])
 {
-    if(3 != argc)
+    if(4 != argc)
     {
-        fprintf(stderr, "%s [target driectory] [date] > out file\n", argv[0]);
+        fprintf(stderr, "%s [target driectory] [start date] [end date] > out file\n", argv[0]);
 
         return 1;
     }
 
-    searchdir(realpath(argv[1], NULL), argv[2]);
+    searchdir(realpath(argv[1], NULL), argv[2], argv[3]);
 
     return 0;
 }
