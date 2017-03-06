@@ -4,6 +4,7 @@ sequence2. '# ./make_dev_image.sh' <br />
 ####Caution!
 1. While './install_docker.sh', one time must put the sudo passward when asked. <br />
 2. User who execute install must have valid private-public key set in ~/.ssh directory. <br />
+3. Sometimes timeout error occur when install tensorflow. Then, restart 'make_dev_image.sh'  <br />
 <br />
 <br />
 
