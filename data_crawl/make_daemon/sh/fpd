@@ -25,11 +25,7 @@ LOGFILE=/var/log/fpd.log
 LOCKFILE=/var/lock/subsys/$prog
 
 if [ `grep -c 'CentOS' /etc/issue` -eq 1 ]; then #OS check
-    . /etc/init.d/functions
-elif [ `grep -c 'Ubuntu' /etc/issue` -eq 1 ]; then
-else
-	echo "Error: fpd support only centos or ubuntu"
-	exit 1
+   . /etc/init.d/functions
 fi
 
 start() {
@@ -39,18 +35,31 @@ start() {
 	fi
 
 	echo -n $"Starting $prog: "
-	
+
 	PID=`$exec > /dev/null 2>&1 & echo $!`
-	
-	if [ -z $PID ]; then
-		failure $"$prog Start Failed!"
-		echo
-	else
-		touch $LOCKFILE
-		echo $PID > $PIDFILE
-		success $"$prog Startup!"
-		echo
-	fi
+
+	touch $LOCKFILE
+	success $"$proc Start Up!"
+	echo
+
+#	if [ -f "$PIDFILE" ]; then
+#		touch $LOCKFILE
+#		success $"$proc StartUp!"
+#		echo
+#	else
+#		failure $"$prog Start Failed!"
+#		echo
+#	fi
+
+#	if [ -z $PID ]; then
+#		failure $"$prog Start Failed!"
+#		echo
+#	else
+#		touch $LOCKFILE
+#		echo $PID > $PIDFILE
+#		success $"$prog Startup!"
+#		echo
+#	fi
 
 }
 

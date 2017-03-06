@@ -5,7 +5,6 @@
 #include <netinet/in.h>
 
 #include <string.h>
-#include <syslog.h>
 
 int connection(char *ip, int port)
 {
@@ -32,16 +31,11 @@ struct loginfo
     char msg[2048];
 };
 
-int proc()
+int main()
 {
     int sock;
     FILE *logfd = NULL;
 /*
-int proc(int argc, char *argv[])
-{
-    int sock;
-    FILE *logfd = NULL;
-
     if(3 != argc)
     {
         fprintf(stderr, "%s [server ip] [port]\n", argv[0]);
@@ -58,7 +52,7 @@ int proc(int argc, char *argv[])
     logfd = popen("tail -f /var/log/messages -n 1", "r");
     if(NULL == logfd)
     {
-        //perror("popen error : ");
+        perror("popen error : ");
         return 1;
     }
 
@@ -73,7 +67,7 @@ int proc(int argc, char *argv[])
         if(-1 == fscanf(logfd, "%[^\n]%*c", buffer))
             break;
 
-       // printf("%s\n", buffer);
+        printf("%s\n", buffer);
 
         //sscanf(buffer, "%[^.].%[^:]:%*[^:]:%*[^:]:%*[^:]:%[^\n]\n%n", parselog.fac, parselog.sev, parselog.msg, &len);
         write(sock, buffer, strlen(buffer));
