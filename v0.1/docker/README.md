@@ -1,6 +1,6 @@
-##Install sequence
+##DEV_ENV Install sequence
 sequence1. '# ./install_docker.sh' <br />
-sequence2. '# ./make_image.sh' <br />
+sequence2. '# ./make_dev_image.sh' <br />
 <br />
 ##Caution
 1. While './install_docker.sh', one time must put the sudo passward when asked. <br />
