@@ -11,5 +11,6 @@ sequence2. '# ./make_dev_image.sh' <br />
 exit container with container stop : '[ctrl] + [D]'  <br />
 exit container without container stop : '[ctrl] + [P] + [ctrl] + [Q]' <br /> 
 
+print all images created : '# docker images' <br />
 print all container cmd : '# docker ps -a' <br />
-restart container cmd : '# docker start -i NAMES'
+restart container cmd : '# docker start -i NAMES' <br />
