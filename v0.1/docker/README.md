@@ -7,7 +7,7 @@ sequence2. '# ./make_dev_image.sh' <br />
 <br />
 <br />
 
-###Docker control([] mean short key)
+##Docker control([] mean short key)
 exit container with container stop : '[ctrl] + [D]'  <br />
 exit container without container stop : '[ctrl] + [P] + [ctrl] + [Q]' <br /> 
 
