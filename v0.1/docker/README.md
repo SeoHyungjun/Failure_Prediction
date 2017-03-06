@@ -12,5 +12,11 @@ exit container with container stop : '[ctrl] + [D]'  <br />
 exit container without container stop : '[ctrl] + [P] + [ctrl] + [Q]' <br /> 
 
 print all images created : '# docker images' <br />
-print all container cmd : '# docker ps -a' <br />
-restart container cmd : '# docker start -i NAMES' <br />
+print all container : '# docker ps -a' <br />
+
+create container : '# docker run -it --name NAMES REPOSITORY:TAG' <br />
+restart container : '# docker start -i NAMES' <br />
+
+remove image : '# docker rmi REPOSITORY:TAG' or '# docker rmi IMAGE_ID' <br />
+remove container : '# docker rm CONTAINER_ID' or '# docker rm NAMES' <br />
+
