@@ -14,6 +14,7 @@ exit container without container stop : '[ctrl] + [P] + [ctrl] + [Q]' <br />
 print all images created : '# docker images' <br />
 print all container : '# docker ps -a' <br />
 
+*NAMES mean name of container*
 create container : '# docker run -it --name NAMES REPOSITORY:TAG' <br />
 restart container : '# docker start -i NAMES' <br />
 
