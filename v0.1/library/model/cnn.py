@@ -1,7 +1,19 @@
 from model import *
 
 class CNN(Model):
-  def __init__(self):
+  
+  ### model parameter ###
+  # size of input matrix(two-dimention)
+  # fully connected NN nodes(array) e.g. [3,4,5,2]
+  # size of filtuer matrix(two-dimention)
+  # the number of each size of filter
+  
+  ### train parameter ###
+
+
+  ### CV parameter ###
+
+  def __init__(self, num_nodes, num_classes, filter_sizes, num_filters, l2_reg_lambda=0.0):
     pass
 
   def create_model(self):
