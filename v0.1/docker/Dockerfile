@@ -12,8 +12,11 @@ EXPOSE 6006
 WORKDIR /root
 
 COPY .ssh /root/.ssh
+# COPY "from host" "to container"
+# RUN cp .ssh /root/.ssh
 RUN git clone git@github.com:PrioKim/Failure_Prediction
 
+# ENTRY ?? 
 CMD ["/bin/bash"]
 
 #RUN ln -s /usr/bin/python3.4 /usr/bin/python
