@@ -14,11 +14,6 @@ class trainer(ml_process.ml_process_main) :
 
 		config_parse(config_fname)
 
-		if self.read_where == 'file':
-			config_from_file()
-		elif self.read_where == 'DB':
-			config_from_db()
-
 	def config_parse(self, config_fname):
 		f=open(config_fname, 'r')
 
@@ -27,15 +22,12 @@ class trainer(ml_process.ml_process_main) :
 		self.algo_num=1
 		self.model_list.append('cnn')
 		self.transform_list.append('transpose')
-		self.read_where='file' # or 'db'
-		pass
+		self.data_read_where='file' # or 'db' or 'pipe' or 'msg q'
 
-	def config_from_db(self):
-		pass
-
-	def config_from_file(self):
+	def read_data(self, data_read_where):
 		pass
 
 	def main(self):
+		self.read_data(
 
 
