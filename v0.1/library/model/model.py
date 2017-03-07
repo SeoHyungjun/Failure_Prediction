@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '..')
 from abc import ABC, abstractmethod
 from eval_info import *
 
