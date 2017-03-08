@@ -12,7 +12,7 @@ class CNN(Model):
 
     def create_model(self, input_size, num_NN_nodes, num_output, filter_sizes, num_filters, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
     # Model parameter of create_model
-    # input_size : size of input matrix(two-dimention)  e.g. [3,4]
+    # input_size : size of input matrix(two-dimention), [height, width]  e.g. [3,4]
     # num_NN_nodes : fully connected NN nodes(array)  e.g. [3,4,5,2]
     # num_output : the number of output nodes. if regression, num_output = 1.
     # filter_sizes : list of size of filter matrix(two-dimention)  e.g. [[1,2], [2,3], ...]
@@ -31,36 +31,33 @@ class CNN(Model):
     
         for i, filter_size in enumerate(filter_sizes):
             with tf.name_scope("conv-maxpool-{}".format(filter_size[0])):
-            # Convolution Later
+                # Convolution Later
                 filter_shape = [filter_size[0], filter_size[1], 1, num_filters]
                 W = tf.Variable(tf.truncated_normal(filter_shape, stddev=0.1), name="W")
                 b = tf.Variable(tf.constant(0.1, shape=[num_filters]), name="b")
-        """
+        
                 conv = tf.nn.conv2d(
-                self.expanded_input_x,
-                W,                  # filter
-                strides=[1,1,1,1],
-                padding="VALID",    # no padding
-                name="conv")
-                # shape(self.x_window) : [days, window_height, num_features, 1]
-                # days : the number of days to predict
-                # window_height : the number of days of one window set
+                    self.expanded_input_x,
+                    W,                  # filter
+                    strides=[1,1,1,1],
+                    padding="VALID",    # no padding
+                    name="conv")
                 # Apply nonlinearity
                 h = tf.nn.relu(tf.nn.bias_add(conv, b), name="relu")
                 # shape(h) : [days, window_height - filter_size + 1, 1, num_filters]
         
                 # Maxpooling over the outputs
                 pooled = tf.nn.max_pool(
-                h,
-                ksize=[1, input_size[1] - filter_size[1] + 1, 1, 1],
-                strides=[1,1,1,1],
-                padding="VALID",
-                name="pool")
-                pooled_outputs.append(pooled)
+                    h,
+                    ksize=[1, input_size[0] - filter_size[0] + 1, 1, 1],
+                    strides=[1,1,1,1],
+                    padding="VALID",
+                    name="pool")
+                    pooled_outputs.append(pooled)
                 # shape(pooled) : [days, 1, 1, num_filters]
                 # shape(pooled_outputs)
                 # [[days, 1, 1, num_filters], [days, 1, 1, num_filters], [days, 1, 1, num_filters]]
-        """
+        
         
 
 
@@ -99,4 +96,4 @@ class CNN(Model):
 
 if __name__ == "__main__":
     cnn = CNN()
-    cnn.create_model([1,2], [2,3], 3, [[3,4],[1,5]], 6)
+    cnn.create_model([10,20], [2,3], 3, [[3,4],[1,5]], 6)
