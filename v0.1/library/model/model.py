@@ -3,7 +3,7 @@ sys.path.insert(0, '..')
 from abc import ABC, abstractmethod
 from eval_info import *
 
-  # abstract class to be used by machine learning class
+# abstract class to be used by machine learning class
 class Model(ABC):
     # db = Database()
     # input_x = Dataframe()
