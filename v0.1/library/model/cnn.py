@@ -53,7 +53,7 @@ class CNN(Model):
                     strides=[1,1,1,1],
                     padding="VALID",
                     name="pool")
-                    pooled_outputs.append(pooled)
+                pooled_outputs.append(pooled)
                 # shape(pooled) : [days, 1, 1, num_filters]
                 # shape(pooled_outputs)
                 # [[days, 1, 1, num_filters], [days, 1, 1, num_filters], [days, 1, 1, num_filters]]
@@ -93,7 +93,3 @@ class CNN(Model):
         print ("Predict Something!!!!")
         pass
 
-
-if __name__ == "__main__":
-    cnn = CNN()
-    cnn.create_model([10,20], [2,3], 3, [[3,4],[1,5]], 6)
