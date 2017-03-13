@@ -1,0 +1,55 @@
+# config file fall into three sections.
+# DataCollect section, Predictor section, Trainer section
+# This Framework has the three main process as above mentioned.
+# Also, each algorithm and data transform functions 
+# can be configured in detail using additional sections.
+# 
+
+# DataCollect section is related in Framework.
+# such as data collect buf size or data transfer period
+[DataCollect]
+client_buf_size = 
+tranfer_period = 
+
+# ML_Process sections apply to trainer and predictor.
+# It can use more than one algorithm.
+# Each algorithm might be needed different data for training.
+[ML_Process]
+algo_num = 3
+algo_names = CNN, Kmeans, ANN
+
+# Each algorithm has different parameters.
+# Each section contains the data transform functions that will 
+# work before the algorithm is executed.
+[CNN]
+NR_Layer = 4 
+# ...
+
+train_data_source = /cnn_train_dir
+train_result_target = /cnn_result_dir
+predict_data_source = /cnn_predict_dir
+
+data_transform_num = 3
+data_transform_names = deduplicates, transpose, 1col_del
+
+[ANN]
+NR_Layer = 2
+# ...
+
+train_data_source = /ann_train_dir
+train_result_target = /ann_result_dir
+predict_data_source = /ann_predict_dir
+
+data_transform_num = 0
+data_transform_names =  
+
+[Kmeans]
+cluster_num = 5
+# ...
+
+train_data_source = /kmeans_train_dir
+train_result_target = /kmeans_result_dir
+predict_data_source = /kmeans_predict_dir
+
+data_transform_num = 2
+data_transform_names = transpose, 2col_del 
