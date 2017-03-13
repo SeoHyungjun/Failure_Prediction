@@ -13,7 +13,7 @@ if __name__ == "__main__":
         num_filters=2)
 
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
-        run_result = sess.run(pooled_outputs, feed_dict={input_x:[[1,2,3],[4,5,6],[7,8,9]]})
+        sess.run(tf.global_variables_initializer())
+        run_result = sess.run(cnn.aaa, feed_dict={cnn.input_x:[[1,2,3],[4,5,6],[7,8,9]]})
 
     print (run_result)

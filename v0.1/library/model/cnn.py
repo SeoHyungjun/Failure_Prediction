@@ -44,22 +44,18 @@ class CNN(Model):
                     name="conv")
                 # Apply nonlinearity
                 h = tf.nn.relu(tf.nn.bias_add(conv, b), name="relu")
-                # shape(h) : [days, window_height - filter_size + 1, 1, num_filters]
         
                 # Maxpooling over the outputs
                 pooled = tf.nn.max_pool(
                     h,
-                    ksize=[1, input_size[0] - filter_size[0] + 1, 1, 1],
+                    ksize=[1, input_size[0] - filter_size[0] + 1, input_size[1] - filter_size[1] + 1, 1],
                     strides=[1,1,1,1],
                     padding="VALID",
                     name="pool")
                 pooled_outputs.append(pooled)
-                # shape(pooled) : [days, 1, 1, num_filters]
-                # shape(pooled_outputs)
-                # [[days, 1, 1, num_filters], [days, 1, 1, num_filters], [days, 1, 1, num_filters]]
         
-        
-
+        self.aaa = pooled_outputs
+    
 
     def restore(self):
         pass
