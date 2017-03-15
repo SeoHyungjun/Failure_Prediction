@@ -10,6 +10,7 @@
 [DataCollect]
 client_buf_size = 
 tranfer_period = 
+collect_port = 
 
 # ML_Process sections apply to trainer and predictor.
 # It can use more than one algorithm.
@@ -17,6 +18,7 @@ tranfer_period =
 [ML_Process]
 algo_num = 3
 algo_names = CNN, Kmeans, ANN
+window_size = 10
 
 # Each algorithm has different parameters.
 # Each section contains the data transform functions that will 
@@ -30,7 +32,7 @@ train_result_target = /cnn_result_dir
 predict_data_source = /cnn_predict_dir
 
 data_transform_num = 3
-data_transform_names = deduplicates, transpose, 1col_del
+data_transform_names = deduplicates(1,3), transpose, 1col_del
 
 [ANN]
 NR_Layer = 2
