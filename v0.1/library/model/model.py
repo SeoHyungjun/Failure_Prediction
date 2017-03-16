@@ -37,3 +37,10 @@ class Model(ABC):
     @abstractmethod
     def eval(self):
         pass
+
+
+    def batch_iter():
+        pass
+
+    def make_dir():
+        

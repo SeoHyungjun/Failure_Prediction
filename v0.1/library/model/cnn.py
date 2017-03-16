@@ -5,7 +5,7 @@ import numpy as np
 class CNN(Model):
     ### CV parameter ###
 
-    def __init__(self):
+    def __init__(self, directory):
     ### env parameter(init) ###
         pass
 
@@ -24,7 +24,7 @@ class CNN(Model):
         # Placeholders for input, output and dropout
         self.input_x = tf.placeholder(tf.float32, [None, input_size[0], input_size[1]], name="input_x")
         self.expanded_input_x = tf.expand_dims(self.input_x, -1)
-        self.input_y = tf.placeholder(tf.float32, [None, num_output], name="input_y" )
+        self.input_y = tf.placeholder(tf.int32, [None, num_output], name="input_y" )
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
        
         # Keeping track of 12 regularization loss (optional)
@@ -96,16 +96,19 @@ class CNN(Model):
             l2_loss += tf.nn.l2_loss(W)
             l2_loss += tf.nn.l2_loss(b)
 
-            self.scores = tf.nn.xw_plus_b(NN_result[index+1], W, b, name="scores")
+            self.scores = tf.nn.xw_plus_b(NN_result[index+1], W, b, name="output")
+            self.softmax = tf.nn.softmax(self.scores, name="softmax_scores")
+            self.predictions = tf.argmax(self.scores, 1, name="predictions")
             
 
+        with tf.name_scope("loss"):
+            losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores, labels=self.input_y)
+            self.loss = tf.reduce_mean(losses) + (l2_reg_lambda * l2_loss)
+
         with tf.name_scope("eval_info"):
-            subtraction = tf.subtract(self.scores, self.input_y)
-            equal = tf.equal(self.scores, self.input_y)
+            correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
+            self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
 
-
-        self.test = conv_drop
-    
 
     def restore(self):
         pass
@@ -119,10 +122,10 @@ class CNN(Model):
         pass
 
 
-    def train(self, dev_sample_percentage, data_file_location, out_subdir, tag, batch_size, num_epochs, evaluate_every, checkpoint_every):
+    def train(self, dev_sample_percentage, data_file_path, out_subdir, tag, batch_size, num_epochs, evaluate_every, checkpoint_every):
     ### train parameter ###
     # dev_sample_percentage : percentage of the training data to use for validation"
-    # data_file_location : Data source for training
+    # data_file_path : Data source for training
     # out_subdir : directory for saving output
     # tag : added in output directory name
     # batch_size : Batch Size
@@ -131,7 +134,32 @@ class CNN(Model):
     # checkpoint_every : Save model after this many steps (default: 150)
     # allow_soft_placement : Allow device soft device placement
     # log_device_placement : Log placement of ops on devices
-    # =============================== ###  
+    
+    # optimizer step
+
+        # directory setting
+        # input directory, output directory
+        ###################
+
+
+        session_conf = tf.ConfigProto(
+            allow_soft_placement=True,
+            log_device_placement=False)
+
+        with tf.Session(config=session_conf) as sess:
+            global_step = tf.Variable(0, name="global_step", trainable=False)
+            optimizer = tf.train.AdamOptimizer(1e-3)
+            grads_and_vars = optimizer.compute_gradients(self.loss)
+            train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
+            
+            ## generate batch for train
+
+            sess.run(tf.global_variables_initializer())
+            _, run_result = sess.run([train_op, self.accuracy], feed_dict={self.input_x:[[[3,2],[5,4]], [[5,6],[8,9]]], self.input_y:[[0,1,0],[1,0,0]]})
+
+
+        print(run_result)
+
         pass
   
   
