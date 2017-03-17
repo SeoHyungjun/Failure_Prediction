@@ -31,6 +31,7 @@ class Collector():
                     print("perr has closed connection, fileno: {}".format(fd))
                 elif evt & select.EPOLLIN:
                     buf = self.sock_map[fd].recv(self.BUFSIZE)
+                    print("type : {}".format(type(buf)))
                     if len(buf) == 0:
                             self.ep.modify(fd, 0)
                             self.sock_map[fd].shutdown(socket.SHUT_RDWR)
