@@ -39,6 +39,4 @@ class Model(ABC):
     def eval(self):
         pass
 
-    def batch_iter(self, batch_size, num_epochs):
-        data_size = len(data)
 

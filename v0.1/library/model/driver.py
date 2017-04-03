@@ -2,10 +2,12 @@
 
 import cnn
 import tensorflow as tf
+import set_out_dir
 
 if __name__ == "__main__":
     cnn = cnn.CNN(directory="./")
-
+    set_out_dir.make_dir("K-means,CNN,NN")
+"""
     with tf.Graph().as_default():     
         cnn.create_model(
             input_size=[2,2], 
@@ -24,7 +26,7 @@ if __name__ == "__main__":
             checkpoint_every="100")
     
 
-"""
+
     session_conf = tf.ConfigProto(
         allow_soft_placement=True,
         log_device_placement=False)
