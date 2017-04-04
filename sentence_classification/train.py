@@ -58,7 +58,7 @@ x_sentences, y_type = formatting_data.load_data_and_labels(FLAGS.drive_log_file,
 # y_type      = [1, 0],                   [0, 1]                   , ...]
 len_y = len(y_type)
 
-# Build vocabulary(change work to index by dictionary)
+# Build vocabulary(change word to index by dictionary)
 max_document_length = max([len(sentence.split(" ")) for sentence in x_sentences])
 vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length)
 sentences_indexs = np.array(list(vocab_processor.fit_transform(x_sentences)))
