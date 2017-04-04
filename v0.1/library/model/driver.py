@@ -7,7 +7,7 @@ import set_out_dir
 if __name__ == "__main__":
     cnn = cnn.CNN(directory="./")
     set_out_dir.make_dir("K-means,CNN,NN")
-"""
+
     with tf.Graph().as_default():     
         cnn.create_model(
             input_size=[2,2], 
@@ -18,15 +18,15 @@ if __name__ == "__main__":
 
         cnn.train(
             dev_sample_percentage=0.1,
-            data_file_path="./",
-            tag="tag",
-            batch_size="20",
-            num_epochs="10",
-            evaluate_every="100",
-            checkpoint_every="100")
+            data_file_path="./ML_data/CNN/input/sample.csv",
+            tag="CNN",
+            batch_size=5,
+            num_epochs=10,
+            evaluate_every=100,
+            checkpoint_every=100)
     
 
-
+"""
     session_conf = tf.ConfigProto(
         allow_soft_placement=True,
         log_device_placement=False)

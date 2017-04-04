@@ -1,20 +1,20 @@
 import os
-import constant
+import constant as ct
 
 def make_dir(model_names):
-    constant.STR_DIRECTORY_MODEL = list(model_names.split(","))
-    if not os.path.exists(constant.STR_DERECTORY_ROOT):
-        os.makedirs(constant.STR_DERECTORY_ROOT)
-        for name in constant.STR_DIRECTORY_MODEL:
-            model_path = os.path.join(constant.STR_DERECTORY_ROOT, name)
+    ct.STR_DIRECTORY_MODEL = list(model_names.split(","))
+    if not os.path.exists(ct.STR_DERECTORY_ROOT):
+        os.makedirs(ct.STR_DERECTORY_ROOT)
+        for name in ct.STR_DIRECTORY_MODEL:
+            model_path = os.path.join(ct.STR_DERECTORY_ROOT, name)
             os.makedirs(model_path)
-            input_path = os.path.join(model_path, constant.STR_DERECTORY_INPUT)
+            input_path = os.path.join(model_path, ct.STR_DERECTORY_INPUT)
             os.makedirs(input_path)
-            saver_path = os.path.join(model_path, constant.STR_DERECTORY_SAVER)
+            saver_path = os.path.join(model_path, ct.STR_DERECTORY_SAVER)
             os.makedirs(saver_path)
-            summary_path = os.path.join(model_path, constant.STR_DERECTORY_SUMMARY)
+            summary_path = os.path.join(model_path, ct.STR_DERECTORY_SUMMARY)
             os.makedirs(summary_path)
-            train_path = os.path.join(summary_path, constant.STR_DERECTORY_TRAIN)
+            train_path = os.path.join(summary_path, ct.STR_DERECTORY_TRAIN)
             os.makedirs(train_path)
-            dev_path = os.path.join(summary_path, constant.STR_DERECTORY_DEV)
+            dev_path = os.path.join(summary_path, ct.STR_DERECTORY_DEV)
             os.makedirs(dev_path)

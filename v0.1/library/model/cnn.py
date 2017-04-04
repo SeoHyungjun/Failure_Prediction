@@ -1,6 +1,8 @@
 from model import *
 import tensorflow as tf
 import numpy as np
+import make_input
+import constant as ct
 
 class CNN(Model):
     ### CV parameter ###
@@ -122,46 +124,65 @@ class CNN(Model):
         pass
 
 
-    def train(self, dev_sample_percentage, data_file_path, out_subdir, tag, batch_size, num_epochs, evaluate_every, checkpoint_every):
+    def train(self, dev_sample_percentage, data_file_path, tag, batch_size, num_epochs, evaluate_every, saver_every, dropout_keep_prob=0.5, out_subdir=ct.STR_DERECTORY_ROOT):
     ### train parameter ###
     # dev_sample_percentage : percentage of the training data to use for validation"
     # data_file_path : Data source for training
-    # out_subdir : directory for saving output
     # tag : added in output directory name
     # batch_size : Batch Size
     # num_epochs : Number of training epochs
-    # evaluate_every : Evaluate model on dev set after this many sters (default: 150)
-    # checkpoint_every : Save model after this many steps (default: 150)
+    # evaluate_every : Evaluate model on dev set after this many steps (default: 150)
+    # saver_every : Save model after this many steps (default: 150)
     # allow_soft_placement : Allow device soft device placement
     # log_device_placement : Log placement of ops on devices
+    # out_subdir : directory for saving output
     
-    # optimizer step
 
-        # directory setting
-        # input directory, output directory
-        ###################
+        # Load training/validation data batch by batch
+        x, y = make_input.split_xy(csv_file_path=data_file_path)
+        x_train, x_val, y_train, y_val = make_input.divide_fold(x, y, num_fold=10)
+        batches = make_input.batch_iter(x_train, y_train, batch_size, num_epochs)
 
-
+        # setting session for training 
         session_conf = tf.ConfigProto(
             allow_soft_placement=True,
             log_device_placement=False)
 
+
+        # Training
         with tf.Session(config=session_conf) as sess:
+            # 1. Define Training procedure
             global_step = tf.Variable(0, name="global_step", trainable=False)
             optimizer = tf.train.AdamOptimizer(1e-3)
             grads_and_vars = optimizer.compute_gradients(self.loss)
             train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
-            
-            ## generate batch for train
 
+            # 2. setting summary(tensorboard) and saver(save learned graph) operation
+            saver = tf.train.Saver(tf.all_variables())
+
+            # 3. do training
             sess.run(tf.global_variables_initializer())
+            for batch in batches:
+                x_batch = batch[0]
+                y_batch = batch[1]
+                feed_dict = {
+                    self.input_x : x_batch,
+                    self.input_y : y_batch,
+                    self.dropout_keep_prob : dropout_keep_prob
+                }
+
+                _, step, loss, accuracy = sess.run(
+                    [train_op, global_step, self.loss, cnn.accuracy], feed_dict)
+                
+                
+
+            """    
+            print("End \'{}\' epoch\n".format(epoch + 1))
             _, run_result = sess.run([train_op, self.accuracy], feed_dict={self.input_x:[[[3,2],[5,4]], [[5,6],[8,9]]], self.input_y:[[0,1,0],[1,0,0]]})
 
 
         print(run_result)
-
-        pass
-  
+        """
   
     def run(self):
         print ("Predict Something!!!!")
