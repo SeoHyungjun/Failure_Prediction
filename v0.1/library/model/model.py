@@ -20,7 +20,15 @@ class Model(ABC):
         pass
     
     @abstractmethod
-    def restore(self):
+    def _restore(self):
+        pass
+  
+    @abstractmethod
+    def _save(self):
+        pass
+  
+    @abstractmethod
+    def _eval(self):
         pass
   
     @abstractmethod
@@ -29,14 +37,6 @@ class Model(ABC):
   
     @abstractmethod
     def run(self):
-        pass
-  
-    @abstractmethod
-    def save(self):
-        pass
-  
-    @abstractmethod
-    def eval(self):
         pass
 
 

@@ -1,12 +1,11 @@
 #! /usr/bin/python3
 
-import cnn
+import cnn as model1 
 import tensorflow as tf
-import set_out_dir
 
 if __name__ == "__main__":
-    cnn = cnn.CNN(directory="./")
-    set_out_dir.make_dir("K-means,CNN,NN")
+
+    cnn = model1.CNN(directory="./")
 
     with tf.Graph().as_default():     
         cnn.create_model(
@@ -18,12 +17,12 @@ if __name__ == "__main__":
 
         cnn.train(
             dev_sample_percentage=0.1,
-            data_file_path="./ML_data/CNN/input/sample.csv",
+            data_file_path="./input.csv",
             tag="CNN",
             batch_size=5,
             num_epochs=10,
             evaluate_every=100,
-            checkpoint_every=100)
+            saver_every=100)
     
 
 """

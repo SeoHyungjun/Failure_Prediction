@@ -2,6 +2,7 @@ from model import *
 import tensorflow as tf
 import numpy as np
 import make_input
+import set_out_dir
 import constant as ct
 
 class CNN(Model):
@@ -112,14 +113,14 @@ class CNN(Model):
             self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
 
 
-    def restore(self):
+    def _restore(self):
         pass
     
-    def save(self):
+    def _save(self):
         print ("Save model trained!!!")
         pass
       
-    def eval(self):
+    def _eval(self):
         print ("Eval model trained!!!")
         pass
 
@@ -137,6 +138,8 @@ class CNN(Model):
     # log_device_placement : Log placement of ops on devices
     # out_subdir : directory for saving output
     
+        # make output directory
+        set_out_dir.make_dir("CNN")
 
         # Load training/validation data batch by batch
         x, y = make_input.split_xy(csv_file_path=data_file_path)
@@ -158,7 +161,15 @@ class CNN(Model):
             train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
 
             # 2. setting summary(tensorboard) and saver(save learned graph) operation
+            loss_summary = tf.summary.scalar("loss", self.loss)
+            acuracy_summary = tf.summary.scalar("acuracy", self.acuracy)
+            summary_op = tf.summary.merge([loss.summary, acuracy_summary])
+
+            summary_dir = os.paht.join(
+            summary_writer = tf.train.SummaryWriter(out_subdir
+
             saver = tf.train.Saver(tf.all_variables())
+             
 
             # 3. do training
             sess.run(tf.global_variables_initializer())
@@ -171,8 +182,8 @@ class CNN(Model):
                     self.dropout_keep_prob : dropout_keep_prob
                 }
 
-                _, step, loss, accuracy = sess.run(
-                    [train_op, global_step, self.loss, cnn.accuracy], feed_dict)
+                _, step, summary, loss, accuracy = sess.run(
+                    [train_op, global_step, summary_op, self.loss, self.accuracy], feed_dict)
                 
                 
 
