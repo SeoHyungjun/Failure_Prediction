@@ -13,7 +13,7 @@ class CNN(Model):
         pass
 
 
-    def create_model(self, input_size, num_NN_nodes, num_output, filter_sizes, num_filters, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
+    def create_model(self, data_file_path, height, num_NN_nodes, num_output, filter_sizes, num_filters, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
     # Model parameter of create_model
     # input_size : size of input matrix(two-dimention), [height, width]  e.g. [3,4]
     # num_NN_nodes : fully connected NN nodes(array)  e.g. [3,4,5,2]
@@ -24,8 +24,12 @@ class CNN(Model):
 
     # pooling_size, dropout(Conv, NN), activation func, variable initializer
 
+        # Load input data
+        self.x, x_maxlen, self.y = make_input.split_xy(csv_file_path=data_file_path)
+        print("x_maxlen ={}".format(x_maxlen))
+
         # Placeholders for input, output and dropout
-        self.input_x = tf.placeholder(tf.float32, [None, input_size[0], input_size[1]], name="input_x")
+        self.input_x = tf.placeholder(tf.float32, [None, height, x_maxlen], name="input_x")
         self.expanded_input_x = tf.expand_dims(self.input_x, -1)
         self.input_y = tf.placeholder(tf.int32, [None, num_output], name="input_y" )
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
@@ -125,7 +129,7 @@ class CNN(Model):
         pass
 
 
-    def train(self, dev_sample_percentage, data_file_path, tag, batch_size, num_epochs, evaluate_every, saver_every, dropout_keep_prob=0.5, out_subdir=ct.STR_DERECTORY_ROOT):
+    def train(self, dev_sample_percentage, model_name, batch_size, num_epochs, evaluate_every, saver_every, dropout_keep_prob=0.5, out_subdir=ct.STR_DERECTORY_ROOT):
     ### train parameter ###
     # dev_sample_percentage : percentage of the training data to use for validation"
     # data_file_path : Data source for training
@@ -141,9 +145,8 @@ class CNN(Model):
         # make output directory
         set_out_dir.make_dir("CNN")
 
-        # Load training/validation data batch by batch
-        x, y = make_input.split_xy(csv_file_path=data_file_path)
-        x_train, x_val, y_train, y_val = make_input.divide_fold(x, y, num_fold=10)
+        # make training/validation data batch by batch
+        x_train, x_val, y_train, y_val = make_input.divide_fold(self.x, self.y, num_fold=10)
         batches = make_input.batch_iter(x_train, y_train, batch_size, num_epochs)
 
         # setting session for training 
@@ -162,18 +165,18 @@ class CNN(Model):
 
             # 2. setting summary(tensorboard) and saver(save learned graph) operation
             loss_summary = tf.summary.scalar("loss", self.loss)
-            acuracy_summary = tf.summary.scalar("acuracy", self.acuracy)
-            summary_op = tf.summary.merge([loss.summary, acuracy_summary])
+            accuracy_summary = tf.summary.scalar("accuracy", self.accuracy)
+            summary_op = tf.summary.merge([loss_summary, accuracy_summary])
 
-            summary_dir = os.paht.join(
-            summary_writer = tf.train.SummaryWriter(out_subdir
+#            summary_dir = os.paht.join(
+#            summary_writer = tf.train.SummaryWriter(out_subdir
 
             saver = tf.train.Saver(tf.all_variables())
              
 
             # 3. do training
             sess.run(tf.global_variables_initializer())
-            for batch in batches:
+            for batch in self.batches:
                 x_batch = batch[0]
                 y_batch = batch[1]
                 feed_dict = {

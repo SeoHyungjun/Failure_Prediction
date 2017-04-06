@@ -9,23 +9,24 @@ if __name__ == "__main__":
 
     with tf.Graph().as_default():     
         cnn.create_model(
-            input_size=[2,2], 
+            data_file_path="./input.csv",
+            height = 3,
             num_NN_nodes=[2,3], 
             num_output=3, 
             filter_sizes=[[2,2],[1,2]], 
             num_filters=1)
 
+"""
         cnn.train(
             dev_sample_percentage=0.1,
-            data_file_path="./input.csv",
-            tag="CNN",
+            model_name="CNN",
             batch_size=5,
             num_epochs=10,
             evaluate_every=100,
             saver_every=100)
     
 
-"""
+
     session_conf = tf.ConfigProto(
         allow_soft_placement=True,
         log_device_placement=False)

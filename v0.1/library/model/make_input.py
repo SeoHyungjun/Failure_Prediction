@@ -1,20 +1,33 @@
 import numpy as np
 import sys
+import pandas as pd
 
 def split_xy(csv_file_path):
-    data = open(csv_file_path, "r").readlines()
+    data = pd.read_csv(csv_file_path)
+#    data = open(csv_file_path, "r").readlines()
 
-    xy0 = data[0]
-    xy0 = xy0[:-1]
-    xy0 = xy0.split(",")
-    x = np.array([xy0[:-1]])
-    y = np.array(xy0[-1])
-    for xy in data[1:]:
-        xy = xy[:-1]
-        xy = xy.split(",")
+    x_maxlen = 0
+    
+    i, xy0 = next(data.iterrows())
+    print(xy0)
+    xy0 = xy0.as_matrix()
+#    x = np.array([xy0[:-1]])
+#    y = np.array([xy0[-1]])
+    print(x)
+    
+    x = np.array([], shape())
+    y = np.array()
+    for i, xy in data.iterrows():
+        xy = xy.as_matrix()
+        x_maxlen = max(x_maxlen, len(xy)-1)
         x = np.append(x, [xy[:-1]], axis=0)
         y = np.append(y, xy[-1])
-    return x, y
+    
+    if x_maxlen == 0:
+        print("x_maxlen = {}. Input data parameter is deficient.".format(x_maxlen))
+        sys.exit()
+    return x, x_maxlen, y
+
 
 def divide_fold(x, y, num_fold):
     """
