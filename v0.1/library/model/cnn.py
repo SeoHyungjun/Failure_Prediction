@@ -13,8 +13,9 @@ class CNN(Model):
         pass
 
 
-    def create_model(self, data_file_path, height, num_NN_nodes, num_output, filter_sizes, num_filters, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
+    def create_model(self, data_file_path, input_height, num_NN_nodes, num_output, filter_sizes, num_filters, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
     # Model parameter of create_model
+    # input_height : height of input matrix
     # input_size : size of input matrix(two-dimention), [height, width]  e.g. [3,4]
     # num_NN_nodes : fully connected NN nodes(array)  e.g. [3,4,5,2]
     # num_output : the number of output nodes. if regression, num_output = 1.
@@ -25,11 +26,10 @@ class CNN(Model):
     # pooling_size, dropout(Conv, NN), activation func, variable initializer
 
         # Load input data
-        self.x, x_maxlen, self.y = make_input.split_xy(csv_file_path=data_file_path)
-        print("x_maxlen ={}".format(x_maxlen))
+        self.x, x_len, self.y = make_input.split_xy(csv_file_path=data_file_path, x_height=input_height)
 
         # Placeholders for input, output and dropout
-        self.input_x = tf.placeholder(tf.float32, [None, height, x_maxlen], name="input_x")
+        self.input_x = tf.placeholder(tf.float32, [None, input_height, x_len], name="input_x")
         self.expanded_input_x = tf.expand_dims(self.input_x, -1)
         self.input_y = tf.placeholder(tf.int32, [None, num_output], name="input_y" )
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
@@ -57,7 +57,7 @@ class CNN(Model):
                 # Maxpooling over the outputs
                 pooled = tf.nn.max_pool(
                     conv_relu,
-                    ksize=[1, input_size[0] - filter_size[0] + 1, input_size[1] - filter_size[1] + 1, 1],
+                    ksize=[1, input_height - filter_size[0] + 1, x_len - filter_size[1] + 1, 1],
                     strides=[1,1,1,1],
                     padding="VALID",
                     name="pool")

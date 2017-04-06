@@ -10,7 +10,7 @@ if __name__ == "__main__":
     with tf.Graph().as_default():     
         cnn.create_model(
             data_file_path="./input.csv",
-            height = 3,
+            input_height = 2,
             num_NN_nodes=[2,3], 
             num_output=3, 
             filter_sizes=[[2,2],[1,2]], 

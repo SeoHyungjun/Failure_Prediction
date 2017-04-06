@@ -2,31 +2,35 @@ import numpy as np
 import sys
 import pandas as pd
 
-def split_xy(csv_file_path):
+
+def split_xy(csv_file_path, x_height):
     data = pd.read_csv(csv_file_path)
 #    data = open(csv_file_path, "r").readlines()
 
     x_maxlen = 0
-    
-    i, xy0 = next(data.iterrows())
-    print(xy0)
+
+    xy0 = next(data.iterrows())[1]
     xy0 = xy0.as_matrix()
-#    x = np.array([xy0[:-1]])
-#    y = np.array([xy0[-1]])
-    print(x)
-    
-    x = np.array([], shape())
-    y = np.array()
+    x_len = len(xy0[:-1])
+
+    x = np.empty((0, x_height, x_len), int)
+    window_queue = np.empty((x_height, x_len), int)
+    y = np.empty((0, 1), int)
+
     for i, xy in data.iterrows():
         xy = xy.as_matrix()
-        x_maxlen = max(x_maxlen, len(xy)-1)
-        x = np.append(x, [xy[:-1]], axis=0)
-        y = np.append(y, xy[-1])
-    
-    if x_maxlen == 0:
-        print("x_maxlen = {}. Input data parameter is deficient.".format(x_maxlen))
+
+        window_queue = np.delete(window_queue, 0, axis=0)
+        window_queue = np.append(window_queue, [xy[:-1]], axis=0)
+        
+        if i+1 >= x_height:
+            x = np.append(x, [window_queue], axis=0)
+            y = np.append(y, xy[-1])
+
+    if x_len == 0:
+        print("x_len = {}. Input data parameter is deficient.".format(x_len))
         sys.exit()
-    return x, x_maxlen, y
+    return x, x_len, y
 
 
 def divide_fold(x, y, num_fold):
