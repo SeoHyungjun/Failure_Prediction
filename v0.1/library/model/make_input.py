@@ -3,29 +3,31 @@ import sys
 import pandas as pd
 
 
-def split_xy(csv_file_path, x_height):
+def split_xy(csv_file_path, x_height, y_size):
     data = pd.read_csv(csv_file_path)
 #    data = open(csv_file_path, "r").readlines()
 
-    x_maxlen = 0
+    x_len = 0
 
     xy0 = next(data.iterrows())[1]
     xy0 = xy0.as_matrix()
     x_len = len(xy0[:-1])
 
     x = np.empty((0, x_height, x_len), int)
-    window_queue = np.empty((x_height, x_len), int)
-    y = np.empty((0, 1), int)
+    x_window_queue = np.empty((x_height, x_len), int)
+    y = np.empty((0, y_size), int)
 
     for i, xy in data.iterrows():
         xy = xy.as_matrix()
 
-        window_queue = np.delete(window_queue, 0, axis=0)
-        window_queue = np.append(window_queue, [xy[:-1]], axis=0)
-        
+        x_window_queue = np.delete(x_window_queue, 0, axis=0)
+        x_window_queue = np.append(x_window_queue, [xy[:-1]], axis=0)
+
         if i+1 >= x_height:
-            x = np.append(x, [window_queue], axis=0)
-            y = np.append(y, xy[-1])
+            x = np.append(x, [x_window_queue], axis=0)
+            y_tmp = [0]*(y_size)
+            y_tmp[int(xy[-1])] = 1
+            y = np.append(y, [y_tmp], axis=0)
 
     if x_len == 0:
         print("x_len = {}. Input data parameter is deficient.".format(x_len))

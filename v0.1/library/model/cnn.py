@@ -26,7 +26,7 @@ class CNN(Model):
     # pooling_size, dropout(Conv, NN), activation func, variable initializer
 
         # Load input data
-        self.x, x_len, self.y = make_input.split_xy(csv_file_path=data_file_path, x_height=input_height)
+        self.x, x_len, self.y = make_input.split_xy(csv_file_path=data_file_path, x_height=input_height, y_size=num_output)
 
         # Placeholders for input, output and dropout
         self.input_x = tf.placeholder(tf.float32, [None, input_height, x_len], name="input_x")
@@ -171,12 +171,12 @@ class CNN(Model):
 #            summary_dir = os.paht.join(
 #            summary_writer = tf.train.SummaryWriter(out_subdir
 
-            saver = tf.train.Saver(tf.all_variables())
+            saver = tf.train.Saver(tf.global_variables())
              
 
             # 3. do training
             sess.run(tf.global_variables_initializer())
-            for batch in self.batches:
+            for batch in batches:
                 x_batch = batch[0]
                 y_batch = batch[1]
                 feed_dict = {

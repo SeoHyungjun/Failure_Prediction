@@ -12,11 +12,10 @@ if __name__ == "__main__":
             data_file_path="./input.csv",
             input_height = 2,
             num_NN_nodes=[2,3], 
-            num_output=3, 
+            num_output=2, 
             filter_sizes=[[2,2],[1,2]], 
             num_filters=1)
 
-"""
         cnn.train(
             dev_sample_percentage=0.1,
             model_name="CNN",
@@ -26,7 +25,7 @@ if __name__ == "__main__":
             saver_every=100)
     
 
-
+"""
     session_conf = tf.ConfigProto(
         allow_soft_placement=True,
         log_device_placement=False)
