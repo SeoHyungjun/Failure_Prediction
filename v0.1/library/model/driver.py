@@ -7,7 +7,11 @@ if __name__ == "__main__":
 
     cnn = model1.CNN(directory="./")
 
-    with tf.Graph().as_default():     
+    graph = tf.Graph()
+    with graph.as_default():
+        
+        cnn.restore(graph, model_name="CNN")
+        """
         cnn.create_model(
             data_file_path="./input.csv",
             input_height = 2,
@@ -15,12 +19,13 @@ if __name__ == "__main__":
             num_output=2, 
             filter_sizes=[[2,2],[1,2]], 
             num_filters=1)
-
+        """
+        
         cnn.train(
             dev_sample_percentage=0.1,
             model_name="CNN",
             batch_size=5,
-            num_epochs=10,
+            num_epochs=3,
             evaluate_every=100,
             saver_every=100)
     

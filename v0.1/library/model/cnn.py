@@ -119,12 +119,16 @@ class CNN(Model):
             tf.summary.scalar("accuracy_summary", accuracy)
 
 
-    def _restore(self):
-        pass
+    def restore(self, graph, model_name):
+        model_dir = os.path.join(ct.STR_DERECTORY_ROOT, model_name, ct.STR_DERECTORY_GRAPH, "model")
+
+        checkpoint_file = tf.train.latest_checkpoint(model_dir)
+        restorer = tf.train.import_meta_graph("{}-300.meta".format(model_dir))
+        with tf.Session() as sess:
+            restorer.restore(sess, model_dir)
+        self.input_x = graph.get_operation_by_name("input_x").outputs[0]
+        self.input_y = graph.get_operation_by_name("input_y").outputs[0]
     
-    def _save(self):
-        print ("Save model trained!!!")
-        pass
       
     def _eval(self):
         print ("Eval model trained!!!")
@@ -147,6 +151,12 @@ class CNN(Model):
         # make output directory
         set_out_dir.make_dir("CNN")
 
+        # set output directory of tensorflow output
+        summary_dir = os.path.join(ct.STR_DERECTORY_ROOT, model_name, ct.STR_DERECTORY_SUMMARY) 
+        summary_train_dir = os.path.join(summary_dir, ct.STR_DERECTORY_SUMMARY_TRAIN) 
+        summary_dev_dir = os.path.join(summary_dir, ct.STR_DERECTORY_SUMMARY_DEV)
+        model_dir = os.path.join(ct.STR_DERECTORY_ROOT, model_name, ct.STR_DERECTORY_GRAPH, "model")
+
         # make training/validation data batch by batch
         x_train, x_val, y_train, y_val = make_input.divide_fold(self.x, self.y, num_fold=10)
         batches = make_input.batch_iter(x_train, y_train, batch_size, num_epochs)
@@ -165,15 +175,16 @@ class CNN(Model):
             grads_and_vars = optimizer.compute_gradients(self.loss)
             train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
 
-            # 2. setting summary(tensorboard) and saver(save learned graph) operation
+            # 2. setting summary writer(tensorboard) and saver(save learned graph) operation
             summary_op = tf.summary.merge_all()
-            train_writer = tf.summary.FileWriter("./ML_data/CNN/summary/train", sess.graph)
+            train_writer = tf.summary.FileWriter(summary_train_dir, sess.graph)
 
-            saver = tf.train.Saver(tf.global_variables())
+            model_saver = tf.train.Saver(tf.global_variables())
              
 
             # 3. do training
             sess.run(tf.global_variables_initializer())
+#            tf.train.export_meta_graph(model_dir)
             for batch in batches:
                 x_batch = batch[0]
                 y_batch = batch[1]
@@ -186,15 +197,10 @@ class CNN(Model):
                 _, step, summary = sess.run(
                     [train_op, global_step, summary_op], feed_dict)
                 train_writer.add_summary(summary, step)
-                
+                if step % saver_every == 0:
+                    model_saver.save(sess, model_dir, global_step=step)
+                    print("Save leanred graph at step {}".format(step))
 
-            """    
-            print("End \'{}\' epoch\n".format(epoch + 1))
-            _, run_result = sess.run([train_op, self.accuracy], feed_dict={self.input_x:[[[3,2],[5,4]], [[5,6],[8,9]]], self.input_y:[[0,1,0],[1,0,0]]})
-
-
-        print(run_result)
-        """
   
     def run(self):
         print ("Predict Something!!!!")

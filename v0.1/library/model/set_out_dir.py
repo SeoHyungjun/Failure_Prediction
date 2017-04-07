@@ -13,7 +13,7 @@ def make_dir(model_name):
 
         summary_path = os.path.join(model_path, ct.STR_DERECTORY_SUMMARY)
         os.makedirs(summary_path)
-        summary_train_path = os.path.join(summary_path, "train")
+        summary_train_path = os.path.join(summary_path, ct.STR_DERECTORY_SUMMARY_TRAIN)
         os.makedirs(summary_train_path)
-        summary_dev_path = os.path.join(summary_path, "dev")
+        summary_dev_path = os.path.join(summary_path, ct.STR_DERECTORY_SUMMARY_DEV)
         os.makedirs(summary_dev_path)
