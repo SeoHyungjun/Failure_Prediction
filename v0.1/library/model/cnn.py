@@ -111,10 +111,12 @@ class CNN(Model):
         with tf.name_scope("loss"):
             losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores, labels=self.input_y)
             self.loss = tf.reduce_mean(losses) + (l2_reg_lambda * l2_loss)
+            tf.summary.scalar("loss_summary", self.loss)
 
         with tf.name_scope("eval_info"):
             correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
-            self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
+            accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
+            tf.summary.scalar("accuracy_summary", accuracy)
 
 
     def _restore(self):
@@ -164,12 +166,8 @@ class CNN(Model):
             train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
 
             # 2. setting summary(tensorboard) and saver(save learned graph) operation
-            loss_summary = tf.summary.scalar("loss", self.loss)
-            accuracy_summary = tf.summary.scalar("accuracy", self.accuracy)
-            summary_op = tf.summary.merge([loss_summary, accuracy_summary])
-
-#            summary_dir = os.paht.join(
-#            summary_writer = tf.train.SummaryWriter(out_subdir
+            summary_op = tf.summary.merge_all()
+            train_writer = tf.summary.FileWriter("./ML_data/CNN/summary/train", sess.graph)
 
             saver = tf.train.Saver(tf.global_variables())
              
@@ -185,9 +183,9 @@ class CNN(Model):
                     self.dropout_keep_prob : dropout_keep_prob
                 }
 
-                _, step, summary, loss, accuracy = sess.run(
-                    [train_op, global_step, summary_op, self.loss, self.accuracy], feed_dict)
-                
+                _, step, summary = sess.run(
+                    [train_op, global_step, summary_op], feed_dict)
+                train_writer.add_summary(summary, step)
                 
 
             """    

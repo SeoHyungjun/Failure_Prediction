@@ -15,5 +15,5 @@ def make_dir(model_name):
         os.makedirs(summary_path)
         summary_train_path = os.path.join(summary_path, "train")
         os.makedirs(summary_train_path)
-        summary_dev_path = os.path.join(summary_path, "summary")
+        summary_dev_path = os.path.join(summary_path, "dev")
         os.makedirs(summary_dev_path)
