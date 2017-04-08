@@ -3,7 +3,7 @@ import sys
 import pandas as pd
 
 
-def split_xy(csv_file_path, x_height, y_size):
+def split_xy(csv_file_path, y_size, x_height=1):
     data = pd.read_csv(csv_file_path)
 #    data = open(csv_file_path, "r").readlines()
 

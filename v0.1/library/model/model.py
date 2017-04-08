@@ -20,7 +20,7 @@ class Model(ABC):
         pass
     
     @abstractmethod
-    def restore(self):
+    def restore_all(self):
         pass
   
     @abstractmethod

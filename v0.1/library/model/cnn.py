@@ -35,7 +35,8 @@ class CNN(Model):
         # Keeping track of 12 regularization loss (optional)
         l2_loss = tf.constant(0.0)
         pooled_outputs = []
-    
+
+        # Convolution & Maxpooling layer
         for i, filter_size in enumerate(filter_sizes):
             with tf.name_scope("conv-maxpool-{}".format(filter_size[0])):
                 # Convolution Later
@@ -92,6 +93,7 @@ class CNN(Model):
                 pre_num_node = num_node
 
 
+        # predict & classify layer
         with tf.name_scope("output_layer"):
             W = tf.get_variable(
                 "W",
@@ -106,35 +108,43 @@ class CNN(Model):
             self.predictions = tf.argmax(self.scores, 1, name="predictions")
             
 
-        with tf.name_scope("loss"):
-            losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores, labels=self.input_y)
-            self.loss = tf.add(tf.reduce_mean(losses), (l2_reg_lambda * l2_loss), name="A")
-            tf.summary.scalar("loss_summary", self.loss)
-
+        # evalute layer
         with tf.name_scope("eval_info"):
+            losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores, labels=self.input_y)
+            self.objective = tf.add(tf.reduce_mean(losses), (l2_reg_lambda * l2_loss), name="objective")
+            tf.summary.scalar("loss", self.objective)
             correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
             accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
-            tf.summary.scalar("accuracy_summary", accuracy)
+            tf.summary.scalar("accuracy", accuracy)
+
+        # 1. Define Training procedure
+        self.global_step = tf.Variable(0, name="global_step", trainable=False)
+        optimizer = tf.train.AdamOptimizer(1e-3)
+        grads_and_vars = optimizer.compute_gradients(self.objective)
+        self.train_op = optimizer.apply_gradients(grads_and_vars, global_step=self.global_step, name="train_op")
 
 
-    def restore(self, sess, graph, model_name):
+    def restore_all(self, session, model_name):
         checkpoint_file_path = os.path.join(ct.STR_DERECTORY_ROOT, model_name, ct.STR_DERECTORY_GRAPH)
 
-        checkpoint_file = tf.train.latest_checkpoint(checkpoint_file_path)
-        restorer = tf.train.import_meta_graph("{}.meta".format(checkpoint_file))
-        restorer.restore(sess, "{}".format(checkpoint_file))
+        latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
+        restorer = tf.train.import_meta_graph("{}.meta".format(latest_model))
+        restorer.restore(session, "{}".format(latest_model))
+    
+        self.input_x = session.graph.get_operation_by_name("input_x").outputs[0]
+        self.input_y = session.graph.get_operation_by_name("input_y").outputs[0]
+        self.dropout_keep_prob = session.graph.get_operation_by_name("dropout_keep_prob").outputs[0]
+        self.global_step = session.graph.get_operation_by_name("global_step").outputs[0]
+        print(self.global_step.eval())
 
-        self.input_x = graph.get_operation_by_name("input_x").outputs[0]
-        self.input_y = graph.get_operation_by_name("input_y").outputs[0]
-        self.dropout_keep_prob = graph.get_operation_by_name("dropout_keep_prob").outputs[0]
-        self.loss = graph.get_operation_by_name("A").outputs[0]
-      
+        self.train_op = session.graph.get_operation_by_name("train_op").outputs[0]
+#        self.objective = session.graph.get_operation_by_name("eval_info/objective").outputs[0]
+         
+
     def _eval(self):
-        print ("Eval model trained!!!")
         pass
 
-
-    def train(self, x, y, sess, dev_sample_percentage, model_name, batch_size, num_epochs, evaluate_every, saver_every, dropout_keep_prob=0.5, out_subdir=ct.STR_DERECTORY_ROOT):
+    def train(self, x, y, session, dev_sample_percentage, model_name, batch_size, num_epochs, evaluate_every, saver_every, dropout_keep_prob=0.5, out_subdir=ct.STR_DERECTORY_ROOT):
     ### train parameter ###
     # dev_sample_percentage : percentage of the training data to use for validation"
     # data_file_path : Data source for training
@@ -163,20 +173,15 @@ class CNN(Model):
 
 
         # Training
-        # 1. Define Training procedure
-        global_step = tf.Variable(0, name="global_step", trainable=False)
-        optimizer = tf.train.AdamOptimizer(1e-3)
-        grads_and_vars = optimizer.compute_gradients(self.loss)
-        train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
 
         # 2. setting summary writer(tensorboard) and saver(save learned graph) operation
         summary_op = tf.summary.merge_all()
-        train_writer = tf.summary.FileWriter(summary_train_dir, sess.graph)
+        train_writer = tf.summary.FileWriter(summary_train_dir, session.graph)
+        dev_writer = tf.summary.FileWriter(summary_dev_dir, session.graph)
         model_saver = tf.train.Saver(tf.global_variables())
          
         # 3. do training
-        sess.run(tf.global_variables_initializer())
-#        tf.train.export_meta_graph(model_prefix)
+        session.run(tf.global_variables_initializer())
         for batch in batches:
             x_batch = batch[0]
             y_batch = batch[1]
@@ -185,15 +190,32 @@ class CNN(Model):
                 self.input_y : y_batch,
                 self.dropout_keep_prob : dropout_keep_prob
             }
-            _, step, summary = sess.run(
-                [train_op, global_step, summary_op], feed_dict)
-            train_writer.add_summary(summary, step)
-            if step % saver_every == 0:
-                model_saver.save(sess, model_prefix, global_step=step)
-                print("Save leanred graph at step {}".format(step))
+            _, current_step, summary_train = session.run(
+                [self.train_op, self.global_step, summary_op], feed_dict)
+            train_writer.add_summary(summary_train, current_step)
+            if current_step % saver_every == 0:
+                model_saver.save(session, model_prefix, global_step=current_step)
+                print("Save leanred graph at step {}".format(current_step))
+            if current_step % evaluate_every == 0:
+                feed_dict = {
+                    self.input_x : x_val,
+                    self.input_y : y_val,
+                    self.dropout_keep_prob : 1.0
+                }
+                current_step, summary_dev = session.run(
+                    [self.global_step, summary_op], feed_dict)
+                print ("Eval model trained at step {}".format(current_step))
+                dev_writer.add_summary(summary_dev, current_step)
 
   
-    def run(self):
-        print ("Predict Something!!!!")
-        pass
+    def run(self, x, y, session):
+        feed_dict = {
+            self.input_x : x,
+            self.input_y : y,
+            self.dropout_keep_prob : 1.0
+        }
+
+        result_op = session.graph.get_operation_by_name("output_layer/predictions").outputs[0]
+        result = session.run([result_op], feed_dict)
+        print (result)
 
