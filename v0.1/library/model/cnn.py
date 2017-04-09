@@ -2,7 +2,7 @@ from model import *
 import tensorflow as tf
 import numpy as np
 import make_input
-import set_out_dir
+import set_output_dir
 import constant as ct
 
 class CNN(Model):
@@ -10,7 +10,7 @@ class CNN(Model):
 
     def __init__(self, algorithm_name, session):
         # make output directory
-        self.model_path, self.summary_train_path, self.summary_dev_path = set_out_dir.make_dir(algorithm_name)
+        self.model_path, self.summary_train_path, self.summary_dev_path = set_output_dir.make_dir(algorithm_name)
         # set output directory of tensorflow output
         self.model_prefix = os.path.join(self.model_path, ct.STR_SAVED_MODEL_PREFIX) 
         self.session = session
