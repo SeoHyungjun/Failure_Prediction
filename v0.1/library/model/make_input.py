@@ -3,19 +3,18 @@ import sys
 import pandas as pd
 
 
-def split_xy(csv_file_path, y_size, x_height=1):
+def split_xy(csv_file_path, num_y_type, x_height=1):
     data = pd.read_csv(csv_file_path)
-#    data = open(csv_file_path, "r").readlines()
 
-    x_len = 0
+    x_width = 0
 
     xy0 = next(data.iterrows())[1]
     xy0 = xy0.as_matrix()
-    x_len = len(xy0[:-1])
+    x_width = len(xy0[:-1])
 
-    x = np.empty((0, x_height, x_len), int)
-    x_window_queue = np.empty((x_height, x_len), int)
-    y = np.empty((0, y_size), int)
+    x = np.empty((0, x_height, x_width), int)
+    x_window_queue = np.empty((x_height, x_width), int)
+    y = np.empty((0, num_y_type), int)
 
     for i, xy in data.iterrows():
         xy = xy.as_matrix()
@@ -25,14 +24,14 @@ def split_xy(csv_file_path, y_size, x_height=1):
 
         if i+1 >= x_height:
             x = np.append(x, [x_window_queue], axis=0)
-            y_tmp = [0]*(y_size)
+            y_tmp = [0]*(num_y_type)
             y_tmp[int(xy[-1])] = 1
             y = np.append(y, [y_tmp], axis=0)
 
-    if x_len == 0:
-        print("x_len = {}. Input data parameter is deficient.".format(x_len))
+    if x_width == 0:
+        print("x_width = {}. Input data parameter is deficient.".format(x_width))
         sys.exit()
-    return x, x_len, y
+    return x, x_width, y
 
 
 def divide_fold(x, y, num_fold):
@@ -40,14 +39,14 @@ def divide_fold(x, y, num_fold):
     divide as N fold, select only one fold as validation set.
     other folds are used as training set
     """
-    len_y = len(y)
-    if len_y < 2:
+    num_y_type = len(y)
+    if num_y_type < 2:
         print("Too small data set. Need more data... exit.")
         sys.exit()
 
     # Randomly shuffle data
     np.random.seed()
-    shuffle_indices = np.random.permutation(np.arange(len_y))
+    shuffle_indices = np.random.permutation(np.arange(num_y_type))
     x_shuffled = x[shuffle_indices]
     y_shuffled = y[shuffle_indices]
     
@@ -60,7 +59,7 @@ def divide_fold(x, y, num_fold):
     else:
         val_percentage = float(1) /float(num_fold)
 
-    val_index = -1*int(val_percentage * float(len_y))
+    val_index = -1*int(val_percentage * float(num_y_type))
     if val_index == 0:
         val_index = -1   # num_fold == 1
     x_train, x_val = x_shuffled[:val_index], x_shuffled[val_index:]
@@ -70,18 +69,18 @@ def divide_fold(x, y, num_fold):
 
 
 def batch_iter(x, y, batch_size, num_epochs):
-    x_size = len(x)
-    if x_size != len(y):
-        print("size of x and size of y are different")
+    num_x = len(x)
+    if num_x != len(y):
+        print("the number of x and the number of y are different")
         sys.exit()
 
-    if x_size % batch_size == 0:
-        num_batches_per_epoch = int(x_size/batch_size)
+    if num_x % batch_size == 0:
+        num_batches_per_epoch = int(num_x/batch_size)
     else:
-        num_batches_per_epoch = int(x_size/batch_size) + 1
+        num_batches_per_epoch = int(num_x/batch_size) + 1
     for epoch in range(num_epochs):
         for num_batch in range(num_batches_per_epoch):
             start_index = num_batch * batch_size
-            end_index = min(start_index + batch_size, x_size)
+            end_index = min(start_index + batch_size, num_x)
             print("Start \'{}\' epoch\n".format(epoch + 1))
             yield [x[start_index:end_index], y[start_index:end_index]]

@@ -8,28 +8,28 @@ import constant as ct
 class CNN(Model):
     ### CV parameter ###
 
-    def __init__(self, directory):
-    ### env parameter(init) ###
-        pass
+    def __init__(self, algorithm_name, session):
+        # make output directory
+        self.model_path, self.summary_train_path, self.summary_dev_path = set_out_dir.make_dir(algorithm_name)
+        # set output directory of tensorflow output
+        self.model_prefix = os.path.join(self.model_path, ct.STR_SAVED_MODEL_PREFIX) 
+        self.session = session
 
 
-    def create_model(self, x_height, x_len, num_NN_nodes, y_size, filter_sizes, num_filters, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
-    # Model parameter of create_model
+    def create_model(self, x_height, x_width, num_NN_nodes, num_y_type, filter_sizes, num_filters, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
     # x_height : height of input matrix
-    # input_size : size of input matrix(two-dimention), [height, width]  e.g. [3,4]
     # num_NN_nodes : fully connected NN nodes(array)  e.g. [3,4,5,2]
-    # y_size : the number of output nodes. if regression, y_size = 1.
-    # filter_sizes : list of size of filter matrix(two-dimention)  e.g. [[1,2], [2,3], ...]
+    # num_y_type : the number of output nodes. if regression, num_y_type == 1.
+    # filter_sizes : list of size of filter matrix(two-dimention), [height, width]  e.g. [[1,2], [2,3], ...]
     # numb_filters : the number of each size of filter
     # regularization : dropout_keep_prob, l2_reg_lambda(when not applied, each value are 1.0, 0.0)
 
     # pooling_size, dropout(Conv, NN), activation func, variable initializer
 
-
         # Placeholders for input, output and dropout
-        self.input_x = tf.placeholder(tf.float32, [None, x_height, x_len], name="input_x")
+        self.input_x = tf.placeholder(tf.float32, [None, x_height, x_width], name="input_x")
         self.expanded_input_x = tf.expand_dims(self.input_x, -1)
-        self.input_y = tf.placeholder(tf.int32, [None, y_size], name="input_y" )
+        self.input_y = tf.placeholder(tf.int32, [None, num_y_type], name="input_y" )
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
        
         # Keeping track of 12 regularization loss (optional)
@@ -56,7 +56,7 @@ class CNN(Model):
                 # Maxpooling over the outputs
                 pooled = tf.nn.max_pool(
                     conv_relu,
-                    ksize=[1, x_height - filter_size[0] + 1, x_len - filter_size[1] + 1, 1],
+                    ksize=[1, x_height - filter_size[0] + 1, x_width - filter_size[1] + 1, 1],
                     strides=[1,1,1,1],
                     padding="VALID",
                     name="pool")
@@ -69,8 +69,7 @@ class CNN(Model):
 
         with tf.name_scope("conv-dropout"):
             conv_drop = tf.nn.dropout(pooled_flat, dropout_keep_prob)
-        
-        
+            
         # Hidden_NN layer
         pre_num_node = num_filters_total
         NN_result = [None] * (len(num_NN_nodes) + 1)
@@ -92,14 +91,13 @@ class CNN(Model):
                     NN_result[index+1] = tf.nn.dropout(NN_result[index+1], dropout_keep_prob)
                 pre_num_node = num_node
 
-
-        # predict & classify layer
+        # Predict & Classify layer
         with tf.name_scope("output_layer"):
             W = tf.get_variable(
                 "W",
-                shape=[pre_num_node, y_size],
+                shape=[pre_num_node, num_y_type],
                 initializer=tf.contrib.layers.xavier_initializer())
-            b = tf.Variable(tf.constant(0.1, shape=[y_size]), name="b")
+            b = tf.Variable(tf.constant(0.1, shape=[num_y_type]), name="b")
             l2_loss += tf.nn.l2_loss(W)
             l2_loss += tf.nn.l2_loss(b)
 
@@ -107,8 +105,7 @@ class CNN(Model):
             self.softmax = tf.nn.softmax(self.scores, name="softmax_scores")
             self.predictions = tf.argmax(self.scores, 1, name="predictions")
             
-
-        # evalute layer
+        # Evaluation layer
         with tf.name_scope("eval_info"):
             losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores, labels=self.input_y)
             self.objective = tf.add(tf.reduce_mean(losses), (l2_reg_lambda * l2_loss), name="objective")
@@ -117,71 +114,56 @@ class CNN(Model):
             accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
             tf.summary.scalar("accuracy", accuracy)
 
-        # 1. Define Training procedure
-        self.global_step = tf.Variable(0, name="global_step", trainable=False)
-        optimizer = tf.train.AdamOptimizer(1e-3)
-        grads_and_vars = optimizer.compute_gradients(self.objective)
-        self.train_op = optimizer.apply_gradients(grads_and_vars, global_step=self.global_step, name="train_op")
+        # Training operation
+        with tf.name_scope("train"):
+            self.global_step = tf.Variable(0, name="global_step", trainable=False)
+            optimizer = tf.train.AdamOptimizer(1e-3)
+            grads_and_vars = optimizer.compute_gradients(self.objective)
+            self.train_op = optimizer.apply_gradients(grads_and_vars, global_step=self.global_step, name="train_op")
+
+        # Initialize all variables of tensor
+        self.session.run(tf.global_variables_initializer())
 
 
-    def restore_all(self, session, model_name):
-        checkpoint_file_path = os.path.join(ct.STR_DERECTORY_ROOT, model_name, ct.STR_DERECTORY_GRAPH)
+    def restore_all(self, algorithm_name):
+        checkpoint_file_path = os.path.join(ct.STR_DERECTORY_ROOT, algorithm_name, ct.STR_DERECTORY_GRAPH)
 
+        # restore graph and variables
         latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
         restorer = tf.train.import_meta_graph("{}.meta".format(latest_model))
-        restorer.restore(session, "{}".format(latest_model))
+        restorer.restore(self.session, "{}".format(latest_model))
     
-        self.input_x = session.graph.get_operation_by_name("input_x").outputs[0]
-        self.input_y = session.graph.get_operation_by_name("input_y").outputs[0]
-        self.dropout_keep_prob = session.graph.get_operation_by_name("dropout_keep_prob").outputs[0]
-        self.global_step = session.graph.get_operation_by_name("global_step").outputs[0]
-        print(self.global_step.eval())
+        # Restore input operation
+        self.input_x = self.session.graph.get_operation_by_name("input_x").outputs[0]
+        self.input_y = self.session.graph.get_operation_by_name("input_y").outputs[0]
+        self.dropout_keep_prob = self.session.graph.get_operation_by_name("dropout_keep_prob").outputs[0]
 
-        self.train_op = session.graph.get_operation_by_name("train_op").outputs[0]
-#        self.objective = session.graph.get_operation_by_name("eval_info/objective").outputs[0]
+        # Restore train operation
+        self.train_op = self.session.graph.get_operation_by_name("train/train_op").outputs[0]
+        self.global_step = self.session.graph.get_operation_by_name("train/global_step").outputs[0]
          
 
-    def _eval(self):
-        pass
-
-    def train(self, x, y, session, dev_sample_percentage, model_name, batch_size, num_epochs, evaluate_every, saver_every, dropout_keep_prob=0.5, out_subdir=ct.STR_DERECTORY_ROOT):
+    def train(self, x, y, dev_sample_percentage, batch_size, num_epochs, evaluate_every, saver_every, dropout_keep_prob=0.5):
     ### train parameter ###
     # dev_sample_percentage : percentage of the training data to use for validation"
-    # data_file_path : Data source for training
-    # tag : added in output directory name
     # batch_size : Batch Size
     # num_epochs : Number of training epochs
     # evaluate_every : Evaluate model on dev set after this many steps (default: 150)
     # saver_every : Save model after this many steps (default: 150)
     # allow_soft_placement : Allow device soft device placement
     # log_device_placement : Log placement of ops on devices
-    # out_subdir : directory for saving output
     
-        # make output directory
-        set_out_dir.make_dir("CNN")
-
-        # set output directory of tensorflow output
-        summary_dir = os.path.join(ct.STR_DERECTORY_ROOT, model_name, ct.STR_DERECTORY_SUMMARY) 
-        summary_train_dir = os.path.join(summary_dir, ct.STR_DERECTORY_SUMMARY_TRAIN) 
-        summary_dev_dir = os.path.join(summary_dir, ct.STR_DERECTORY_SUMMARY_DEV)
-        model_dir = os.path.join(ct.STR_DERECTORY_ROOT, model_name, ct.STR_DERECTORY_GRAPH)
-        model_prefix = os.path.join(model_dir, ct.STR_SAVED_MODEL_PREFIX)
-
         # make training/validation data batch by batch
         x_train, x_val, y_train, y_val = make_input.divide_fold(x, y, num_fold=10)
         batches = make_input.batch_iter(x_train, y_train, batch_size, num_epochs)
 
+        # Summary writer(tensorboard) & Saver(save learned model), maybe not registered in graph
+        summary_op = tf.summary.merge_all()
+        train_writer = tf.summary.FileWriter(self.summary_train_path, self.session.graph)
+        dev_writer = tf.summary.FileWriter(self.summary_dev_path, self.session.graph)
+        model_saver = tf.train.Saver(tf.global_variables())
 
         # Training
-
-        # 2. setting summary writer(tensorboard) and saver(save learned graph) operation
-        summary_op = tf.summary.merge_all()
-        train_writer = tf.summary.FileWriter(summary_train_dir, session.graph)
-        dev_writer = tf.summary.FileWriter(summary_dev_dir, session.graph)
-        model_saver = tf.train.Saver(tf.global_variables())
-         
-        # 3. do training
-        session.run(tf.global_variables_initializer())
         for batch in batches:
             x_batch = batch[0]
             y_batch = batch[1]
@@ -190,11 +172,11 @@ class CNN(Model):
                 self.input_y : y_batch,
                 self.dropout_keep_prob : dropout_keep_prob
             }
-            _, current_step, summary_train = session.run(
+            _, current_step, summary_train = self.session.run(
                 [self.train_op, self.global_step, summary_op], feed_dict)
             train_writer.add_summary(summary_train, current_step)
             if current_step % saver_every == 0:
-                model_saver.save(session, model_prefix, global_step=current_step)
+                model_saver.save(self.session, self.model_prefix, global_step=current_step)
                 print("Save leanred graph at step {}".format(current_step))
             if current_step % evaluate_every == 0:
                 feed_dict = {
@@ -202,20 +184,20 @@ class CNN(Model):
                     self.input_y : y_val,
                     self.dropout_keep_prob : 1.0
                 }
-                current_step, summary_dev = session.run(
+                current_step, summary_dev = self.session.run(
                     [self.global_step, summary_op], feed_dict)
                 print ("Eval model trained at step {}".format(current_step))
                 dev_writer.add_summary(summary_dev, current_step)
 
   
-    def run(self, x, y, session):
+    def run(self, x, y):
         feed_dict = {
             self.input_x : x,
             self.input_y : y,
             self.dropout_keep_prob : 1.0
         }
 
-        result_op = session.graph.get_operation_by_name("output_layer/predictions").outputs[0]
-        result = session.run([result_op], feed_dict)
+        result_op = self.session.graph.get_operation_by_name("output_layer/predictions").outputs[0]
+        result = self.session.run([result_op], feed_dict)
         print (result)
 

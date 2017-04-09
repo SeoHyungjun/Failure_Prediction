@@ -24,10 +24,6 @@ class Model(ABC):
         pass
   
     @abstractmethod
-    def _eval(self):
-        pass
-  
-    @abstractmethod
     def train(self):
         pass
   
