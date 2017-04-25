@@ -16,42 +16,44 @@ collect_port =
 # It can use more than one algorithm.
 # Each algorithm might be needed different data for training.
 [ML_Process]
-algo_num = 3
-algo_names = CNN, Kmeans, ANN
+model_num = 3
+model_names = model1, model2
 window_size = 10
+
+# predict data source path.
+# it can be pipe... 
+predict_data_sources = /predict_data_dir
+predict_operations = deduplicates(1, 3), model1.run, 1col_del, model2.run
 
 # Each algorithm has different parameters.
 # Each section contains the data transform functions that will 
 # work before the algorithm is executed.
+[model1]
+param1 = 1
+param2 = parapara
+param3 = qqqqq
+
+training_data_source = /model1_train_data
+train_operations = deduplicates(1, 3), model1.train, transpose
+
+[model2]
+arg1 = 30
+arg2 = arg2
+arg3 = Aargrrgrg3
+
+training_data_source = /model2_train_data
+train_operations = 1col_del, model1.run, transpose, model2.train
+
 [CNN]
 NR_Layer = 4 
 # ...
 
-train_data_source = /cnn_train_dir
-train_result_target = /cnn_result_dir
-predict_data_source = /cnn_predict_dir
-
-data_transform_num = 3
-data_transform_names = deduplicates(1,3), transpose, 1col_del
 
 [ANN]
 NR_Layer = 2
 # ...
 
-train_data_source = /ann_train_dir
-train_result_target = /ann_result_dir
-predict_data_source = /ann_predict_dir
-
-data_transform_num = 0
-data_transform_names =  
-
 [Kmeans]
 cluster_num = 5
 # ...
 
-train_data_source = /kmeans_train_dir
-train_result_target = /kmeans_result_dir
-predict_data_source = /kmeans_predict_dir
-
-data_transform_num = 2
-data_transform_names = transpose, 2col_del 
