@@ -1,8 +1,10 @@
 #! /usr/bin/python3
 
-import cnn as algorithm1 
 import tensorflow as tf
 import make_input
+import cnn as algorithm1 
+import k_means as algorithm2
+
 
 if __name__ == "__main__":
 
@@ -21,22 +23,19 @@ if __name__ == "__main__":
     session_conf = tf.ConfigProto(
         allow_soft_placement=True,
         log_device_placement=False)
-
-
+    
+    """
     # Model 1
     with tf.Session(graph=graph_cnn, config=session_conf) as sess:
-        cnn = algorithm1.CNN(algorithm_name="CNN", session=sess)
-                 
+        cnn = algorithm1.CNN(algorithm_name="CNN", session=sess)               
         cnn.create_model(
             x_height=x_height,
             x_width=x_width,
             num_NN_nodes=[2,3], 
             num_y_type=2, 
             filter_sizes=[[2,2],[1,2]], 
-            num_filters=1)
-                  
+            num_filters=1)                  
 #        cnn.restore_all(algorithm_name="CNN")
-
         cnn.train(
             x=x,
             y=y,
@@ -45,10 +44,9 @@ if __name__ == "__main__":
             num_epochs=3,
             evaluate_every=2,
             saver_every=100)
-            
         cnn.run(x, y) 
-          
+    """
 
     # Model 2
     with tf.Session(graph=graph_cnn, config=session_conf) as sess:
-        pass
+        k_means = algorithm2.K_Means(algorithm_name="K_Means", session=sess)
