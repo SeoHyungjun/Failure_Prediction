@@ -57,5 +57,5 @@ if __name__ == "__main__":
     with tf.Session(graph=graph_k_means, config=session_conf) as sess:
         k_means = model2.K_Means(model_tag="K_Means", 
                 save_tag=ct.STR_SAVED_MODEL_PREFIX, session=sess)
-        k_means.create_model(3, 3)
-        k_means.train(x2)
+        k_means.create_model(x2_width, ct.NUM_CENTROID)
+#        k_means.train(x2)

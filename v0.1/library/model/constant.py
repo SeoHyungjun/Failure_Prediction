@@ -13,6 +13,6 @@ MODEL1_TAG = "CNN"
 
 # K_Means #
 MODEL2_TAG = "k_means"
-NUM_CENTROID = 3
+NUM_CENTROID = 2
 # MAX_ITERS
 # num_x
