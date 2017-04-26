@@ -24,9 +24,12 @@ class K_Means(Model):
 
         centroid = tf.get_variable("centroid", shape=[self.num_centroid, x_width])
         update = tf.assign(centroid, self.input_centroid)
-        expanded_centroid = tf.expand_dims(update, 1)
-        expanded_point = tf.expand_dims(self.input_x, 0)
+        expanded_centroid = tf.expand_dims(update, 0)
+        expanded_point = tf.expand_dims(self.input_x, 1)
         test = tf.subtract(expanded_point, expanded_centroid)
+        sum_squares = tf.reduce_sum(tf.square(tf.subtract(expanded_point, expanded_centroid)), -1)
+        assignment = tf.argmin(sum_squares, -1)
+
         # for pre_cent != cent
             # set centroid point
             # map each point to nearest centroid
@@ -42,7 +45,7 @@ class K_Means(Model):
                 self.input_x : x,
                 self.input_centroid : feed_centroid
         }
-        output = self.session.run([test], feed_dict)
+        output = self.session.run([assignment], feed_dict)
         print(output)
     
     def restore_all(self):
