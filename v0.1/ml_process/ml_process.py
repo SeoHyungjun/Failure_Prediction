@@ -1,4 +1,5 @@
 #!/bin/python3
+#-*- coding:utf-8 -*-
 
 # import sys
 # sys.path.insert(0, '../library/data_transform')
@@ -19,7 +20,7 @@ class ML_process_class :
         self.model_list = []
         self.model_name_list = []
         self.cfg_name = config_fname
-        self.lib = library()
+        self.lib = library.library()
 
     # config reads the config file and config
     # Configuration item will be what you use algorithm and data_transform...
@@ -30,31 +31,23 @@ class ML_process_class :
         self.model_name_list = config['ML_Process']['model_names'] \
                                 .replace(' ','').split(',')
 
-        for model in self.model_name_list :
+        for model_name in self.model_name_list :
             # algoparam_dict has each algorithm's parameters
             # including train_data_source, train_result_target, predict_data_source
 
-            # for lib_model in self.lib.models :
-            #     if lib_model.name == model :
+            '''
+            for model in self.lib.models :
+                if model.model_name == model_name :
+                    model.get_config(config[model_name])
+                    self.model_list.append(model)
+                    break
+            '''
+            model = self.lib.models[model_name]
+            model.get_config(arg_dict = config[model_name])
+            self.model_list.append(model)
+            # config 파일에 적힌 모델이 없는 경우에 대한 예외 처리 필요
 
-            if model == 'model1' :
-                self.lib.model1.param1 = config['model1']['param1']
-                self.lib.model1.param2 = config['model1']['param2']
-                self.lib.model1.param3 = config['model1']['param3']
-                self.lib.model1.train_operations = config['model1']['train_operations']
-            elif model == 'model2' :
-                self.lib.model2.arg1 = config['model2']['arg1']
-                self.lib.model2.arg2 = config['model2']['arg2']
-                self.lib.model2.arg3 = config['model2']['arg3']
-                self.lib.model2.train_operations = config['model2']['train_operations']
-
-
-    def print_config(self) :
-        print("Configuration information")
-        print("{0:20s} : ".format("Config file path") + "%s" % self.cfg_name)
-        print("{0:20s} : ".format("Number of Algorithm") + "%d" % self.model_num)
-        print("{0:20s} : ".format("Algorithms") + ' '.join(self.model_name_list))
-
+        self.model_list[0].print_config_all(self.model_list)
 
     # read_training_data or predict_data
     # read_where can be 'db' or 'pipe' or 'queue' ...? 

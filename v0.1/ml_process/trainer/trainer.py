@@ -13,9 +13,10 @@ class Trainer(ml_process.ML_process_class) :
 
     def main(self):
         self.config()
+        #for i -> n
+        #self.model_list[i].train_operations
 
 
 if __name__ == '__main__' :
     train = Trainer()
     train.main()
-    train.print_config()
