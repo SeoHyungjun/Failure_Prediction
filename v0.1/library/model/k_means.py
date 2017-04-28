@@ -34,6 +34,7 @@ class K_Means(Model):
         assignments = tf.argmin(distances, -1)
         self.train_op = [tf.reduce_mean(tf.gather(self.input_x, tf.reshape(tf.where(tf.equal(assignments, centroid_index)), [-1])), reduction_indices=0, name="train_op") 
                 for centroid_index in range(self.num_centroid)]
+        self.global_step = tf.Variable(0, name="global_step", trainable=False)
 
         # Initialize all variables of tensor
         self.session.run(tf.global_variables_initializer())
