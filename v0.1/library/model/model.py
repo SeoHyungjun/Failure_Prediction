@@ -14,6 +14,10 @@ class Model(ABC):
     @abstractmethod
     def __init__(self):
         pass
+
+    @abstractmethod
+    def set_config(self):
+        pass
   
     @abstractmethod
     def create_model(self):
@@ -30,5 +34,20 @@ class Model(ABC):
     @abstractmethod
     def run(self):
         pass
+    
+    @staticmethod
+    def print_model_config(model_name, arg_dict):
+        print("------------------------------------")
+        print("Model [%s] configuration information" % model_name)
+        for key in arg_dict.keys():
+            print("[%s] : %s" % (key, arg_dict.get(key)))
+        print("------------------------------------")
+
+    @staticmethod
+    def print_config_all(model_dict) :
+        print("Configuration information")
+        print("The Number of Models : %d" % len(model_list))
+        for model in model_list :
+            model.print_model_config(model.model_name, model.arg_dict)
 
 
