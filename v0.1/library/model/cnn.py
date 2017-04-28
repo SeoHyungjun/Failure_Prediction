@@ -8,13 +8,15 @@ import constant as ct
 class CNN(Model):
     ### CV parameter ###
 
-    def __init__(self, model_tag, session):
+    def __init__(self, model_name, session):
         # make output directory
-        self.saver_path, self.summary_train_path, self.summary_dev_path = set_output_dir.make_dir(model_tag)
+        self.saver_path, self.summary_train_path, self.summary_dev_path = set_output_dir.make_dir(model_name)
         # set output directory of tensorflow output
         self.model_prefix = os.path.join(self.saver_path, ct.STR_SAVED_MODEL_PREFIX) 
         self.session = session
 
+    def set_config(self):
+        pass
 
     def create_model(self, x_height, x_width, num_NN_nodes, num_y_type, filter_sizes, num_filters, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
     # x_height : height of input matrix
@@ -125,19 +127,16 @@ class CNN(Model):
         self.session.run(tf.global_variables_initializer())
 
 
-    def restore_all(self, model_tag):
-        checkpoint_file_path = os.path.join(ct.STR_DERECTORY_ROOT, model_tag, ct.STR_DERECTORY_GRAPH)
-
-        # restore graph and variables
+    def restore_all(self, model_name):
+        checkpoint_file_path = os.path.join(ct.STR_DERECTORY_ROOT, model_name, ct.STR_DERECTORY_GRAPH)
+        # Restore graph and variables
         latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
         restorer = tf.train.import_meta_graph("{}.meta".format(latest_model))
         restorer.restore(self.session, "{}".format(latest_model))
-    
         # Restore input operation
         self.input_x = self.session.graph.get_operation_by_name("input_x").outputs[0]
         self.input_y = self.session.graph.get_operation_by_name("input_y").outputs[0]
         self.dropout_keep_prob = self.session.graph.get_operation_by_name("dropout_keep_prob").outputs[0]
-
         # Restore train operation
         self.train_op = self.session.graph.get_operation_by_name("train/train_op").outputs[0]
         self.global_step = self.session.graph.get_operation_by_name("train/global_step").outputs[0]
@@ -189,14 +188,12 @@ class CNN(Model):
                 print ("Eval model trained at step {}".format(current_step))
                 dev_writer.add_summary(summary_dev, current_step)
 
-  
     def run(self, x, y):
         feed_dict = {
             self.input_x : x,
             self.input_y : y,
             self.dropout_keep_prob : 1.0
         }
-
         result_op = self.session.graph.get_operation_by_name("output_layer/predictions").outputs[0]
         result = self.session.run([result_op], feed_dict)
         print (result)

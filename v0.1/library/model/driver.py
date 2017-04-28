@@ -32,7 +32,7 @@ if __name__ == "__main__":
     """ 
     # Model 1
     with tf.Session(graph=graph_cnn, config=session_conf) as sess:
-        cnn = model1.CNN(model_tag="CNN", session=sess)               
+        cnn = model1.CNN(model_name="CNN", session=sess)               
         
         cnn.create_model(
             x_height=x1_height,
@@ -42,7 +42,7 @@ if __name__ == "__main__":
             filter_sizes=[[2,2],[1,2]], 
             num_filters=1)                  
         
-        cnn.restore_all(model_tag="CNN")
+        cnn.restore_all(model_name="CNN")
         cnn.train(
             x=x1,
             y=y1,
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     """
     # Model 2
     with tf.Session(graph=graph_k_means, config=session_conf) as sess:
-        k_means = model2.K_Means(model_tag="K_Means", 
+        k_means = model2.K_Means(model_name="K_Means", 
                 save_tag=ct.STR_SAVED_MODEL_PREFIX, session=sess)
         k_means.create_model(x2_width, ct.NUM_CENTROID)
-#        k_means.train(x2)
+        k_means.train(x2, ct.MAX_ITERS)
