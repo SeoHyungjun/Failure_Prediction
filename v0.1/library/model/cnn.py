@@ -8,11 +8,11 @@ import constant as ct
 class CNN(Model):
     ### CV parameter ###
 
-    def __init__(self, model_name, session):
+    def __init__(self, model_name, session, save_tag=ct.STR_SAVED_MODEL_PREFIX):
         # make output directory
         self.saver_path, self.summary_train_path, self.summary_dev_path = set_output_dir.make_dir(model_name)
         # set output directory of tensorflow output
-        self.model_prefix = os.path.join(self.saver_path, ct.STR_SAVED_MODEL_PREFIX) 
+        self.model_prefix = os.path.join(self.saver_path, save_tag) 
         self.session = session
 
     def set_config(self):
@@ -127,17 +127,17 @@ class CNN(Model):
         self.session.run(tf.global_variables_initializer())
 
 
-    def restore_all(self, model_name):
-        checkpoint_file_path = os.path.join(ct.STR_DERECTORY_ROOT, model_name, ct.STR_DERECTORY_GRAPH)
-        # Restore graph and variables
+    def restore_all(self, model_name, dir_root=ct.STR_DERECTORY_ROOT, graph_dir=ct.STR_DERECTORY_GRAPH):
+        checkpoint_file_path = os.path.join(dir_root, model_name, graph_dir)
+        # Restore graph and variables and operation
         latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
         restorer = tf.train.import_meta_graph("{}.meta".format(latest_model))
         restorer.restore(self.session, "{}".format(latest_model))
-        # Restore input operation
+        # input operation
         self.input_x = self.session.graph.get_operation_by_name("input_x").outputs[0]
         self.input_y = self.session.graph.get_operation_by_name("input_y").outputs[0]
         self.dropout_keep_prob = self.session.graph.get_operation_by_name("dropout_keep_prob").outputs[0]
-        # Restore train operation
+        # train operation
         self.train_op = self.session.graph.get_operation_by_name("train/train_op").outputs[0]
         self.global_step = self.session.graph.get_operation_by_name("train/global_step").outputs[0]
          
@@ -176,7 +176,7 @@ class CNN(Model):
             train_writer.add_summary(summary_train, current_step)
             if current_step % saver_every == 0:
                 model_saver.save(self.session, self.model_prefix, global_step=current_step)
-                print("Save leanred graph at step {}".format(current_step))
+                print("Save leanred learned at step {}".format(current_step))
             if current_step % evaluate_every == 0:
                 feed_dict = {
                     self.input_x : x_val,

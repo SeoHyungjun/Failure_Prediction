@@ -8,9 +8,10 @@ import tensorflow as tf
 import pandas as pd
 
 import set_output_dir
+import constant as ct
 
 class K_Means(Model):
-    def __init__(self, model_name, save_tag, session):
+    def __init__(self, model_name, session, save_tag=ct.STR_SAVED_MODEL_PREFIX):
         # make output directory
         self.model_path, self.summary_train_path, self.summary_dev_path = set_output_dir.make_dir(model_name)
 
@@ -23,8 +24,10 @@ class K_Means(Model):
 
     def create_model(self, x_width, num_centroid, MAX_ITERS=1000):
         self.num_centroid = num_centroid
+#        tf.constant(num_centroid, name="num_centroid")
         self.input_x = tf.placeholder(tf.float32, [None, x_width], name="input_x")
         self.input_centroids = tf.placeholder(tf.float32, [self.num_centroid, x_width], name="input_centroids")
+        self.input_step = tf.placeholder(tf.int32, name="input_step")
 
         centroids = tf.get_variable("centroids", shape=[self.num_centroid, x_width])
         init_centroids = tf.assign(centroids, self.input_centroids)
@@ -32,23 +35,25 @@ class K_Means(Model):
         expanded_point = tf.expand_dims(self.input_x, 1)
         distances = tf.reduce_sum(tf.square(tf.subtract(expanded_point, expanded_centroids)), -1)
         assignments = tf.argmin(distances, -1)
-        self.train_op = [tf.reduce_mean(tf.gather(self.input_x, tf.reshape(tf.where(tf.equal(assignments, centroid_index)), [-1])), reduction_indices=0, name="train_op") 
+        self.train_op = [tf.reduce_mean(tf.gather(self.input_x, tf.reshape(tf.where(tf.equal(assignments, centroid_index)), [-1])), reduction_indices=0, name="train_op")
                 for centroid_index in range(self.num_centroid)]
-        self.global_step = tf.Variable(0, name="global_step", trainable=False)
+        self.global_step = tf.assign(tf.Variable(0, dtype=tf.int32), self.input_step, name="global_step")
 
         # Initialize all variables of tensor
         self.session.run(tf.global_variables_initializer())
     
-    def restore_all(self, model_name):
-        checkpoint_file_path = os.path.join(ct.STR_DERECTORY_ROOT, model_name, ct.STR_DERECTORY_GRAPH)
-        # Restore graph and variables
+    def restore_all(self, model_name, dir_root=ct.STR_DERECTORY_ROOT, graph_dir=ct.STR_DERECTORY_GRAPH):
+        checkpoint_file_path = os.path.join(dir_root, model_name, graph_dir)
+        # Restore graph and variables and operation
         latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
         restorer = tf.train.import_meta_graph("{}.meta".format(latest_model))
         restorer.restore(self.session, "{}".format(latest_model))
-        # Restore input operation
+        # input operation
+        self.num_centroid = self.session.graph.get_operation_by_name("num_centroid").output[0]
         self.input_x = self.session.graph.get_operation_by_name("input_x").outputs[0]
         self.input_centroids  = self.session.graph.get_operation_by_name("input_centroids").outputs[0]
-        # Restore train operation
+        self.input_step  = self.session.graph.get_operation_by_name("input_step").outputs[0]
+        # train operation
         self.train_op = self.session.graph.get_operation_by_name("train_op").outputs[0]
         self.global_step = self.session.graph.get_operation_by_name("global_step").outputs[0]
   
@@ -60,12 +65,14 @@ class K_Means(Model):
         centroids_feed = x.iloc[centroid_indexs]
         feed_dict = {
                 self.input_x : x,
-                self.input_centroids : centroids_feed
+                self.input_centroids : centroids_feed,
         }
+        model_saver = tf.train.Saver(tf.global_variables())
+
         # start train
         for i in range(max_iters):
-            print("{}st step".format(i))
-            updated_centroids = self.session.run([self.train_op], feed_dict)[0]
+            feed_dict.update({self.input_step:i+1})
+            updated_centroids, global_step = self.session.run([self.train_op, self.global_step], feed_dict)
             # check centroids are changed
             flag_compare_center = []
             if i != 0:
@@ -78,9 +85,12 @@ class K_Means(Model):
                 # if not changed, stop training
                 if all(flag_compare_center):
                     break
+            print("Finish {} st step".format(global_step))
+            print("centroid:\n{}\n".format(updated_centroids))
             feed_dict.update({self.input_centroids:updated_centroids})
-        print(updated_centroids)
-        print(feed_dict[self.input_centroids])
+        print("All trainings are finished!")
+        model_saver.save(self.session, self.model_prefix, global_step=global_step)
+        print("Save leanred model at step {}".format(global_step))
 
     def run(self):
         pass
