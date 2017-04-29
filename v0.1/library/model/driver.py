@@ -19,7 +19,7 @@ if __name__ == "__main__":
         num_y_type=num_y1_tpye,
         x_height=x1_height)
     
-    x2 = pd.read_csv("./input.csv")
+    x2 = pd.read_csv("./sample.csv")
     x2_width = len(x2.columns)
 
     # make each graph
@@ -30,10 +30,10 @@ if __name__ == "__main__":
     session_conf = tf.ConfigProto(
         allow_soft_placement=True,
         log_device_placement=False)
-    """
+    """ 
     # Model 1
     with tf.Session(graph=graph_cnn, config=session_conf) as sess:
-        cnn = model1.CNN(model_name=config.MODEL1_NAME, session=sess)               
+        cnn = model1.CNN(session=sess)               
         
         cnn.create_model(
             x_height=x1_height,
@@ -43,7 +43,7 @@ if __name__ == "__main__":
             filter_sizes=[[2,2],[1,2]], 
             num_filters=1)                  
         
-        cnn.restore_all(model_name=config.MODEL1_NAME)
+#        cnn.restore_all()
         cnn.train(
             x=x1,
             y=y1,
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     """
     # Model 2
     with tf.Session(graph=graph_k_means, config=session_conf) as sess:
-        k_means = model2.K_Means(model_name=config.MODEL2_NAME, session=sess)
-        k_means.create_model(x2_width, config.NUM_CENTROID)
-#        k_means.restore_all(config.MODEL2_NAME)
+        k_means = model2.K_Means(session=sess)
+#        k_means.create_model(x2_width, config.NUM_CENTROID)
+        k_means.restore_all()
         k_means.train(x2, config.MAX_ITERS)

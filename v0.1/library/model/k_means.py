@@ -11,7 +11,7 @@ import set_output_dir
 import constant as ct
 
 class K_Means(Model):
-    def __init__(self, model_name, session, save_tag=ct.STR_SAVED_MODEL_PREFIX):
+    def __init__(self, session, model_name="k_means", save_tag=ct.STR_SAVED_MODEL_PREFIX):
         # make output directory
         self.model_path, self.summary_train_path, self.summary_dev_path = set_output_dir.make_dir(model_name)
 
@@ -22,9 +22,8 @@ class K_Means(Model):
     def set_config(self):
         pass
 
-    def create_model(self, x_width, num_centroid, MAX_ITERS=1000):
-        self.num_centroid = num_centroid
-#        tf.constant(num_centroid, name="num_centroid")
+    def create_model(self, x_width, num_centroid, max_iters=1000):
+        self.num_centroid = tf.constant(num_centroid, name="num_centroid").eval()
         self.input_x = tf.placeholder(tf.float32, [None, x_width], name="input_x")
         self.input_centroids = tf.placeholder(tf.float32, [self.num_centroid, x_width], name="input_centroids")
         self.input_step = tf.placeholder(tf.int32, name="input_step")
@@ -35,28 +34,31 @@ class K_Means(Model):
         expanded_point = tf.expand_dims(self.input_x, 1)
         distances = tf.reduce_sum(tf.square(tf.subtract(expanded_point, expanded_centroids)), -1)
         assignments = tf.argmin(distances, -1)
-        self.train_op = [tf.reduce_mean(tf.gather(self.input_x, tf.reshape(tf.where(tf.equal(assignments, centroid_index)), [-1])), reduction_indices=0, name="train_op")
-                for centroid_index in range(self.num_centroid)]
+        points_per_centroid = [tf.gather(self.input_x, tf.reshape(tf.where(tf.equal(assignments, centroid_index)), [-1])) for centroid_index in range(self.num_centroid)]
+        updated_centroids = [tf.reduce_mean(points, reduction_indices=0)
+                for points in points_per_centroid]
+        self.train_op = tf.assign(centroids, updated_centroids, name="train_op")
         self.global_step = tf.assign(tf.Variable(0, dtype=tf.int32), self.input_step, name="global_step")
 
         # Initialize all variables of tensor
         self.session.run(tf.global_variables_initializer())
     
-    def restore_all(self, model_name, dir_root=ct.STR_DERECTORY_ROOT, graph_dir=ct.STR_DERECTORY_GRAPH):
+    def restore_all(self, model_name="k_means", dir_root=ct.STR_DERECTORY_ROOT, graph_dir=ct.STR_DERECTORY_GRAPH):
         checkpoint_file_path = os.path.join(dir_root, model_name, graph_dir)
         # Restore graph and variables and operation
         latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
         restorer = tf.train.import_meta_graph("{}.meta".format(latest_model))
         restorer.restore(self.session, "{}".format(latest_model))
         # input operation
-        self.num_centroid = self.session.graph.get_operation_by_name("num_centroid").output[0]
+        self.num_centroid = self.session.graph.get_operation_by_name("num_centroid").outputs[0].eval()
         self.input_x = self.session.graph.get_operation_by_name("input_x").outputs[0]
         self.input_centroids  = self.session.graph.get_operation_by_name("input_centroids").outputs[0]
         self.input_step  = self.session.graph.get_operation_by_name("input_step").outputs[0]
-        # train operation
+        # output operation
         self.train_op = self.session.graph.get_operation_by_name("train_op").outputs[0]
         self.global_step = self.session.graph.get_operation_by_name("global_step").outputs[0]
-  
+ 
+
     def train(self, x, max_iters):
         if self.num_centroid >= len(x):
             print("the number of centroid must be larger than (the number of data + 1)")
@@ -89,9 +91,9 @@ class K_Means(Model):
             print("centroid:\n{}\n".format(updated_centroids))
             feed_dict.update({self.input_centroids:updated_centroids})
         print("All trainings are finished!")
-        model_saver.save(self.session, self.model_prefix, global_step=global_step)
-        print("Save leanred model at step {}".format(global_step))
-
+        model_saver.save(self.session, self.model_prefix, global_step=global_step-1)
+        print("Save leanred model at step {}".format(global_step-1))
+        
     def run(self):
         pass
 
