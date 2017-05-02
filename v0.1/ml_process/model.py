@@ -16,7 +16,7 @@ class Model(ABC):
         pass
 
     @abstractmethod
-    def get_config(self, arg_dict):
+    def set_config(self, arg_dict):
         pass
 
     @abstractmethod

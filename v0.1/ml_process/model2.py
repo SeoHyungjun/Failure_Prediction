@@ -11,7 +11,7 @@ class model2(Model):
         self.training_data_source = ""
         self.train_operations = []
 
-    def get_config(self, arg_dict):
+    def set_config(self, arg_dict):
         self.arg_dict = arg_dict
         self.arg1 = arg_dict['arg1']
         self.arg2 = arg_dict['arg2']

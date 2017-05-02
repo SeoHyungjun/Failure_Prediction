@@ -1,15 +1,8 @@
-# config file fall into three sections.
-# DataCollect section, Predictor section, Trainer section
-# This Framework has the three main process as above mentioned.
-# Also, each algorithm and data transform functions 
-# can be configured in detail using additional sections.
-# 
-
 # DataCollect section is related in Framework.
 # such as data collect buf size or data transfer period
 [DataCollect]
 client_buf_size = 
-tranfer_period = 
+transfer_period =
 collect_port = 
 
 # ML_Process sections apply to trainer and predictor.
@@ -20,11 +13,6 @@ model_num = 3
 model_names = model1, model2
 window_size = 10
 
-# predict data source path.
-# it can be pipe... 
-predict_data_sources = /predict_data_dir
-predict_operations = deduplicates(1, 3), model1.run, 1col_del, model2.run
-
 # Each algorithm has different parameters.
 # Each section contains the data transform functions that will 
 # work before the algorithm is executed.
@@ -33,16 +21,10 @@ param1 = 1
 param2 = parapara
 param3 = qqqqq
 
-training_data_source = /model1_train_data
-train_operations = deduplicates(1, 3), model1.train, transpose
-
 [model2]
 arg1 = 30
 arg2 = arg2
 arg3 = Aargrrgrg3
-
-training_data_source = /model2_train_data
-train_operations = 1col_del, model1.run, transpose, model2.train
 
 [CNN]
 NR_Layer = 4 
@@ -57,3 +39,40 @@ NR_Layer = 2
 cluster_num = 5
 # ...
 
+
+# In operations section, enter the operation sequence.
+# Types of operations include data(D), model training(T), model running(R),
+# data transformation(M), output_path(O).
+#
+# In the "ML_PROCESS SECTION" above, you can define the order of
+# model learning operations in the order of the input models.
+# if Model_names = model1, model2,
+# The first_model entry defines the order of operations for model1, and
+# the second_model entry defines the order of operations for model2.
+# The steps of each operation are separated by ','.
+#
+# Below is an example of writing the operation sequence.
+#
+# first_model = D:"data_path1", M:"1col_del"A:"2", T:"ANN", M:"transpose", O:"output_path1"
+# second_model = D:"data_path2", R:"first_model", M:"transpose", T:"CNN"
+#
+# The above example defines a sequence of operations that
+# learns two models to create a predictive model.
+# For data transform functions, the arguments can be multiple,
+# such as A:"arg1" A:"arg2".
+#
+# Option "O" is the path where the learned model is saved.
+# If not set, it will be saved in the default path.
+#
+# All elements must be enclosed in double quotes.
+# (Data path, model name, data transformation function and arguments, etc.)
+
+[predict_operations]
+# predict data source can be pipe...
+predict_operations = D:"predict_data", M:"deduplicates"A:"1"A:"2", R:"model1.run", F:"1col_del", R:"model2.run"
+
+[train_operations]
+first_model = D:"train_data", T:"CNN", M:"transpose", O:"output_path"
+second_model = D:"train_data", M:"deduplicates"A:"1"A:"3", T:"CNN", M:"transpose"
+third_model =
+fourth_model =
