@@ -57,6 +57,7 @@ if __name__ == "__main__":
     # Model 2
     with tf.Session(graph=graph_k_means, config=session_conf) as sess:
         k_means = model2.K_Means(session=sess)
-#        k_means.create_model(x2_width, config.NUM_CENTROID)
-        k_means.restore_all()
+        k_means.create_model(x2_width, config.NUM_CENTROID)
+#        k_means.restore_all()
         k_means.train(x2, config.MAX_ITERS)
+        k_means.run(x2)

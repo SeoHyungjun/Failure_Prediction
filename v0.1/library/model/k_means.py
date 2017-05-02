@@ -33,11 +33,12 @@ class K_Means(Model):
         expanded_centroids = tf.expand_dims(init_centroids, 0)
         expanded_point = tf.expand_dims(self.input_x, 1)
         distances = tf.reduce_sum(tf.square(tf.subtract(expanded_point, expanded_centroids)), -1)
-        assignments = tf.argmin(distances, -1)
-        points_per_centroid = [tf.gather(self.input_x, tf.reshape(tf.where(tf.equal(assignments, centroid_index)), [-1])) for centroid_index in range(self.num_centroid)]
+        self.assignments = tf.argmin(distances, -1, name="assignment")
+        points_per_centroid = [tf.gather(self.input_x, tf.reshape(tf.where(tf.equal(self.assignments, centroid_index)), [-1])) for centroid_index in range(self.num_centroid)]
         updated_centroids = [tf.reduce_mean(points, reduction_indices=0)
                 for points in points_per_centroid]
         self.train_op = tf.assign(centroids, updated_centroids, name="train_op")
+        self.sum_distances = tf.reduce_sum(tf.reduce_min(distances, -1), name="sum_distances")
         self.global_step = tf.assign(tf.Variable(0, dtype=tf.int32), self.input_step, name="global_step")
 
         # Initialize all variables of tensor
@@ -56,13 +57,16 @@ class K_Means(Model):
         self.input_step  = self.session.graph.get_operation_by_name("input_step").outputs[0]
         # output operation
         self.train_op = self.session.graph.get_operation_by_name("train_op").outputs[0]
+        self.sum_distances = self.session.graph.get_operation_by_name("sum_distances").outputs[0]
+        self.assignments = self.session.graph.get_operation_by_name("assignment").outputs[0]
         self.global_step = self.session.graph.get_operation_by_name("global_step").outputs[0]
  
 
-    def train(self, x, max_iters):
+    def train(self, x, max_iters, file_output=ct.STR_CENTROID_FILE):
         if self.num_centroid >= len(x):
             print("the number of centroid must be larger than (the number of data + 1)")
             sys.exit()
+        # set default centroids randomly
         centroid_indexs = random.sample(range(0, len(x)-1), self.num_centroid) 
         centroids_feed = x.iloc[centroid_indexs]
         feed_dict = {
@@ -74,7 +78,7 @@ class K_Means(Model):
         # start train
         for i in range(max_iters):
             feed_dict.update({self.input_step:i+1})
-            updated_centroids, global_step = self.session.run([self.train_op, self.global_step], feed_dict)
+            updated_centroids, global_step, sum_distances = self.session.run([self.train_op, self.global_step, self.sum_distances], feed_dict)
             # check centroids are changed
             flag_compare_center = []
             if i != 0:
@@ -90,10 +94,16 @@ class K_Means(Model):
             print("Finish {} st step".format(global_step))
             print("centroid:\n{}\n".format(updated_centroids))
             feed_dict.update({self.input_centroids:updated_centroids})
-        print("All trainings are finished!")
+        print("finish!!\nsum_distances = {}".format(sum_distances))
         model_saver.save(self.session, self.model_prefix, global_step=global_step-1)
+        np.savetxt(os.path.join(self.summary_train_path, file_output), updated_centroids, delimiter=',')
         print("Save leanred model at step {}".format(global_step-1))
         
-    def run(self):
-        pass
-
+    def run(self, x, file_output=ct.STR_CENTROID_FILE):
+        centroids = np.genfromtxt(os.path.join(self.summary_train_path, file_output), delimiter=',')
+        feed_dict = {
+                self.input_x : x,
+                self.input_centroids : centroids,
+        }
+        result = self.session.run(self.assignments, feed_dict)
+        print("cluster result!! = {}".format(result))
