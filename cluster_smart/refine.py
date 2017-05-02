@@ -2,6 +2,29 @@ import numpy as np
 import os
 import re
 
+
+def select_attribute(index_attributes, lines):
+    pass
+
+
+def exclude_empty(lines):
+    """
+    exclude empty attribute by inspecting last line.
+    input : string lines seperated by comma.
+    """
+    filtered_index = list()
+    filtered_lines = list()
+    last_line = lines[-1].split(',')
+    for i, content in enumerate(last_line):
+        if content != '':
+            filtered_index.append(i)
+    for line in lines:
+        l = np.array(line.split(','))
+        l = l[filtered_index]
+        filtered_line.append(i)
+    return filtered_index, filtred_line
+
+
 def filter_attribute(line_attributes, lines):
   """
   step 1. filter empty attribute
@@ -11,14 +34,7 @@ def filter_attribute(line_attributes, lines):
   filtered_index1 = list()
   filtered_lines1 = list()
   # step 1. filter empty attr index and make list
-  last_line = lines[-1].split(',')
-  for i, content in enumerate(last_line):
-    if content != '':
-      filtered_index1.append(i)
-  for line in lines:
-    l = np.array(line.split(','))
-    l = l[filtered_index1]
-    filtered_lines1.append(l)
+  filtered_index1, filtered_lines1 = exclude_empty(lines)
 
   # step 2. filter no-changed attr index
   filtered_index2 = list()
@@ -78,6 +94,8 @@ def classify_attribute(lines):
     if "failure" in attribute:
       raw_index.append(i)
       nor_index.append(i)
+    if i > 5:
+      break
 
   print(raw_index)
   for i, attribute in enumerate(attributes):

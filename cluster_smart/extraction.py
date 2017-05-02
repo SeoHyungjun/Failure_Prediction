@@ -10,8 +10,8 @@ from refine import *
 
 # flag
 #in_path = "ST4000DM000"
-in_path = "test2"
-out_directory = "out_test"
+in_path = "/root/SMART/test"
+out_directory = "root/SMART/out_test"
 if len(sys.argv) > 1:
   window_size = (int(sys.argv[1]))
 else:
@@ -49,4 +49,4 @@ for in_filename in glob.glob(os.path.abspath(os.path.join(in_path, '*.csv'))):
     with open(out_nor_filename, 'w') as out_f:
       out_f.writelines(nor_lines)
 
-print("complete! well done")
+print("complete!")
