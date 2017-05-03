@@ -44,7 +44,7 @@ class Model(ABC):
         print("------------------------------------")
 
     @staticmethod
-    def print_config_all(model_dict) :
+    def print_config_all(model_list) :
         print("Configuration information")
         print("The Number of Models : %d" % len(model_list))
         for model in model_list :

@@ -16,8 +16,6 @@ class model2(Model):
         self.arg1 = arg_dict['arg1']
         self.arg2 = arg_dict['arg2']
         self.arg3 = arg_dict['arg3']
-        self.data_source = arg_dict['training_data_source']
-        self.train_operations = arg_dict['train_operations']
 
     def create_model(self):
         pass

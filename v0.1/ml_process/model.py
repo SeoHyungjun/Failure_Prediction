@@ -1,8 +1,4 @@
-import sys
-sys.path.insert(0, '..')
-import os
 from abc import ABC, abstractmethod
-# from eval_info import *
 
 # abstract class to be used by machine learning class
 class Model(ABC):
@@ -37,19 +33,15 @@ class Model(ABC):
 
     @staticmethod
     def print_model_config(model_name, arg_dict):
-        print("------------------------------------")
         print("Model [%s] configuration information" % model_name)
-
         for key in arg_dict.keys():
             print("[%s] : %s" % (key, arg_dict.get(key)))
 
-        print("------------------------------------")
 
     @staticmethod
     def print_config_all(model_list) :
-        print("Configuration information")
+        print("Each model Configuration information")
         print("The Number of Models : %d" % len(model_list))
         for model in model_list :
             model.print_model_config(model.model_name, model.arg_dict)
-
 

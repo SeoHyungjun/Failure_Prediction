@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-import sys
-sys.path.insert(0, '..')
+#import sys
+#sys.path.insert(0, '..')
 import ml_process
 
 class Trainer(ml_process.ML_process_class) :

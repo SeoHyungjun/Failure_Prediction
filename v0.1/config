@@ -7,37 +7,75 @@ collect_port =
 
 # ML_Process sections apply to trainer and predictor.
 # It can use more than one algorithm.
-# Each algorithm might be needed different data for training.
+# model_name must be model class name
 [ML_Process]
 model_num = 3
-model_names = model1, model2
+model_names = model1, model2, model1
 window_size = 10
 
 # Each algorithm has different parameters.
 # Each section contains the data transform functions that will 
 # work before the algorithm is executed.
-[model1]
+# Each session defines parameters for the models to be run.
+# The model name is either the name of the model supported
+# by the framework or the name of the model you have implemented.
+# At this time, the name of the model must be the same as
+# the class name of the implemented model.
+#
+# The parameters may vary depending on the model.
+# At the bottom of this sections there are the default parameter
+# settings for each model. You must use or modify it.
+#
+# Each session refers to the order that will be used to learn
+# and run the models that will work in the framework.
+# If you are using two models, set the enable entry
+# in the FIRST_MODEL and SECOND_MODEL sections to true
+# and set the rest to false.
+
+[FIRST_MODEL]
+enable = true
+model_name = model1
 param1 = 1
 param2 = parapara
 param3 = qqqqq
 
-[model2]
+[SECOND_MODEL]
+enable = true
+model_name = model2
 arg1 = 30
 arg2 = arg2
 arg3 = Aargrrgrg3
 
-[CNN]
-NR_Layer = 4 
-# ...
+[THIRD_MODEL]
+enable = true
+model_name = model1
+param1 = 122
+param2 = parazz
+param3 = 2222
+
+[FOURTH_MODEL]
+enable = false
+model_name =
+arg1 =
+arg2 =
+
+# Below are the default parameters for the models supported by the framework.
+# [Xth_MODEL]
+# enable = true
+# model_name = model1
+# param1 = 1
+# param2 = parapara
+# param3 = qqqqq
+#
+# [Xth_MODEL]
+# enable = true
+# model_name = model2
+# arg1 = 30
+# arg2 = arg2
+# arg3 = Aargrrgrg3
 
 
-[ANN]
-NR_Layer = 2
-# ...
 
-[Kmeans]
-cluster_num = 5
-# ...
 
 
 # In operations section, enter the operation sequence.
@@ -53,13 +91,13 @@ cluster_num = 5
 #
 # Below is an example of writing the operation sequence.
 #
-# first_model = D:"data_path1", M:"1col_del"A:"2", T:"ANN", M:"transpose", O:"output_path1"
+# first_model = D:"data_path1", M:"1col_del":"2", T:"ANN", M:"transpose", O:"output_path1"
 # second_model = D:"data_path2", R:"first_model", M:"transpose", T:"CNN"
 #
 # The above example defines a sequence of operations that
 # learns two models to create a predictive model.
 # For data transform functions, the arguments can be multiple,
-# such as A:"arg1" A:"arg2".
+# such as :"arg1":"arg2".
 #
 # Option "O" is the path where the learned model is saved.
 # If not set, it will be saved in the default path.
@@ -69,10 +107,12 @@ cluster_num = 5
 
 [predict_operations]
 # predict data source can be pipe...
-predict_operations = D:"predict_data", M:"deduplicates"A:"1"A:"2", R:"model1.run", F:"1col_del", R:"model2.run"
+predict_operations = D:"predict_data", M:"deduplicates":"1":"2", R:"first_model", M:"1col_del", R:"second_model"
 
 [train_operations]
 first_model = D:"train_data", T:"CNN", M:"transpose", O:"output_path"
-second_model = D:"train_data", M:"deduplicates"A:"1"A:"3", T:"CNN", M:"transpose"
+second_model = D:"train_data", M:"deduplicates":"1":"3", R:"first_model", T:"CNN", M:"transpose"
 third_model =
 fourth_model =
+
+
