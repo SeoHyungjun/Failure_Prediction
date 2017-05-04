@@ -9,9 +9,9 @@ from refine import *
 
 
 # flag
-#in_path = "ST4000DM000"
-in_path = "/root/SMART/test"
-out_directory = "root/SMART/out_test"
+in_path = "/root/SMART/ST4000DM000"
+#in_path = "/root/SMART/test"
+out_directory = "/root/SMART/out_test"
 if len(sys.argv) > 1:
   window_size = (int(sys.argv[1]))
 else:

@@ -3,10 +3,6 @@ import os
 import re
 
 
-def select_attribute(index_attributes, lines):
-    pass
-
-
 def exclude_empty(lines):
     """
     exclude empty attribute by inspecting last line.
@@ -21,8 +17,26 @@ def exclude_empty(lines):
     for line in lines:
         l = np.array(line.split(','))
         l = l[filtered_index]
-        filtered_line.append(i)
-    return filtered_index, filtred_line
+        filtered_lines.append(l)
+    return filtered_index, filtered_lines
+
+
+def select_attribute(num_attributes, lines):
+    filtered_index = list()
+    filtered_lines = list()
+    attributes = lines[0].split(',')
+    for num_attribute in num_attributes:
+        select_attr = "smart_" + str(num_attribute)
+        for i, attr in enumerate(attributes):
+            if select_attr in attr:
+                filtered_index.append(i)
+    for line in lines:
+        line = line.split(',')
+        l = list()
+        for i in filtered_index:
+            l.append(line[i])
+        filtered_lines.append(l)
+    return filtered_index, filtered_lines
 
 
 def filter_attribute(line_attributes, lines):
@@ -97,7 +111,6 @@ def classify_attribute(lines):
     if i > 5:
       break
 
-  print(raw_index)
   for i, attribute in enumerate(attributes):
     if "raw" in attribute:
       raw_index.append(i)
@@ -112,6 +125,47 @@ def classify_attribute(lines):
     raw_lines.append(raw_line)
 
     nor_line = np.array(line.split(','))
+    nor_line = nor_line[nor_index]
+    nor_line = ",".join(nor_line)
+    nor_line = re.sub(r"\n", "", nor_line) + '\n'
+    nor_lines.append(nor_line)
+
+  return raw_lines, nor_lines
+
+
+def classify_attribute2(lines):
+  """
+  classify raw and normalized data
+  input : list -> output : filtered csv format lines
+  """
+
+  raw_index = list([])
+  nor_index = list([])
+
+  raw_lines = list()
+  nor_lines = list()
+
+  for i, attribute in enumerate(lines[0]):
+    if "failure" in attribute:
+      raw_index.append(i)
+      nor_index.append(i)
+    if i > 5:
+      break
+
+  for i, attribute in enumerate(lines[0]):
+    if "raw" in attribute:
+      raw_index.append(i)
+    elif "normalized" in attribute:
+      nor_index.append(i)
+
+  for i, line in enumerate(lines):
+    raw_line = np.array(line)
+    raw_line = raw_line[raw_index]
+    raw_line = ",".join(raw_line)
+    raw_line = re.sub(r"\n", "", raw_line) + '\n'
+    raw_lines.append(raw_line)
+
+    nor_line = np.array(line)
     nor_line = nor_line[nor_index]
     nor_line = ",".join(nor_line)
     nor_line = re.sub(r"\n", "", nor_line) + '\n'
