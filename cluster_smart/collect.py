@@ -57,21 +57,33 @@ for in_filename in glob.glob(os.path.abspath(os.path.join(in_path, '*.csv'))):
     raw_lines, nor_lines = classify_attribute2(lines_filted_attr)
 
 # 3. save as cluster
+    num_line = len(nor_lines)
+    num_len = 2
+    early_end = num_len + 1
+    middle_start = int(num_line / 2)
+    middle_end = middle_start + num_len
+    last_start = -(num_len + 1)
     if i == 0:
-      f_nor_early.writelines(nor_lines[:21])
+      f_nor_early.writelines(nor_lines[:early_end])
       f_nor_middle.writelines(nor_lines[0])
-      f_nor_middle.writelines(nor_lines[60:80])
+      f_nor_middle.writelines(nor_lines[middle_start:middle_end])
       f_nor_last.writelines(nor_lines[0])
-      f_nor_last.writelines(nor_lines[-21:-1])
+      f_nor_last.writelines(nor_lines[last_start:-1])
       f_nor_failure.writelines(nor_lines[0])
       f_nor_failure.writelines(nor_lines[-1])
-      f_nor.writelines(nor_lines)
+      # nor.write
+      f_nor.writelines(nor_lines[:early_end])
+      f_nor.writelines(nor_lines[middle_start:middle_end])
+      f_nor.writelines(nor_lines[last_start:])
       i = i + 1
     else:
-      f_nor_early.writelines(nor_lines[1:21])
-      f_nor_middle.writelines(nor_lines[60:80])
-      f_nor_last.writelines(nor_lines[-21:-1])
+      f_nor_early.writelines(nor_lines[1:early_end])
+      f_nor_middle.writelines(nor_lines[middle_start:middle_end])
+      f_nor_last.writelines(nor_lines[last_start:-1])
       f_nor_failure.writelines(nor_lines[-1])
-      f_nor.writelines(nor_lines[1:])
+      # nor.write
+      f_nor.writelines(nor_lines[1:early_end])
+      f_nor.writelines(nor_lines[middle_start:middle_end])
+      f_nor.writelines(nor_lines[last_start:])
 
 print("complete!")
