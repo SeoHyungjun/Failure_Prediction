@@ -1,14 +1,16 @@
-from model import *
+import sys
 import tensorflow as tf
 import numpy as np
+
+from model import *
 import make_input
 import set_output_dir
 import constant as ct
 
-class CNN(Model):
+class ANN(Model):
     ### CV parameter ###
 
-    def __init__(self, session, model_name="CNN", save_tag=ct.STR_SAVED_MODEL_PREFIX):
+    def __init__(self, session, model_name="ANN", save_tag=ct.STR_SAVED_MODEL_PREFIX):
         # make output directory
         self.saver_path, self.summary_train_path, self.summary_dev_path = set_output_dir.make_dir(model_name)
         # set output directory of tensorflow output
@@ -18,68 +20,29 @@ class CNN(Model):
     def set_config(self):
         pass
 
-    def create_model(self, x_height, x_width, num_NN_nodes, num_y_type, filter_sizes, num_filters, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
-    # x_height : height of input matrix
+    def create_model(self, x_width, num_NN_nodes, num_y_type, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
     # num_NN_nodes : fully connected NN nodes(array)  e.g. [3,4,5,2]
     # num_y_type : the number of output nodes. if regression, num_y_type == 1.
-    # filter_sizes : list of size of filter matrix(two-dimention), [height, width]  e.g. [[1,2], [2,3], ...]
-    # numb_filters : the number of each size of filter
     # regularization : dropout_keep_prob, l2_reg_lambda(when not applied, each value are 1.0, 0.0)
-
     # pooling_size, dropout(Conv, NN), activation func, variable initializer
 
         # Placeholders for input, output and dropout
-        self.input_x = tf.placeholder(tf.float32, [None, x_height, x_width], name="input_x")
-        self.expanded_input_x = tf.expand_dims(self.input_x, -1)
+        self.input_x = tf.placeholder(tf.float32, [None, x_width], name="input_x")
         self.input_y = tf.placeholder(tf.int32, [None, num_y_type], name="input_y" )
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
        
         # Keeping track of 12 regularization loss (optional)
         l2_loss = tf.constant(0.0)
-        pooled_outputs = []
 
-        # Convolution & Maxpooling layer
-        for i, filter_size in enumerate(filter_sizes):
-            with tf.name_scope("conv-maxpool-{}".format(filter_size[0])):
-                # Convolution Later
-                filter_shape = [filter_size[0], filter_size[1], 1, num_filters]
-                W = tf.Variable(tf.truncated_normal(filter_shape, stddev=0.1), name="W")
-                b = tf.Variable(tf.constant(0.1, shape=[num_filters]), name="b")
-        
-                conv = tf.nn.conv2d(
-                    self.expanded_input_x,
-                    W,                  # filter
-                    strides=[1,1,1,1],
-                    padding="VALID",    # no padding
-                    name="conv")
-                # Apply nonlinearity
-                conv_relu = tf.nn.relu(tf.nn.bias_add(conv, b), name="relu")
-       
-                # Maxpooling over the outputs
-                pooled = tf.nn.max_pool(
-                    conv_relu,
-                    ksize=[1, x_height - filter_size[0] + 1, x_width - filter_size[1] + 1, 1],
-                    strides=[1,1,1,1],
-                    padding="VALID",
-                    name="pool")
-                pooled_outputs.append(pooled)
-        
-        # Combine all the pooled featrues
-        num_filters_total = num_filters * len(filter_sizes)
-        pooled_concat = tf.concat(pooled_outputs, 3)
-        pooled_flat = tf.reshape(pooled_concat, [-1, num_filters_total])
-
-        with tf.name_scope("conv-dropout"):
-            conv_drop = tf.nn.dropout(pooled_flat, dropout_keep_prob)
-            
-        # Hidden_NN layer
-        pre_num_node = num_filters_total
+        # ANN layer
+        pre_num_node = x_width
         NN_result = [None] * (len(num_NN_nodes) + 1)
-        NN_result[0] = conv_drop
+        NN_result[0] = self.input_x
         for index, num_node in enumerate(num_NN_nodes):
             if num_node == 0:
+                print("the number of ANN layer node(num_node=0) is not valid")
                 index = -1
-                break
+                sys.exit()
             with tf.name_scope("completely_connected_NN_layer{}".format(index+1)):
                 W = tf.get_variable(
                     "W_layer{}".format(index+1),
@@ -127,7 +90,7 @@ class CNN(Model):
         self.session.run(tf.global_variables_initializer())
 
 
-    def restore_all(self, model_name="CNN", dir_root=ct.STR_DERECTORY_ROOT, graph_dir=ct.STR_DERECTORY_GRAPH):
+    def restore_all(self, model_name="ANN", dir_root=ct.STR_DERECTORY_ROOT, graph_dir=ct.STR_DERECTORY_GRAPH):
         checkpoint_file_path = os.path.join(dir_root, model_name, graph_dir)
         # Restore graph and variables and operation
         latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
