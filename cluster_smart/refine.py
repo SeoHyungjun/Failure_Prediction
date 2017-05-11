@@ -30,6 +30,7 @@ def select_attribute(num_attributes, lines):
         for i, attr in enumerate(attributes):
             if select_attr in attr:
                 filtered_index.append(i)
+#    filtered_index.append(4)
     for line in lines:
         line = line.split(',')
         l = list()
@@ -108,8 +109,6 @@ def classify_attribute(lines):
     if "failure" in attribute:
       raw_index.append(i)
       nor_index.append(i)
-    if i > 5:
-      break
 
   for i, attribute in enumerate(attributes):
     if "raw" in attribute:
@@ -146,16 +145,14 @@ def classify_attribute2(lines):
   nor_lines = list()
 
   for i, attribute in enumerate(lines[0]):
-    if "failure" in attribute:
-      raw_index.append(i)
-      nor_index.append(i)
-    if i > 5:
-      break
-
-  for i, attribute in enumerate(lines[0]):
     if "raw" in attribute:
       raw_index.append(i)
     elif "normalized" in attribute:
+      nor_index.append(i)
+
+  for i, attribute in enumerate(lines[0]):
+    if "failure" in attribute:
+      raw_index.append(i)
       nor_index.append(i)
 
   for i, line in enumerate(lines):
@@ -170,5 +167,4 @@ def classify_attribute2(lines):
     nor_line = ",".join(nor_line)
     nor_line = re.sub(r"\n", "", nor_line) + '\n'
     nor_lines.append(nor_line)
-
   return raw_lines, nor_lines
