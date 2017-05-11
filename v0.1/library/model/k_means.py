@@ -108,3 +108,4 @@ class K_Means(Model):
         }
         result = self.session.run(self.assignments, feed_dict)
         print("cluster result!! = {}".format(result))
+        return result

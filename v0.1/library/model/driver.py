@@ -20,7 +20,7 @@ if __name__ == "__main__":
         num_y_type=num_y1_tpye,
         x_height=x1_height)
     """
-    x2 = pd.read_csv("/root/SMART/out_test/nor.csv")
+    x2 = pd.read_csv("/root/SMART/in_cluster/nor.csv")
 #    x2 = pd.read_csv("./sample.csv")
     x2_width = len(x2.columns)
 
