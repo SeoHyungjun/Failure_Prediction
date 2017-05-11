@@ -8,20 +8,25 @@ class operation_unit :
 
         self.oper_type = split_opers[0]
         self.execute_oper_func = None
-        # just for initialize
 
-        if self.oper_type == 'D':
-            self.data_source = split_opers[1].split('"')[1]    # data source (for D type)
-            self.execute_oper_func = self.oper_D_type
+        if self.oper_type == 'DT':
+            self.train_input_path = split_opers[1].split('"')[1]
+            self.execute_oper_func = self.oper_DT_type
+        elif self.oper_type == 'DP':
+            self.predict_input_path = split_opers[1].split('"')[1]
+            self.execute_oper_func = self.oper_DP_type
+        elif self.oper_type == 'OT':
+            self.train_output_path = split_opers[1].split('"')[1]
+            self.execute_oper_func = self.oper_OT_type
+        elif self.oper_type == 'OP':
+            self.predict_output_path = split_opers[1].split('"')[1]
+            self.execute_oper_func = self.oper_OP_type
         elif self.oper_type == 'T':
             self.train_model = split_opers[1].split('"')[1]    # train model (for T type)
             self.execute_oper_func = self.oper_T_type
         elif self.oper_type == 'R':
             self.run_model = split_opers[1].split('"')[1]      # run model (for R type)
             self.execute_oper_func = self.oper_R_type
-        elif self.oper_type == 'O':
-            self.output_path = split_opers[1].split('"')[1]      # output path (for O type)
-            self.execute_oper_func = self.oper_O_type
         elif self.oper_type == 'M':
             self.transform_func = split_opers[1].split('"')[1]    # data transform func (for M type)
             self.trsf_func_args = [arg.split('"')[1] for arg in split_opers[2:]]    # args for M type
@@ -30,14 +35,18 @@ class operation_unit :
     def print_oper_unit(self):
         print("[operation type] : %s" % self.oper_type)
 
-        if self.oper_type == 'D':
-            print("[Data source] : %s" % self.data_source)
+        if self.oper_type == 'DT':
+            print("[Train Input Path] : %s" % self.train_input_path)
+        elif self.oper_type == 'DP':
+            print("Predict Input Path] : %s" % self.predict_input_path)
+        elif self.oper_type == 'OT':
+            print("[Train Output Path] : %s" % self.train_output_path)
+        elif self.oper_type == 'OP':
+            print("[Predict Output Path] : %s" % self.predict_output_path)
         elif self.oper_type == 'T':
             print("[Train Model] : %s" % self.train_model)
         elif self.oper_type == 'R':
             print("[Run Model] : %s" % self.run_model)
-        elif self.oper_type == 'O':
-            print("[Output Path] : %s" % self.output_path)
         elif self.oper_type == 'M':
             print("[Func Name] : %s" % self.transform_func)
             i = 0
@@ -45,9 +54,18 @@ class operation_unit :
                 i = i + 1
                 print("[Argument %d] : %s " % (i,  arg))
 
-    # operation for D type. just return data source path.
-    def oper_D_type(self):
-        return self.data_source
+    # operation for DT type.
+    def oper_DT_type(self, model, path):
+        pass
+
+    def oper_DP_type(self, model, path):
+        pass
+
+    def oper_OT_type(self, model, path):
+        pass
+
+    def oper_OP_type(self, model, path):
+        pass
 
     # operation for T type.
     def oper_T_type(self, model=None, session_conf=None, retrain=False):
@@ -55,7 +73,7 @@ class operation_unit :
             print("Operation type is Train.")
             print("But, it doesn't exist model instance.!")
             print("exit...")
-            exit(0)
+            exit(1)
         elif session_conf is None:
             print("Session configuration is not given")
             print("Setting on default session config")

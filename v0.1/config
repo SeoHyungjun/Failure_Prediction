@@ -87,8 +87,8 @@ arg2 =
 #
 # Below is an example of writing the operation sequence.
 #
-# first_model = D:"data_path1", M:"1col_del":"2", T:"ANN", M:"transpose", O:"output_path1"
-# second_model = D:"data_path2", R:"first_model", M:"transpose", T:"CNN"
+# first_model = DT:"data_path1", M:"1col_del":"2", T:"ANN", M:"transpose", OT:"output_path1"
+# second_model = DT:"data_path2", R:"first_model", M:"transpose", T:"CNN"
 #
 # The above example defines a sequence of operations that
 # learns two models to create a predictive model.
@@ -100,14 +100,23 @@ arg2 =
 #
 # All elements must be enclosed in double quotes.
 # (Data path, model name, data transformation function and arguments, etc.)
+#
+# 'DT' : Input data path when train
+# 'DP' : Input data path when predict
+# 'OT' : Output path when train
+# 'OP' : Output path when predict
+# 'M'  : Data transform method
+# 'T'  : Train model
+# 'R'  : Run model (Predict)
+
 
 [predict_operations]
 # predict data source can be pipe...
-predict_operations = D:"predict_data", M:"deduplicates":"1":"2", R:"first_model", M:"1col_del", R:"second_model"
+predict_operations = DP:"predict_data", M:"deduplicates":"1":"2", R:"first_model", M:"1col_del", R:"second_model"
 
 [train_operations]
-first_model = D:"train_data", T:"first_model", M:"transpose", O:"output_path"
-second_model = D:"train_data", M:"deduplicates":"1":"3", R:"first_model", T:"second_model", M:"transpose"
+first_model = DT:"train_data", T:"first_model", M:"transpose", OT:"output_path"
+second_model = DT:"train_data", M:"deduplicates":"1":"3", R:"first_model", T:"second_model", M:"transpose"
 third_model =
 fourth_model =
 
