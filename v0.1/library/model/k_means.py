@@ -67,7 +67,7 @@ class K_Means(Model):
             print("the number of centroid must be larger than (the number of data + 1)")
             sys.exit()
         # set default centroids randomly
-        centroid_indexs = random.sample(range(0, len(x)-1), self.num_centroid) 
+        centroid_indexs = random.sample(range(0, len(x)-1), self.num_centroid)
         centroids_feed = x.iloc[centroid_indexs]
         feed_dict = {
                 self.input_x : x,
@@ -92,7 +92,8 @@ class K_Means(Model):
                 if all(flag_compare_center):
                     break
             print("Finish {} st step".format(global_step))
-            print("centroid:\n{}\n".format(updated_centroids))
+            print("centroid:\n{}".format(updated_centroids))
+            print("sum_distances = {}\n".format(sum_distances))
             feed_dict.update({self.input_centroids:updated_centroids})
         print("finish!!\nsum_distances = {}".format(sum_distances))
         model_saver.save(self.session, self.model_prefix, global_step=global_step-1)
@@ -107,3 +108,4 @@ class K_Means(Model):
         }
         result = self.session.run(self.assignments, feed_dict)
         print("cluster result!! = {}".format(result))
+        return result

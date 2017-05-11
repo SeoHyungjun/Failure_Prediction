@@ -4,6 +4,10 @@ import pandas as pd
 
 
 def split_xy(csv_file_path, num_y_type, x_height=1):
+    """
+    input csv file format = x1,x2,x3,x4,...,y
+    'num_y_type' is range of y. ex) if y is 0 or 1, num_y_type==2.
+    """
     data = pd.read_csv(csv_file_path)
 
     x_width = 0
@@ -31,6 +35,9 @@ def split_xy(csv_file_path, num_y_type, x_height=1):
     if x_width == 0:
         print("x_width = {}. Input data parameter is deficient.".format(x_width))
         sys.exit()
+
+    if x_height ==1:
+        x = np.reshape(x, (-1, x_width))
     return x, x_width, y
 
 

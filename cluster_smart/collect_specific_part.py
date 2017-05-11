@@ -11,7 +11,7 @@ from refine import *
 # flag
 in_path = "/root/SMART/ST4000DM000"
 #in_path = "/root/SMART/test"
-out_directory = "/root/SMART/out_test"
+out_directory = "/root/SMART/in_cluster"
 early_raw_filename = os.path.join(out_directory, "early_raw.csv")
 middle_raw_filename = os.path.join(out_directory, "middle_raw.csv")
 last_raw_filename = os.path.join(out_directory, "last_raw.csv")
@@ -58,7 +58,7 @@ for in_filename in glob.glob(os.path.abspath(os.path.join(in_path, '*.csv'))):
 
 # 3. save as cluster
     num_line = len(nor_lines)
-    num_len = 2
+    num_len = 1
     early_end = num_len + 1
     middle_start = int(num_line / 2)
     middle_end = middle_start + num_len

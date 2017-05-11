@@ -6,11 +6,12 @@ import pandas as pd
 import constant as ct
 import config
 import cnn as model1 
-import k_means as model2 
+import k_means as model2
+import ann as model3
 import make_input
 
 if __name__ == "__main__":
-
+    """
     # Load input data
     x1_height = 2
     num_y1_tpye = 2
@@ -18,13 +19,20 @@ if __name__ == "__main__":
         csv_file_path="./input.csv",
         num_y_type=num_y1_tpye,
         x_height=x1_height)
-    
-    x2 = pd.read_csv("./sample.csv")
+    """
+    x2 = pd.read_csv("/root/SMART/in_cluster/nor.csv")
+#    x2 = pd.read_csv("./sample.csv")
     x2_width = len(x2.columns)
+
+    num_y3_tpye = 2
+    x3, x3_width, y3 = make_input.split_xy(
+        csv_file_path="./input.csv",
+        num_y_type=num_y3_tpye)
 
     # make each graph
     graph_cnn = tf.Graph()
     graph_k_means = tf.Graph()
+    graph_ann = tf.Graph()
 
     # setting session 
     session_conf = tf.ConfigProto(
@@ -50,8 +58,8 @@ if __name__ == "__main__":
             dev_sample_percentage=0.1,
             batch_size=2,
             num_epochs=1,
-            evaluate_every=2,
-            saver_every=100)
+            evaluate_interval=2,
+            save_interval=100)
         cnn.run(x1, y1) 
     """
     # Model 2
@@ -61,3 +69,23 @@ if __name__ == "__main__":
 #        k_means.restore_all()
         k_means.train(x2, config.MAX_ITERS)
         k_means.run(x2)
+
+    # Model 3
+    with tf.Session(graph=graph_ann, config=session_conf) as sess:
+        ann = model3.ANN(session=sess)
+
+        ann.create_model(
+            x3_width, 
+            num_NN_nodes=config.NUM_NN_NODES,
+            num_y_type=config.NUM_Y_TYPE)
+
+        ann.train(
+            x=x3,
+            y=y3,
+            dev_sample_percentage=0.1,
+            batch_size=config.BATCH_SIZE,
+            num_epochs=config.NUM_EPOCH,
+            evaluate_interval=config.EVALUATE_INTERVAL,
+            save_interval=config.SAVE_INTERVAL)
+
+        ann.run(x3,y3)
