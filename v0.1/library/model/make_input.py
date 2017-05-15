@@ -86,8 +86,8 @@ def batch_iter(x, y, batch_size, num_epochs):
     else:
         num_batches_per_epoch = int(num_x/batch_size) + 1
     for epoch in range(num_epochs):
+        print("Start \'{}\' epoch\n".format(epoch + 1))
         for num_batch in range(num_batches_per_epoch):
             start_index = num_batch * batch_size
             end_index = min(start_index + batch_size, num_x)
-            print("Start \'{}\' epoch\n".format(epoch + 1))
             yield [x[start_index:end_index], y[start_index:end_index]]

@@ -107,5 +107,4 @@ class K_Means(Model):
                 self.input_centroids : centroids,
         }
         result = self.session.run(self.assignments, feed_dict)
-        print("cluster result!! = {}".format(result))
         return result

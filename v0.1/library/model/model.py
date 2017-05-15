@@ -10,11 +10,24 @@ class Model(ABC):
     # input_x = Dataframe()
     # input_y = Dataframe()
     ev_inf = Eval_info() 
-  
+
     @abstractmethod
     def __init__(self):
+        self.model_naem =''
+        self.arg_dict = {}
+    """
+    @abstractmethod
+    def set_session(self, sess): #used by operation.py T type, R
+        pass
+    
+    @abstractmethod
+    def set_input_path(self, path, isTrain=True): #used by D type
         pass
 
+    @abstractmethod
+    def set_output_path(self, path, isTrain=True): #used by O type
+        pass
+    """
     @abstractmethod
     def set_config(self):
         pass

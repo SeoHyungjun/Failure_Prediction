@@ -159,5 +159,4 @@ class ANN(Model):
         }
         result_op = self.session.graph.get_operation_by_name("output_layer/predictions").outputs[0]
         result = self.session.run([result_op], feed_dict)
-        print (result)
-
+        return result

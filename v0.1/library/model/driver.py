@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     num_y3_tpye = 2
     x3, x3_width, y3 = make_input.split_xy(
-        csv_file_path="./input.csv",
+        csv_file_path="/root/SMART/in_ann/in_ann.csv",
         num_y_type=num_y3_tpye)
 
     # make each graph
@@ -61,7 +61,7 @@ if __name__ == "__main__":
             evaluate_interval=2,
             save_interval=100)
         cnn.run(x1, y1) 
-    """
+    
     # Model 2
     with tf.Session(graph=graph_k_means, config=session_conf) as sess:
         k_means = model2.K_Means(session=sess)
@@ -69,7 +69,7 @@ if __name__ == "__main__":
 #        k_means.restore_all()
         k_means.train(x2, config.MAX_ITERS)
         k_means.run(x2)
-
+    """
     # Model 3
     with tf.Session(graph=graph_ann, config=session_conf) as sess:
         ann = model3.ANN(session=sess)
@@ -88,4 +88,16 @@ if __name__ == "__main__":
             evaluate_interval=config.EVALUATE_INTERVAL,
             save_interval=config.SAVE_INTERVAL)
 
-        ann.run(x3,y3)
+        result = ann.run(x3,y3)
+        num_entire = len(result[0]) + 1
+        num_correct = 0
+        for i, prediction in enumerate(result[0]):
+            if y3[i][0] == 1:
+                real_value = 0
+            elif y3[i][1] == 1:
+                real_value = 1
+            if real_value == prediction:
+                num_correct = num_correct + 1
+        accuracy = num_correct / num_entire
+        print(accuracy)
+
