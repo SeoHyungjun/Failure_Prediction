@@ -1,0 +1,32 @@
+# [output directory]
+dir_output = "./ML_data" # only configurable in output directory config
+dir_trained_model = "model"
+dir_summary = "summary"
+dir_summary_train = "train"
+dir_summary_validation = "validation"
+model_save_tag = "model"   
+
+
+# [K_means]
+model_name = "K_means"
+num_centroid = 4
+max_iters = 10
+trained_centroid_file = "learned_centroid.csv"
+#x_train
+#x_eval
+#x_run
+
+
+# [ANN]
+model_name = "ANN"
+num_nodes = [2,4,3]
+## regularization : dropout_keep_prob, l2_reg_lambda(when not applied, each value are 1.0, 0.0)
+dropout_keep_prob = 0.5
+l2_reg_lambda = 0.0
+validation_sample_percentage = 0.1
+batch_size = 30
+num_epochs = 5
+validation_interval = 50
+#x_train
+#x_eval
+#x_run
