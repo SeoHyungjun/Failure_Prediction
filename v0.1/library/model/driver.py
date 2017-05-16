@@ -4,7 +4,6 @@ import tensorflow as tf
 import pandas as pd
 
 import constant as ct
-import config
 #import cnn as model1 
 import k_means as model2
 import ann as model3
@@ -66,15 +65,15 @@ if __name__ == "__main__":
     with tf.Session(graph=graph_k_means, config=session_conf) as sess:
         k_means = model2.K_Means(session=sess)
 #        k_means.create_model(x2_width)
-        k_means.restore_all()
+#        k_means.restore_all()
 #        k_means.train(x2)
-        k_means.run(x2)
+#        k_means.run(x2)
     
     # Model 3
     with tf.Session(graph=graph_ann, config=session_conf) as sess:
         ann = model3.ANN(session=sess)
-#        ann.create_model(x3_width, num_y_type=2)
-        ann.restore_all()
+        ann.create_model(x3_width, num_y_type=2)
+#        ann.restore_all()
         ann.train(x3,y3)
 
         result = ann.run(x3,y3)

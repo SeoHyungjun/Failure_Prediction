@@ -107,18 +107,16 @@ class K_Means(Model):
                 # if not changed, stop training
                 if all(flag_compare_center):
                     break
-            print("Finish {} st step".format(global_step))
-            print("centroid:\n{}".format(updated_centroids))
-            print("sum_distances = {}\n".format(sum_distances))
+            print("Finish {} st step\nsum_distances = {}\n".format(global_step, sum_distances))
             feed_dict.update({self.input_centroids:updated_centroids})
         print("finish!!\nsum_distances = {}".format(sum_distances))
         filepath_trained_model = os.path.join(self.dirpath_trained_model, self.model_save_tag) 
         model_saver.save(self.session, filepath_trained_model, global_step=global_step-1)
-        np.savetxt(os.path.join(self.dirpath_summary_train, ct.KMEANS_TRAINED_CENTROID_FILE), updated_centroids, delimiter=',')
+        np.savetxt(os.path.join(self.dirpath_trained_model, ct.KMEANS_TRAINED_CENTROID_FILE), updated_centroids, delimiter=',')
         print("Save learned model at step {}".format(global_step-1))
         
     def run(self, x):
-        centroids = np.genfromtxt(os.path.join(self.dirpath_summary_train, self.trained_centroid_file), delimiter=',')
+        centroids = np.genfromtxt(os.path.join(self.dirpath_trained_model, self.trained_centroid_file), delimiter=',')
         feed_dict = {
                 self.input_x : x,
                 self.input_centroids : centroids,

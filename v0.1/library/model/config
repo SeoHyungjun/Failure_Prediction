@@ -1,10 +1,5 @@
 # [output directory]
 dir_output = "./ML_data" # only configurable in output directory config
-dir_trained_model = "model"
-dir_summary = "summary"
-dir_summary_train = "train"
-dir_summary_validation = "validation"
-model_save_tag = "model"   
 
 
 # [K_means]
