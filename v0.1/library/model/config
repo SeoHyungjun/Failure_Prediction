@@ -6,7 +6,7 @@ dir_output = "./ML_data" # only configurable in output directory config
 model_name = "K_means"
 num_centroid = 4
 max_iters = 10
-trained_centroid_file = "learned_centroid.csv"
+trained_centroid_file = "centroid.csv"
 #x_train
 #x_eval
 #x_run
