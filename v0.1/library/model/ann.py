@@ -8,37 +8,47 @@ import set_output_dir
 import constant as ct
 
 class ANN(Model):
-    ### CV parameter ###
 
-    def __init__(self, session, model_name="ANN", save_tag=ct.STR_SAVED_MODEL_PREFIX):
-        # make output directory
-        self.saver_path, self.summary_train_path, self.summary_dev_path = set_output_dir.make_dir(model_name)
-        # set output directory of tensorflow output
-        self.model_prefix = os.path.join(self.saver_path, save_tag) 
+    def __init__(self, session):
         self.session = session
+        self.model_name = ct.ANN_MODEL_NAME
+        # output config
+        self.model_save_tag = ct.MODEL_SAVE_TAG
+        self.dir_output = ct.DIR_OUTPUT
+        # create_model
+        self.num_nodes = ct.ANN_NUM_NODES
+        self.dropout_keep_prob = ct.ANN_DROPOUT_KEEP_PROB
+        self.l2_reg_lambda = ct.ANN_L2_REG_LAMBDA
+        self.validation_sample_percentage = ct.ANN_VALIDATION_SAMPLE_PERCENTAGE
+        self.batch_size = ct.ANN_BATCH_SIZE
+        self.num_epochs = ct.ANN_NUM_EPOCHS
+        self.validation_interval = ct.ANN_VALIDATION_INTERVAL
+        #x_train
+        #x_evaluation
+        #x_run
 
     def set_config(self):
         pass
 
-    def create_model(self, x_width, num_NN_nodes, num_y_type, dropout_keep_prob=1.0, l2_reg_lambda=0.0):
-    # num_NN_nodes : fully connected NN nodes(array)  e.g. [3,4,5,2]
+    def create_model(self, x_width, num_y_type):
     # num_y_type : the number of output nodes. if regression, num_y_type == 1.
-    # regularization : dropout_keep_prob, l2_reg_lambda(when not applied, each value are 1.0, 0.0)
-    # pooling_size, dropout(Conv, NN), activation func, variable initializer
+        self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.model_name, self.dir_output)
+        self.model_filepath = os.path.join(self.dirpath_trained_model, self.model_save_tag)
 
         # Placeholders for input, output and dropout
         self.input_x = tf.placeholder(tf.float32, [None, x_width], name="input_x")
         self.input_y = tf.placeholder(tf.int32, [None, num_y_type], name="input_y" )
-        self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
+        # used when evaluation(keep_prob = 1.0)
+        self.input_dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
        
         # Keeping track of 12 regularization loss (optional)
         l2_loss = tf.constant(0.0)
 
         # ANN layer
         pre_num_node = x_width
-        NN_result = [None] * (len(num_NN_nodes) + 1)
+        NN_result = [None] * (len(self.num_nodes) + 1)
         NN_result[0] = self.input_x
-        for index, num_node in enumerate(num_NN_nodes):
+        for index, num_node in enumerate(self.num_nodes):
             if num_node == 0:
                 print("the number of ANN layer node(num_node=0) is not valid")
                 index = -1
@@ -53,7 +63,7 @@ class ANN(Model):
                 l2_loss += tf.nn.l2_loss(b)
                 NN_result[index+1] = tf.sigmoid(tf.nn.xw_plus_b(NN_result[index], W, b, name="NN_result{}".format(index+1)))
                 with tf.name_scope("dropout"):
-                    NN_result[index+1] = tf.nn.dropout(NN_result[index+1], dropout_keep_prob)
+                    NN_result[index+1] = tf.nn.dropout(NN_result[index+1], self.input_dropout_keep_prob)
                 pre_num_node = num_node
 
         # Predict & Classify layer
@@ -73,11 +83,11 @@ class ANN(Model):
         # Evaluation layer
         with tf.name_scope("eval_info"):
             losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores, labels=self.input_y)
-            self.objective = tf.add(tf.reduce_mean(losses), (l2_reg_lambda * l2_loss), name="objective")
+            self.objective = tf.add(tf.reduce_mean(losses), (self.l2_reg_lambda * l2_loss), name="objective")
             tf.summary.scalar("loss", self.objective)
             correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
-            accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
-            tf.summary.scalar("accuracy", accuracy)
+            self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
+            tf.summary.scalar("accuracy", self.accuracy)
 
         # Training operation
         with tf.name_scope("train"):
@@ -86,12 +96,16 @@ class ANN(Model):
             grads_and_vars = optimizer.compute_gradients(self.objective)
             self.train_op = optimizer.apply_gradients(grads_and_vars, global_step=self.global_step, name="train_op")
 
-        # Initialize all variables of tensor
+        # Initiazlize all variables of tensor
         self.session.run(tf.global_variables_initializer())
 
 
-    def restore_all(self, model_name="ANN", dir_root=ct.STR_DERECTORY_ROOT, graph_dir=ct.STR_DERECTORY_GRAPH):
-        checkpoint_file_path = os.path.join(dir_root, model_name, graph_dir)
+    def restore_all(self):
+        dirpath_model = os.path.join(self.dir_output, self.model_name)
+        self.dirpath_trained_model = os.path.join(dirpath_model, ct.DIR_TRAINED_MODEL)
+        self.dirpath_summary_train = os.path.join(dirpath_model, ct.DIR_SUMMARY, ct.DIR_SUMMARY_TRAIN)
+        self.dirpath_summary_validation = os.path.join(dirpath_model, ct.DIR_SUMMARY, ct.DIR_SUMMARY_VALIDATION)
+        checkpoint_file_path = os.path.join(self.dirpath_trained_model)
         # Restore graph and variables and operation
         latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
         restorer = tf.train.import_meta_graph("{}.meta".format(latest_model))
@@ -99,30 +113,21 @@ class ANN(Model):
         # input operation
         self.input_x = self.session.graph.get_operation_by_name("input_x").outputs[0]
         self.input_y = self.session.graph.get_operation_by_name("input_y").outputs[0]
-        self.dropout_keep_prob = self.session.graph.get_operation_by_name("dropout_keep_prob").outputs[0]
+        self.input_dropout_keep_prob = self.session.graph.get_operation_by_name("dropout_keep_prob").outputs[0]
         # train operation
         self.train_op = self.session.graph.get_operation_by_name("train/train_op").outputs[0]
+        self.accuracy = self.session.graph.get_operation_by_name("eval_info/accuracy").outputs[0]
         self.global_step = self.session.graph.get_operation_by_name("train/global_step").outputs[0]
          
-
-    def train(self, x, y, dev_sample_percentage, batch_size, num_epochs, evaluate_interval, save_interval, dropout_keep_prob=0.5):
-    ### train parameter ###
-    # dev_sample_percentage : percentage of the training data to use for validation"
-    # batch_size : Batch Size
-    # num_epochs : Number of training epochs
-    # evaluate_interval : Evaluate model on dev set after this many steps (default: 150)
-    # save_interval : Save model after this many steps (default: 150)
-    # allow_soft_placement : Allow device soft device placement
-    # log_device_placement : Log placement of ops on devices
-    
+    def train(self, x, y):
         # make training/validation data batch by batch
         x_train, x_val, y_train, y_val = make_input.divide_fold(x, y, num_fold=10)
-        batches = make_input.batch_iter(x_train, y_train, batch_size, num_epochs)
+        batches = make_input.batch_iter(x_train, y_train, self.batch_size, self.num_epochs)
 
         # Summary writer(tensorboard) & Saver(save learned model), maybe not registered in graph
         summary_op = tf.summary.merge_all()
-        train_writer = tf.summary.FileWriter(self.summary_train_path, self.session.graph)
-        dev_writer = tf.summary.FileWriter(self.summary_dev_path, self.session.graph)
+        train_writer = tf.summary.FileWriter(self.dirpath_trained_model, self.session.graph)
+        validation_writer = tf.summary.FileWriter(self.dirpath_summary_train, self.session.graph)
         model_saver = tf.train.Saver(tf.global_variables())
 
         # Training
@@ -132,30 +137,31 @@ class ANN(Model):
             feed_dict = {
                 self.input_x : x_batch,
                 self.input_y : y_batch,
-                self.dropout_keep_prob : dropout_keep_prob
+                self.input_dropout_keep_prob : self.dropout_keep_prob
             }
             _, current_step, summary_train = self.session.run(
                 [self.train_op, self.global_step, summary_op], feed_dict)
             train_writer.add_summary(summary_train, current_step)
-            if current_step % save_interval == 0:
-                model_saver.save(self.session, self.model_prefix, global_step=current_step)
-                print("Save learned at step {}".format(current_step))
-            if current_step % evaluate_interval == 0:
+            if current_step % self.validation_interval == 0:
                 feed_dict = {
                     self.input_x : x_val,
                     self.input_y : y_val,
-                    self.dropout_keep_prob : 1.0
+                    self.input_dropout_keep_prob : 1.0
                 }
-                current_step, summary_dev = self.session.run(
-                    [self.global_step, summary_op], feed_dict)
-                print ("Eval model trained at step {}".format(current_step))
-                dev_writer.add_summary(summary_dev, current_step)
+                accuracy, summary_validation = self.session.run(
+                    [self.accuracy, summary_op], feed_dict)
+                print ("validation at step {}, accuracy = {}".format(current_step, accuracy))
+                validation_writer.add_summary(summary_validation, current_step)
+        # save trained model
+        filepath_trained_model = os.path.join(self.dirpath_trained_model, self.model_save_tag) 
+        model_saver.save(self.session, filepath_trained_model, global_step=current_step)
+        print("Save learned at step {}".format(current_step))
 
     def run(self, x, y):
         feed_dict = {
             self.input_x : x,
             self.input_y : y,
-            self.dropout_keep_prob : 1.0
+            self.input_dropout_keep_prob : 1.0
         }
         result_op = self.session.graph.get_operation_by_name("output_layer/predictions").outputs[0]
         result = self.session.run([result_op], feed_dict)

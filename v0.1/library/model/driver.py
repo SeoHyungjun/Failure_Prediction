@@ -5,7 +5,7 @@ import pandas as pd
 
 import constant as ct
 import config
-import cnn as model1 
+#import cnn as model1 
 import k_means as model2
 import ann as model3
 import make_input
@@ -61,34 +61,25 @@ if __name__ == "__main__":
             evaluate_interval=2,
             save_interval=100)
         cnn.run(x1, y1) 
-    
+    """
     # Model 2
     with tf.Session(graph=graph_k_means, config=session_conf) as sess:
         k_means = model2.K_Means(session=sess)
-        k_means.create_model(x2_width, config.NUM_CENTROID)
-#        k_means.restore_all()
-        k_means.train(x2, config.MAX_ITERS)
+#        k_means.create_model(x2_width)
+        k_means.restore_all()
+#        k_means.train(x2)
         k_means.run(x2)
-    """
+    
     # Model 3
     with tf.Session(graph=graph_ann, config=session_conf) as sess:
         ann = model3.ANN(session=sess)
-
-        ann.create_model(
-            x3_width, 
-            num_NN_nodes=config.NUM_NN_NODES,
-            num_y_type=config.NUM_Y_TYPE)
-
-        ann.train(
-            x=x3,
-            y=y3,
-            dev_sample_percentage=0.1,
-            batch_size=config.BATCH_SIZE,
-            num_epochs=config.NUM_EPOCH,
-            evaluate_interval=config.EVALUATE_INTERVAL,
-            save_interval=config.SAVE_INTERVAL)
+#        ann.create_model(x3_width, num_y_type=2)
+        ann.restore_all()
+        ann.train(x3,y3)
 
         result = ann.run(x3,y3)
+        print(result)
+"""
         num_entire = len(result[0]) + 1
         num_correct = 0
         for i, prediction in enumerate(result[0]):
@@ -100,4 +91,4 @@ if __name__ == "__main__":
                 num_correct = num_correct + 1
         accuracy = num_correct / num_entire
         print(accuracy)
-
+    """
