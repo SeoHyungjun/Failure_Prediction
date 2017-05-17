@@ -99,7 +99,7 @@ class K_Means(Model):
         model_saver.save(self.session, self.model_prefix, global_step=global_step-1)
         np.savetxt(os.path.join(self.summary_train_path, file_output), updated_centroids, delimiter=',')
         print("Save leanred model at step {}".format(global_step-1))
-        
+
     def run(self, x, file_output=ct.STR_CENTROID_FILE):
         centroids = np.genfromtxt(os.path.join(self.summary_train_path, file_output), delimiter=',')
         feed_dict = {

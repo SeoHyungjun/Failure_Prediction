@@ -14,7 +14,7 @@ class ANN(Model):
         # make output directory
         self.saver_path, self.summary_train_path, self.summary_dev_path = set_output_dir.make_dir(model_name)
         # set output directory of tensorflow output
-        self.model_prefix = os.path.join(self.saver_path, save_tag) 
+        self.model_prefix = os.path.join(self.saver_path, save_tag)
         self.session = session
 
     def set_config(self):
@@ -29,8 +29,8 @@ class ANN(Model):
         # Placeholders for input, output and dropout
         self.input_x = tf.placeholder(tf.float32, [None, x_width], name="input_x")
         self.input_y = tf.placeholder(tf.int32, [None, num_y_type], name="input_y" )
-        self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
-       
+        self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob")
+
         # Keeping track of 12 regularization loss (optional)
         l2_loss = tf.constant(0.0)
 
@@ -69,7 +69,7 @@ class ANN(Model):
             self.scores = tf.nn.xw_plus_b(NN_result[index+1], W, b, name="output")
             self.softmax = tf.nn.softmax(self.scores, name="softmax_scores")
             self.predictions = tf.argmax(self.scores, 1, name="predictions")
-            
+
         # Evaluation layer
         with tf.name_scope("eval_info"):
             losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores, labels=self.input_y)
@@ -103,7 +103,7 @@ class ANN(Model):
         # train operation
         self.train_op = self.session.graph.get_operation_by_name("train/train_op").outputs[0]
         self.global_step = self.session.graph.get_operation_by_name("train/global_step").outputs[0]
-         
+
 
     def train(self, x, y, dev_sample_percentage, batch_size, num_epochs, evaluate_interval, save_interval, dropout_keep_prob=0.5):
     ### train parameter ###
@@ -114,7 +114,7 @@ class ANN(Model):
     # save_interval : Save model after this many steps (default: 150)
     # allow_soft_placement : Allow device soft device placement
     # log_device_placement : Log placement of ops on devices
-    
+
         # make training/validation data batch by batch
         x_train, x_val, y_train, y_val = make_input.divide_fold(x, y, num_fold=10)
         batches = make_input.batch_iter(x_train, y_train, batch_size, num_epochs)
