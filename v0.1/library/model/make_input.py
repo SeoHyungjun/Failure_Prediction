@@ -43,7 +43,7 @@ def split_xy(csv_file_path, num_y_type, x_height=1):
 
 def divide_fold(x, y, num_fold):
     """
-    divide as N fold, select only one fold as validation set.
+    divide randomly as N fold, select only one fold as validation set.
     other folds are used as training set
     """
     num_y_type = len(y)

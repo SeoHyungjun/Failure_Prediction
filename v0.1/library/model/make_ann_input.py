@@ -27,10 +27,10 @@ def get_last(data, window_size, prediction_interval):
 IN_FAILURE_PATH = "/root/SMART/in_ann/fail_serial"
 IN_NON_FAILURE_PATH = "/root/SMART/in_ann/non_fail_serial"
 OUT_FILE_PATH = "/root/SMART/in_ann/in_ann.csv"
-WINDOW_SIZE = 6
-PREDICTION_INTERVAL = 3
-INT_FAILURE = 0
-INT_NON_FAILURE = 1
+WINDOW_SIZE = 8
+PREDICTION_INTERVAL = 2
+INT_FAILURE = 1
+INT_NON_FAILURE = 0
 index = 0
 
 os.remove(OUT_FILE_PATH)

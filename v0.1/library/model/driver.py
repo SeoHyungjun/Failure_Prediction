@@ -61,23 +61,33 @@ if __name__ == "__main__":
             save_interval=100)
         cnn.run(x1, y1) 
     """
+    arg_dict2 = {'dir_model':'hihi'}
     # Model 2
-    with tf.Session(graph=graph_k_means, config=session_conf) as sess:
-        k_means = model2.K_Means(session=sess)
-#        k_means.create_model(x2_width)
-#        k_means.restore_all()
-#        k_means.train(x2)
-#        k_means.run(x2)
+    k_means = model2.K_Means()
+    k_means.set_config(k_means, arg_dict2)
+    k_means.set_x(k_means, x2)
+    k_means.set_model_sequence(k_means, 2)
+    k_means.create_model()
+#    k_means.restore_all()
+    k_means.train()
+    k_means.run()
     
-    # Model 3
-    with tf.Session(graph=graph_ann, config=session_conf) as sess:
-        ann = model3.ANN(session=sess)
-        ann.create_model(x3_width, num_y_type=2)
-#        ann.restore_all()
-        ann.train(x3,y3)
 
-        result = ann.run(x3,y3)
-        print(result)
+    arg_dict3 = {'tmp':''}
+    # Model 3
+    ann = model3.ANN()
+    ann.set_config(ann, arg_dict3)
+    ann.set_x(ann, x3)
+    ann.set_y(ann, y3)
+    ann.set_model_sequence(ann, 3)
+    ann.create_model()
+#    ann.restore_all()
+    ann.train()
+
+    result = ann.run()
+#    with open("./out","w") as f:
+#        [f.writelines(str(y)) for y in result[0]]
+    print(result)
 """
         num_entire = len(result[0]) + 1
         num_correct = 0
