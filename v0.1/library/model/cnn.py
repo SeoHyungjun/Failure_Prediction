@@ -8,7 +8,7 @@ import constant as ct
 class CNN(Model):
     ### CV parameter ###
 
-    def __init__(self, session, model_name="CNN", save_tag=ct.STR_SAVED_MODEL_PREFIX):
+    def __init__(self, session, model_name="CNN", save_tag="model"):
         # make output directory
         self.saver_path, self.summary_train_path, self.summary_dev_path = set_output_dir.make_dir(model_name)
         # set output directory of tensorflow output
@@ -128,7 +128,7 @@ class CNN(Model):
         self.session.run(tf.global_variables_initializer())
 
 
-    def restore_all(self, model_name="CNN", dir_root=ct.STR_DERECTORY_ROOT, graph_dir=ct.STR_DERECTORY_GRAPH):
+    def restore_all(self, model_name="CNN", dir_root=ct.DIR_ROOT, graph_dir=ct.DIR_MODEL):
         checkpoint_file_path = os.path.join(dir_root, model_name, graph_dir)
         # Restore graph and variables and operation
         latest_model = tf.train.latest_checkpoint(checkpoint_file_path)

@@ -36,6 +36,7 @@ index = 0
 os.remove(OUT_FILE_PATH)
 f_out = open(OUT_FILE_PATH, "a")
 
+proceed = 0
 # write data that have failure. two data added(initial one, last one-failure)
 for in_filepath in glob.glob(os.path.abspath(os.path.join(IN_FAILURE_PATH, '*.csv'))):
     df_csv = pd.read_csv(in_filepath)
@@ -66,6 +67,8 @@ for in_filepath in glob.glob(os.path.abspath(os.path.join(IN_FAILURE_PATH, '*.cs
 
     lines = [str_first_line, str_last_line]
     f_out.writelines(lines)
+    proceed = proceed + 1
+    print("proceed = {}".format(proceed), end='\r')
 
 # write data that don't have failure. two data added(first one, last one)
 for in_filepath in glob.glob(os.path.abspath(os.path.join(IN_NON_FAILURE_PATH, '*.csv'))):
@@ -97,3 +100,5 @@ for in_filepath in glob.glob(os.path.abspath(os.path.join(IN_NON_FAILURE_PATH, '
 
     lines = [str_first_line, str_last_line]
     f_out.writelines(lines)
+    proceed = proceed + 1
+    print("proceed = {}".format(proceed), end='\r')

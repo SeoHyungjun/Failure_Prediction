@@ -68,23 +68,12 @@ class operation_unit :
         pass
 
     # operation for T type.
-    def oper_T_type(self, model=None, session_conf=None, retrain=False):
+    def oper_T_type(self, model=None, retrain=False):
         if model is None:
             print("Operation type is Train.")
             print("But, it doesn't exist model instance.!")
             print("exit...")
             exit(1)
-        elif session_conf is None:
-            print("Session configuration is not given")
-            print("Setting on default session config")
-            print("allow_soft_placement=True, log_device_placement=False")
-            session_conf = tf.ConfigProto(allow_soft_placement=True, \
-                                          log_device_placement=False)
-
-        graph = tf.Graph()
-
-        with tf.Session(graph=graph, config=session_conf) as sess:
-            model.set_session(sess)
 
             if not retrain:
                 model.create_model()
