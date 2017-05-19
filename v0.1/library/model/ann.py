@@ -11,25 +11,25 @@ class ANN(Model):
 
     def __init__(self):
         self.model_name = ct.ANN_MODEL_NAME
-        self.dir_model = ct.ANN_DIR_MODEL
+        self.model_dir = ct.ANN_MODEL_DIR
         # output config
         self.model_save_tag = ct.MODEL_SAVE_TAG
-        self.dir_output = ct.DIRPATH_PROJECT
+        self.project_dirpath = ct.PROJECT_DIRPATH
         # create_model
         self.graph = tf.Graph()
         self.session = tf.Session(graph=self.graph)
-        self.num_nodes = ct.ANN_NUM_NODES
+        self.nodes_num = ct.ANN_NODES_NUM
         self.dropout_keep_prob = ct.ANN_DROPOUT_KEEP_PROB
         self.l2_reg_lambda = ct.ANN_L2_REG_LAMBDA
         self.validation_sample_percentage = ct.ANN_VALIDATION_SAMPLE_PERCENTAGE
         self.batch_size = ct.ANN_BATCH_SIZE
-        self.num_epochs = ct.ANN_NUM_EPOCHS
+        self.epochs_num = ct.ANN_EPOCHS_NUM
         self.validation_interval = ct.ANN_VALIDATION_INTERVAL
 
     def create_model(self):
-        self.dir_model = str(self.model_sequence) + '.' + self.dir_model 
+        self.model_dir = str(self.model_sequence) + '.' + self.model_dir
         # make output directory
-        self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.dir_model, self.dir_output)
+        self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.model_dir, self.project_dirpath)
         self.model_filepath = os.path.join(self.dirpath_trained_model, self.model_save_tag)
 
         x_width = self.x.shape[-1]
@@ -46,9 +46,9 @@ class ANN(Model):
 
             # ANN layer
             pre_num_node = x_width
-            NN_result = [None] * (len(self.num_nodes) + 1)
+            NN_result = [None] * (len(self.nodes_num) + 1)
             NN_result[0] = self.input_x
-            for index, num_node in enumerate(self.num_nodes):
+            for index, num_node in enumerate(self.nodes_num):
                 if num_node == 0:
                     print("the number of ANN layer node(num_node=0) is not valid")
                     index = -1
@@ -106,10 +106,10 @@ class ANN(Model):
 
     def restore_all(self):
         with self.graph.as_default():
-            dirpath_model = os.path.join(self.dir_output, self.model_name)
-            self.dirpath_trained_model = os.path.join(dirpath_model, ct.DIR_TRAINED_MODEL)
-            self.dirpath_summary_train = os.path.join(dirpath_model, ct.DIR_SUMMARY, ct.DIR_SUMMARY_TRAIN)
-            self.dirpath_summary_validation = os.path.join(dirpath_model, ct.DIR_SUMMARY, ct.DIR_SUMMARY_VALIDATION)
+            dirpath_model = os.path.join(self.project_dirpath, self.model_name)
+            self.dirpath_trained_model = os.path.join(dirpath_model, ct.TRAINED_MODEL_DIR)
+            self.dirpath_summary_train = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_TRAIN_DIR)
+            self.dirpath_summary_validation = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_VALIDATION_DIR)
             checkpoint_file_path = os.path.join(self.dirpath_trained_model)
             # Restore graph and variables and operation
             latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
@@ -130,7 +130,7 @@ class ANN(Model):
     def train(self):
         # make training/validation data batch by batch
         x_train, x_val, y_train, y_val = make_input.divide_fold(self.x, self.y, num_fold=10)
-        batches = make_input.batch_iter(x_train, y_train, self.batch_size, self.num_epochs)
+        batches = make_input.batch_iter(x_train, y_train, self.batch_size, self.epochs_num)
         # writer(tensorboard) 
         writer_train = tf.summary.FileWriter(self.dirpath_trained_model, self.session.graph)
         writer_validation = tf.summary.FileWriter(self.dirpath_summary_train, self.session.graph)

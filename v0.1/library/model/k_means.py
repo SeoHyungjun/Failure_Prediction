@@ -14,36 +14,36 @@ import constant as ct
 class K_Means(Model):
     def __init__(self):
         self.model_name = ct.KMEANS_MODEL_NAME
-        self.dir_model = ct.KMEANS_DIR_MODEL
+        self.model_dir = ct.KMEANS_MODEL_DIR
         # output config
         self.model_save_tag = ct.MODEL_SAVE_TAG
-        self.dir_output = ct.DIRPATH_PROJECT
+        self.project_dirpath = ct.PROJECT_DIRPATH
         self.trained_centroid_file = ct.KMEANS_TRAINED_CENTROID_FILE
         # create_model
         self.graph = tf.Graph()
         self.session = tf.Session(graph=self.graph)
-        self.num_centroid = ct.KMEANS_NUM_CENTROID
+        self.centroid_num = ct.KMEANS_CENTROID_NUM
         self.max_iters = ct.KMEANS_MAX_ITERS
 
     def create_model(self):
         self.dir_model = str(self.model_sequence) + '.' + self.dir_model 
         # make output directory
-        self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.dir_model, self.dir_output)
+        self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.model_dir, self.project_dirpath)
         self.model_filepath = os.path.join(self.dirpath_trained_model, self.model_save_tag)
         
         x_width = self.x.shape[-1]
         with self.graph.as_default():
             self.input_x = tf.placeholder(tf.float32, [None, x_width], name="input_x")
-            self.input_centroids = tf.placeholder(tf.float32, [self.num_centroid, x_width], name="input_centroids")
+            self.input_centroids = tf.placeholder(tf.float32, [self.centroid_num, x_width], name="input_centroids")
             self.input_step = tf.placeholder(tf.int32, name="input_step")
     
-            centroids = tf.get_variable("centroids", shape=[self.num_centroid, x_width])
+            centroids = tf.get_variable("centroids", shape=[self.centroid_num, x_width])
             init_centroids = tf.assign(centroids, self.input_centroids)
             expanded_centroids = tf.expand_dims(init_centroids, 0)
             expanded_point = tf.expand_dims(self.input_x, 1)
             distances = tf.reduce_sum(tf.square(tf.subtract(expanded_point, expanded_centroids)), -1)
             self.assignments = tf.argmin(distances, -1, name="assignment")
-            points_per_centroid = [tf.gather(self.input_x, tf.reshape(tf.where(tf.equal(self.assignments, centroid_index)), [-1])) for centroid_index in range(self.num_centroid)]
+            points_per_centroid = [tf.gather(self.input_x, tf.reshape(tf.where(tf.equal(self.assignments, centroid_index)), [-1])) for centroid_index in range(self.centroid_num)]
             updated_centroids = [tf.reduce_mean(points, reduction_indices=0)
                     for points in points_per_centroid]
             self.op_train = tf.assign(centroids, updated_centroids, name="op_train")
@@ -56,10 +56,10 @@ class K_Means(Model):
             self.session.run(tf.global_variables_initializer())
     
     def restore_all(self):
-        dirpath_model = os.path.join(self.dir_output, self.model_name)
-        self.dirpath_trained_model = os.path.join(dirpath_model, ct.DIR_TRAINED_MODEL)
-        self.dirpath_summary_train = os.path.join(dirpath_model, ct.DIR_SUMMARY, ct.DIR_SUMMARY_TRAIN)
-        self.dirpath_summary_validation = os.path.join(dirpath_model, ct.DIR_SUMMARY, ct.DIR_SUMMARY_VALIDATION)
+        dirpath_model = os.path.join(self.project_dirpath, self.model_name)
+        self.dirpath_trained_model = os.path.join(dirpath_model, ct.TRAINED_MODEL_DIR)
+        self.dirpath_summary_train = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_TRAIN_DIR)
+        self.dirpath_summary_validation = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_VALIDATION_DIR)
         checkpoint_file_path = os.path.join(self.dirpath_trained_model)
         with self.graph.as_default():
             # Restore graph and variables and operation
@@ -80,11 +80,11 @@ class K_Means(Model):
             self.saver_model = tf.train.Saver(tf.global_variables(), name="saver_model")
      
     def train(self):
-        if self.num_centroid >= len(self.x):
+        if self.centroid_num >= len(self.x):
             print("the number of centroid must be larger than (the number of data + 1)")
             sys.exit()
         # set default centroids randomly
-        centroid_indexs = random.sample(range(0, len(self.x)-1), self.num_centroid)
+        centroid_indexs = random.sample(range(0, len(self.x)-1), self.centroid_num)
         centroids_feed = self.x.iloc[centroid_indexs]
         feed_dict = {
                 self.input_x : self.x,
