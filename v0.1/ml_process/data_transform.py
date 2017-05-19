@@ -63,23 +63,35 @@ class data_transform :
             start_idx = i * strides
             # end_idx does not contain -1 as ndarray indexing is ended before end_idx
             end_idx = start_idx + window_size
-            print(start_idx, end_idx)
             x.append(orig_x[start_idx:end_idx:1])
 
-#        x = np.empty()
-#        y = np.empty()
-#         print(orig_x)
-#
-#
+        x = np.array(x)
+
+
+        print(y.shape[1])
+
+        # model.x_size = x.shpae  # (tuple)
+        # model.num_y_type = len(y_cols)
+        # model.x = x
+        # model.y = y
+
         for i, j in enumerate(orig_x):
             print(i, j)
 
         for i, j in enumerate(x):
             print(i, j)
 
+        for i, j in enumerate(orig_y):
+            print(i, j)
+
+        for i ,j in enumerate(y):
+            print(i, j)
+
+
 if __name__ == '__main__':
     dt_cls = data_transform()
     df1 = pd.DataFrame(np.random.randn(20, 4), columns=['a', 'b', 'c', 'd'])
+    data = pd.read_csv("~/SMART/in_ann/in_ann.csv")
 
-    dt_cls.create_window_data(0, df1, [1,3], 2, 3 ,2)
+    dt_cls.create_window_data(0, data, [8], 3, 4 ,1)
 
