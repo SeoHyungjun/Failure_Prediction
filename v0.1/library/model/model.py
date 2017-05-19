@@ -15,23 +15,7 @@ class Model(ABC):
     def __init__(self):
         self.model_naem =''
         self.arg_dict = {}
-    """
-    @abstractmethod
-    def set_session(self, sess): #used by operation.py T type, R
-        pass
-    
-    @abstractmethod
-    def set_input_path(self, path, isTrain=True): #used by D type
-        pass
 
-    @abstractmethod
-    def set_output_path(self, path, isTrain=True): #used by O type
-        pass
-    """
-    @abstractmethod
-    def set_config(self):
-        pass
-  
     @abstractmethod
     def create_model(self):
         pass
@@ -63,4 +47,20 @@ class Model(ABC):
         for model in model_list :
             model.print_model_config(model.model_name, model.arg_dict)
 
+    @staticmethod
+    def set_config(self, arg_dict):
+        for config in arg_dict:
+            apply_config_string = 'self.' + config + '=arg_dict[\'' + config + '\']'
+            exec(apply_config_string)
+  
+    @staticmethod
+    def set_x(self, x):
+        self.x = x
 
+    @staticmethod
+    def set_y(self, y):
+        self.y = y
+
+    @staticmethod
+    def set_model_sequence(self, model_sequence):
+        self.model_sequence = model_sequence
