@@ -80,8 +80,8 @@ if __name__ == "__main__":
     ann.set_x(ann, x3)
     ann.set_y(ann, y3)
     ann.set_model_sequence(ann, 3)
-#    ann.create_model()
-    ann.restore_all()
+    ann.create_model()
+#    ann.restore_all()
     ann.train()
 
     result = ann.run()

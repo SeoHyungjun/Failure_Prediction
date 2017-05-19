@@ -26,7 +26,7 @@ class K_Means(Model):
         self.max_iters = ct.KMEANS_MAX_ITERS
 
     def create_model(self):
-        self.dir_model = str(self.model_sequence) + '.' + self.dir_model 
+        self.model_dir = str(self.model_sequence) + '_' + self.model_dir
         # make output directory
         self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.model_dir, self.project_dirpath)
         self.model_filepath = os.path.join(self.dirpath_trained_model, self.model_save_tag)
@@ -109,20 +109,8 @@ class K_Means(Model):
                     break
             print("End {}st step, sum_distances = {}".format(global_step, sum_distances), end="\r")
             feed_dict.update({self.input_centroids:updated_centroids})
-<<<<<<< HEAD
-        print("finish!!\nsum_distances = {}".format(sum_distances))
-<<<<<<< HEAD
-        model_saver.save(self.session, self.model_prefix, global_step=global_step-1)
-        np.savetxt(os.path.join(self.summary_train_path, file_output), updated_centroids, delimiter=',')
-        print("Save leanred model at step {}".format(global_step-1))
-
-    def run(self, x, file_output=ct.STR_CENTROID_FILE):
-        centroids = np.genfromtxt(os.path.join(self.summary_train_path, file_output), delimiter=',')
-=======
-=======
         print("End {}st step, sum_distances = {}".format(global_step, sum_distances))
-        print("\n[Finish]\nsum_distances = {}".format(sum_distances))
->>>>>>> 2ad6813a3f724d0197c5fc84639202a4741b1e43
+        print("[Finish]\nsum_distances = {}".format(sum_distances))
         filepath_trained_model = os.path.join(self.dirpath_trained_model, self.model_save_tag) 
         self.saver_model.save(self.session, filepath_trained_model, global_step=global_step-1)
         np.savetxt(os.path.join(self.dirpath_trained_model, ct.KMEANS_TRAINED_CENTROID_FILE), updated_centroids, delimiter=',')
@@ -130,7 +118,6 @@ class K_Means(Model):
         
     def run(self):
         centroids = np.genfromtxt(os.path.join(self.dirpath_trained_model, self.trained_centroid_file), delimiter=',')
->>>>>>> 8662af41ade9c30a5a416dae4f2fd7ade6274dc8
         feed_dict = {
                 self.input_x : self.x,
                 self.input_centroids : centroids,
