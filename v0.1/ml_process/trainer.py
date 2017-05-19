@@ -11,7 +11,6 @@ MODEL_ORDER = ['first_model', 'second_model', 'third_model', 'fourth_model']
 class Trainer(ml_process.ML_process_class) :
     def __init__(self):
         super().__init__()
-        self.train_data_source = None # 나중에 디폴트 설정넣어놔야함
 
     def read_data(self, data_read_where):
         pass
@@ -29,18 +28,22 @@ class Trainer(ml_process.ML_process_class) :
             for operation_unit in operations:
                 oper_type = operation_unit.oper_type
                 func = operation_unit.execute_oper_func
-                if oper_type == 'D':
-                    self.train_data_source = func()
-                if oper_type == 'R' or oper_type == 'T':
+                elif oper_type == 'DT':
+                    pass
+                elif oper_type == 'DP':
+                    pass
+                elif oper_type == 'OT':
+                    pass
+                elif oper_type == 'OP':
+                    pass
+                elif oper_type == 'R' or oper_type == 'T':
                     func(model, session_conf)
-                if oper_type == 'O':
+                elif oper_type == 'M':
                     pass
-                if oper_type == 'M':
-                    pass
+                else:
+                    print("Operation Type is Wrong!!!. Type %s" % oper_type)
     '''
-
             #graph = tf.Graph()
-
 
         #for i -> n
         #self.model_list[i].train_operations

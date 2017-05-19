@@ -33,7 +33,7 @@ class CNN(Model):
         self.expanded_input_x = tf.expand_dims(self.input_x, -1)
         self.input_y = tf.placeholder(tf.int32, [None, num_y_type], name="input_y" )
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
-       
+
         # Keeping track of 12 regularization loss (optional)
         l2_loss = tf.constant(0.0)
         pooled_outputs = []
@@ -45,7 +45,7 @@ class CNN(Model):
                 filter_shape = [filter_size[0], filter_size[1], 1, num_filters]
                 W = tf.Variable(tf.truncated_normal(filter_shape, stddev=0.1), name="W")
                 b = tf.Variable(tf.constant(0.1, shape=[num_filters]), name="b")
-        
+
                 conv = tf.nn.conv2d(
                     self.expanded_input_x,
                     W,                  # filter
@@ -54,8 +54,9 @@ class CNN(Model):
                     name="conv")
                 # Apply nonlinearity
                 conv_relu = tf.nn.relu(tf.nn.bias_add(conv, b), name="relu")
-       
+
                 # Maxpooling over the outputs
+                #
                 pooled = tf.nn.max_pool(
                     conv_relu,
                     ksize=[1, x_height - filter_size[0] + 1, x_width - filter_size[1] + 1, 1],
@@ -63,7 +64,7 @@ class CNN(Model):
                     padding="VALID",
                     name="pool")
                 pooled_outputs.append(pooled)
-        
+
         # Combine all the pooled featrues
         num_filters_total = num_filters * len(filter_sizes)
         pooled_concat = tf.concat(pooled_outputs, 3)
@@ -71,7 +72,7 @@ class CNN(Model):
 
         with tf.name_scope("conv-dropout"):
             conv_drop = tf.nn.dropout(pooled_flat, dropout_keep_prob)
-            
+
         # Hidden_NN layer
         pre_num_node = num_filters_total
         NN_result = [None] * (len(num_NN_nodes) + 1)
@@ -106,7 +107,7 @@ class CNN(Model):
             self.scores = tf.nn.xw_plus_b(NN_result[index+1], W, b, name="output")
             self.softmax = tf.nn.softmax(self.scores, name="softmax_scores")
             self.predictions = tf.argmax(self.scores, 1, name="predictions")
-            
+
         # Evaluation layer
         with tf.name_scope("eval_info"):
             losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores, labels=self.input_y)
