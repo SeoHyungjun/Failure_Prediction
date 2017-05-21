@@ -103,16 +103,17 @@ class ANN(Model):
             # Initiazlize all variables of tensor
             self.session.run(tf.global_variables_initializer())
 
-
     def restore_all(self):
+        # find latest filename of latest model
+        self.model_dir = str(self.model_sequence) + '_' + self.model_dir
+        dirpath_model = os.path.join(self.project_dirpath, self.model_dir)
+        self.dirpath_trained_model = os.path.join(dirpath_model, ct.TRAINED_MODEL_DIR)
+        self.dirpath_summary_train = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_TRAIN_DIR)
+        self.dirpath_summary_validation = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_VALIDATION_DIR)
+        checkpoint_file_path = os.path.join(self.dirpath_trained_model)
+        latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
         with self.graph.as_default():
-            dirpath_model = os.path.join(self.project_dirpath, self.model_name)
-            self.dirpath_trained_model = os.path.join(dirpath_model, ct.TRAINED_MODEL_DIR)
-            self.dirpath_summary_train = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_TRAIN_DIR)
-            self.dirpath_summary_validation = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_VALIDATION_DIR)
-            checkpoint_file_path = os.path.join(self.dirpath_trained_model)
             # Restore graph and variables and operation
-            latest_model = tf.train.latest_checkpoint(checkpoint_file_path)
             restorer = tf.train.import_meta_graph("{}.meta".format(latest_model))
             restorer.restore(self.session, "{}".format(latest_model))
             # input operation

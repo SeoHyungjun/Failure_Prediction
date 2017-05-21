@@ -67,8 +67,8 @@ if __name__ == "__main__":
     k_means.set_config(k_means, arg_dict2)
     k_means.set_x(k_means, x2)
     k_means.set_model_sequence(k_means, 2)
-    k_means.create_model()
-#    k_means.restore_all()
+#    k_means.create_model()
+    k_means.restore_all()
     k_means.train()
     k_means.run()
     
@@ -88,16 +88,3 @@ if __name__ == "__main__":
 #    with open("./out","w") as f:
 #        [f.writelines(str(y)) for y in result[0]]
     print(result)
-"""
-        num_entire = len(result[0]) + 1
-        num_correct = 0
-        for i, prediction in enumerate(result[0]):
-            if y3[i][0] == 1:
-                real_value = 0
-            elif y3[i][1] == 1:
-                real_value = 1
-            if real_value == prediction:
-                num_correct = num_correct + 1
-        accuracy = num_correct / num_entire
-        print(accuracy)
-    """
