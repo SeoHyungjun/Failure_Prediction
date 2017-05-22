@@ -10,14 +10,12 @@ collect_port =
 # model_name must be model class name
 # dir_project means root dir that contain input and output dir
 # dir input means root dir that contain input data
-# dir output means root dir that contain output data
 [ML_Process]
 model_num = 2
 model_names = K_Means, ANN
 window_size = 10
-dir_project =
-dir_input =
-dir_output =
+dir_project = ./FP_project
+dir_input = input
 
 # Each algorithm has different parameters.
 # Each section contains the data transform functions that will 
@@ -41,20 +39,22 @@ dir_output =
 [FIRST_MODEL]
 enable = true
 model_name = K_Means
-num_centroids =
-max_iters =
-trained_centroid_file =
+model_dir = K_Means
+num_centroids = 4
+max_iters = 1000
+trained_centroid_file = centriod.csv
 
 [SECOND_MODEL]
 enable = true
 model_name = ANN
-num_nodes = []
-dropout_keep_prob =
-l2_reg_lambda =
-validation_sample_percentage =
-batch_size =
-num_epochs =
-validation_interval =
+model_dir = ANN
+num_nodes = "10,7"
+dropout_keep_prob = 0.5
+l2_reg_lambda = 0.0
+validation_sample_percentage = 0.1
+batch_size = 32
+num_epochs = 2
+validation_interval = 2000
 
 [THIRD_MODEL]
 enable = false
@@ -77,8 +77,9 @@ arg2 =
 # [Xth_MODEL]
 # enable = true
 # model_name = K_Means
-# num_centroids =
-# max_iters =
+# model_dir = K_Means
+# num_centroids = 4
+# max_iters = 1000
 # trained_centroid_file =
 #
 
@@ -92,13 +93,15 @@ arg2 =
 # [Xth_MODEL]
 # enable = true
 # model_name = ANN
-# num_nodes = []
-# dropout_keep_prob =
-# l2_reg_lambda =
-# validation_sample_percentage =
-# batch_size =
-# num_epochs =
-# validation_interval =
+# model_dir = ANN
+# num_nodes = "10,7"
+# dropout_keep_prob = 0.5
+# l2_reg_lambda = 0.0
+# validation_sample_percentage = 0.1
+# batch_size = 32
+# num_epochs = 2
+# validation_interval = 2000
+#
 
 # In operations section, enter the operation sequence.
 #
@@ -129,9 +132,10 @@ arg2 =
 # 'PI' : Input data path when predict
 # 'TO' : Output path when train
 # 'PO' : Output path when predict
-# 'DT'  : Data transform method
+# 'DT' : Data transform method
 # 'T'  : Train model
 # 'R'  : Run model (Predict)
+#
 
 
 [predict_operations]
