@@ -9,7 +9,20 @@ import k_means as model2
 import ann as model3
 import make_input
 
+import sys
+sys.path.insert(0, '../data_transform')
+import data_transform
+
 if __name__ == "__main__":
+    data = pd.read_csv("./sample.csv")
+
+    dt = data_transform.data_transform()
+    x, y = dt.create_window_data(data,'failure', window_size=3,lead_time=0,strides=1)
+    x_train, x_val, y_train, y_val = dt.divide_fold(x,y,2)
+    batchs = dt.batch_generator(x_train, y_train, 3, 1)
+    node_y_input = dt.make_node_y_input(y, 2)
+    print(node_y_input)
+
     """
     # Load input data
     x1_height = 2
