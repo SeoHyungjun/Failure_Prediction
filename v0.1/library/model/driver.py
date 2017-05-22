@@ -69,7 +69,7 @@ if __name__ == "__main__":
     k_means.set_model_sequence(k_means, 2)
 #    k_means.create_model()
     k_means.restore_all()
-    k_means.train()
+#    k_means.train()
     k_means.run()
     
 
@@ -80,9 +80,9 @@ if __name__ == "__main__":
     ann.set_x(ann, x3)
     ann.set_y(ann, y3)
     ann.set_model_sequence(ann, 3)
-    ann.create_model()
-#    ann.restore_all()
-    ann.train()
+#    ann.create_model()
+    ann.restore_all()
+#    ann.train()
 
     result = ann.run()
 #    with open("./out","w") as f:
