@@ -2,6 +2,7 @@
 
 import os
 import pandas as pd
+import data_transform
 
 def load_mod(module_path) :
     cwd = os.getcwd()
@@ -36,3 +37,4 @@ for index, row in pd_model_tbl.iterrows():
    class_obj_dict[row['MODEL_NAME']] = getattr(mod, row['CLASS_NAME'])
 
 # print(class_obj_dict)
+dt_func_cls = data_transform()

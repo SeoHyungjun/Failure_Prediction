@@ -1,4 +1,3 @@
 FUNCTION_NAME
-transpose
-1col_del
 split_x_y
+create_window_data

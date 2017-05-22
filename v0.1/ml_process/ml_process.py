@@ -7,7 +7,7 @@ import operation as op
 
 from abc import abstractmethod
 
-class ML_process_class :
+class ML_Process :
     def __init__(self, config_fname='config'):
         self.model_num = 0
         self.model_dict = {}
@@ -37,12 +37,12 @@ class ML_process_class :
             except IndexError:
                 pass
 
-        predict_operations_list = config['predict_operations']['predict_operations'] \
+        predict_operations_list = config['Predict_operations']['predict_operations'] \
                                     .replace(' ', '').split(',')
         for oper in predict_operations_list:
             self.predict_oper_list.append(op.operation_unit(oper))
 
-        train_operations_dict = config['train_operations'] # key : first_model value : D:"", T"", O"" ...
+        train_operations_dict = config['Train_operations'] # key : first_model value : D:"", T"", O"" ...
         for model_order, train_operations_str in train_operations_dict.items():
             train_operations_list = train_operations_str.replace(' ', '').split(',')
             self.train_oper_dict[model_order] = []
@@ -74,12 +74,6 @@ class ML_process_class :
                 oper_unit.print_oper_unit()
             print("------------------------------------")
         print("------------------------------------")
-
-    # read_training_data or predict_data
-    # read_where can be 'db' or 'pipe' or 'queue' ...? 
-    @abstractmethod
-    def read_data(self, data_read_where):
-        pass
 
     @abstractmethod
     def main(self):

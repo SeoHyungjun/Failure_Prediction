@@ -11,26 +11,26 @@ class operation_unit :
 
         if self.oper_type == 'TI':
             self.train_input_path = split_opers[1].split('"')[1]
-            self.execute_oper_func = self.oper_DT_type
+            self.execute_oper_func = self.oper_TI_type
         elif self.oper_type == 'PI':
             self.predict_input_path = split_opers[1].split('"')[1]
-            self.execute_oper_func = self.oper_DP_type
+            self.execute_oper_func = self.oper_PI_type
         elif self.oper_type == 'TO':
             self.train_output_path = split_opers[1].split('"')[1]
-            self.execute_oper_func = self.oper_OT_type
+            self.execute_oper_func = self.oper_TO_type
         elif self.oper_type == 'PO':
             self.predict_output_path = split_opers[1].split('"')[1]
-            self.execute_oper_func = self.oper_OP_type
+            self.execute_oper_func = self.oper_PO_type
         elif self.oper_type == 'T':
-            self.train_model = split_opers[1].split('"')[1]    # train model (for T type)
+            self.train_model = split_opers[1].split('"')[1]
             self.execute_oper_func = self.oper_T_type
         elif self.oper_type == 'R':
-            self.run_model = split_opers[1].split('"')[1]      # run model (for R type)
+            self.run_model = split_opers[1].split('"')[1]
             self.execute_oper_func = self.oper_R_type
         elif self.oper_type == 'DT':
-            self.transform_func = split_opers[1].split('"')[1]    # data transform func (for M type)
-            self.trsf_func_args = [arg.split('"')[1] for arg in split_opers[2:]]    # args for M type
-            self.execute_oper_func = self.oper_M_type
+            self.dt_func = split_opers[1].split('"')[1]
+            self.dt_func_args = [arg.split('"')[1] for arg in split_opers[2:]] # args for DT type
+            self.execute_oper_func = self.oper_DT_type
 
     def print_oper_unit(self):
         print("[operation type] : %s" % self.oper_type)
@@ -54,7 +54,6 @@ class operation_unit :
                 i = i + 1
                 print("[Argument %d] : %s " % (i,  arg))
 
-    # operation for DT type.
     def oper_TI_type(self, model, path):
         pass
 
