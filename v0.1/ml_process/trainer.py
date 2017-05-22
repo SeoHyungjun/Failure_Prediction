@@ -21,9 +21,10 @@ class Trainer(ml_process.ML_process_class) :
         session_conf = tf.ConfigProto(allow_soft_placement=True, \
                                      log_device_placement=False)
     '''
-        for model_order in MODEL_ORDER:
+        for i, model_order in enumerate(MODEL_ORDER):
             operations = self.train_oper_dict[model_order]
             model = self.model_dict[model_order]
+            model.set_model_sequence(model, i+1)
 
             for operation_unit in operations:
                 oper_type = operation_unit.oper_type
@@ -37,6 +38,10 @@ class Trainer(ml_process.ML_process_class) :
                 elif oper_type == 'OP':
                     pass
                 elif oper_type == 'R' or oper_type == 'T':
+                    if x is not None:
+                        model.set_x(model, x)
+                    if y is not None:
+                        model.set_y(model, y)
                     func(model, session_conf)
                 elif oper_type == 'M':
                     pass

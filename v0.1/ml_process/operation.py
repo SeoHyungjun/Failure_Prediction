@@ -9,16 +9,16 @@ class operation_unit :
         self.oper_type = split_opers[0]
         self.execute_oper_func = None
 
-        if self.oper_type == 'DT':
+        if self.oper_type == 'TI':
             self.train_input_path = split_opers[1].split('"')[1]
             self.execute_oper_func = self.oper_DT_type
-        elif self.oper_type == 'DP':
+        elif self.oper_type == 'PI':
             self.predict_input_path = split_opers[1].split('"')[1]
             self.execute_oper_func = self.oper_DP_type
-        elif self.oper_type == 'OT':
+        elif self.oper_type == 'TO':
             self.train_output_path = split_opers[1].split('"')[1]
             self.execute_oper_func = self.oper_OT_type
-        elif self.oper_type == 'OP':
+        elif self.oper_type == 'PO':
             self.predict_output_path = split_opers[1].split('"')[1]
             self.execute_oper_func = self.oper_OP_type
         elif self.oper_type == 'T':
@@ -27,7 +27,7 @@ class operation_unit :
         elif self.oper_type == 'R':
             self.run_model = split_opers[1].split('"')[1]      # run model (for R type)
             self.execute_oper_func = self.oper_R_type
-        elif self.oper_type == 'M':
+        elif self.oper_type == 'DT':
             self.transform_func = split_opers[1].split('"')[1]    # data transform func (for M type)
             self.trsf_func_args = [arg.split('"')[1] for arg in split_opers[2:]]    # args for M type
             self.execute_oper_func = self.oper_M_type
@@ -35,19 +35,19 @@ class operation_unit :
     def print_oper_unit(self):
         print("[operation type] : %s" % self.oper_type)
 
-        if self.oper_type == 'DT':
+        if self.oper_type == 'TI':
             print("[Train Input Path] : %s" % self.train_input_path)
-        elif self.oper_type == 'DP':
+        elif self.oper_type == 'PI':
             print("Predict Input Path] : %s" % self.predict_input_path)
-        elif self.oper_type == 'OT':
+        elif self.oper_type == 'TO':
             print("[Train Output Path] : %s" % self.train_output_path)
-        elif self.oper_type == 'OP':
+        elif self.oper_type == 'PO':
             print("[Predict Output Path] : %s" % self.predict_output_path)
         elif self.oper_type == 'T':
             print("[Train Model] : %s" % self.train_model)
         elif self.oper_type == 'R':
             print("[Run Model] : %s" % self.run_model)
-        elif self.oper_type == 'M':
+        elif self.oper_type == 'DT':
             print("[Func Name] : %s" % self.transform_func)
             i = 0
             for arg in self.trsf_func_args:
@@ -55,16 +55,16 @@ class operation_unit :
                 print("[Argument %d] : %s " % (i,  arg))
 
     # operation for DT type.
-    def oper_DT_type(self, model, path):
+    def oper_TI_type(self, model, path):
         pass
 
-    def oper_DP_type(self, model, path):
+    def oper_PI_type(self, model, path):
         pass
 
-    def oper_OT_type(self, model, path):
+    def oper_TO_type(self, model, path):
         pass
 
-    def oper_OP_type(self, model, path):
+    def oper_PO_type(self, model, path):
         pass
 
     # operation for T type.
@@ -102,10 +102,7 @@ class operation_unit :
 
             model.run()
 
-    def oper_O_type(self):
-        pass
-
-    def oper_M_type(self):
+    def oper_DT_type(self):
         pass
 
 

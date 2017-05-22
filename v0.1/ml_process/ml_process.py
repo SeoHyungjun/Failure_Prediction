@@ -1,12 +1,6 @@
 #!/bin/python3
 #-*- coding:utf-8 -*-
 
-# import sys
-# sys.path.insert(0, '../library/data_transform')
-# sys.path.insert(0, '../library/model')
-# import eval_info
-# import cnn
-# import library
 import configparser as cp
 import library
 import operation as op
