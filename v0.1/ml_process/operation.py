@@ -102,7 +102,17 @@ class operation_unit :
             model.run()
 
     def oper_DT_type(self):
-        pass
+        func_name = self.dt_func
+        args = self.dt_func_args
+
+        func = getattr(data_transform, func_name)
+
+        ret = func(*args)
+
+        if ret is not None:
+            return ret
+
+
 
 
 

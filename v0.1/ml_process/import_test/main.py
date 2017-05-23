@@ -1,4 +1,10 @@
 import lib
 
-cnn_model = lib.cnn.cnn()
-cnn_model.print_cnn()
+func_name = "print_lib"
+args = [4, 2]
+
+func = getattr(lib.library, func_name)
+
+ret = func(*args)
+
+print(ret)
