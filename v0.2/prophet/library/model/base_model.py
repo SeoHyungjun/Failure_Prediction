@@ -13,8 +13,6 @@ class Model(ABC):
 
     @abstractmethod
     def __init__(self):
-        self.model_naem =''
-        self.arg_dict = {}
 
     @abstractmethod
     def create_model(self):
