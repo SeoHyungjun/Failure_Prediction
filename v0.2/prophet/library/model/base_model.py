@@ -13,8 +13,11 @@ class Model(ABC):
 
     @abstractmethod
     def __init__(self):
+<<<<<<< HEAD
         self.model_name =''
         self.arg_dict = {}
+=======
+>>>>>>> 72e905c5458d926ea4b9db528564d5e833c05923
 
     @abstractmethod
     def create_model(self):
