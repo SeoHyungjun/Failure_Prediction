@@ -1,4 +1,5 @@
 import sys
+sys.path.insert(0, '../data_transform')
 import tensorflow as tf
 import numpy as np
 
@@ -6,6 +7,7 @@ from model import *
 import make_input
 import set_output_dir
 import constant as ct
+import data_transform
 
 class ANN(Model):
 
@@ -25,8 +27,13 @@ class ANN(Model):
         self.batch_size = ct.ANN_BATCH_SIZE
         self.epochs_num = ct.ANN_EPOCHS_NUM
         self.validation_interval = ct.ANN_VALIDATION_INTERVAL
+        self.y_type_num = None
+        self.y_type_num = 2
 
     def create_model(self):
+        dt = data_transform.Data_transform()
+        self.x = np.array(self.x)
+        self.y = dt._make_node_y_input(self.y, self.y_type_num)
         self.model_dir = str(self.model_sequence) + '_' + self.model_dir
         # make output directory
         self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.model_dir, self.project_dirpath)
@@ -104,6 +111,9 @@ class ANN(Model):
             self.session.run(tf.global_variables_initializer())
 
     def restore_all(self):
+        dt = data_transform.Data_transform()
+        self.x = np.array(self.x)
+        self.y = dt._make_node_y_input(self.y, self.y_type_num)
         # find latest filename of latest model
         self.model_dir = str(self.model_sequence) + '_' + self.model_dir
         dirpath_model = os.path.join(self.project_dirpath, self.model_dir)

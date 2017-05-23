@@ -1,3 +1,13 @@
 FUNCTION_NAME
-split_x_y
-create_window_data
+read_csv, data_path
+sel_rows_by_index, data, start_index, end_index
+sel_cols_by_index, data, cols_index
+drop_cols_by_index, data, cols_index
+sel_cols_by_name, data, cols_name
+drop_cols_by_name, data, cols_name
+split_xy_by_yindex, data, y_cols=-1
+split_xy_by_yname, data, y_cols)
+_create_window_datai, data, y_cols, window_size, lead_time, strides=1
+_make_node_y_input, y_bundle, num_y_type
+_divide_fold, x, y, num_fold
+_batch_iterator, x, y, batch_size, num_epochs
