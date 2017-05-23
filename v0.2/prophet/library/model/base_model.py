@@ -13,7 +13,7 @@ class Model(ABC):
 
     @abstractmethod
     def __init__(self):
-        self.model_naem =''
+        self.model_name =''
         self.arg_dict = {}
 
     @abstractmethod

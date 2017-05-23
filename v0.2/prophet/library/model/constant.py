@@ -5,7 +5,7 @@ TRAINED_MODEL_DIR = "trained_model"
 SUMMARY_DIR = "summary"
 SUMMARY_TRAIN_DIR = "train"
 SUMMARY_VALIDATION_DIR = "validation"
-MODEL_SAVE_TAG = "model"   
+MODEL_SAVE_TAG = "model"
 
 
 # [K_means]

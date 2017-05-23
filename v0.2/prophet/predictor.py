@@ -9,9 +9,6 @@ class Predictor(ml_process.ML_process_class) :
         super().__init__()
         self.predict_data_source = None # 나중에 디폴트 설정넣어놔야함
 
-    def read_data(self, data_read_where):
-        pass
-
     def main(self):
         self.config()
 
