@@ -1,0 +1,151 @@
+# DataCollect section is related in Framework.
+# such as data collect buf size or data transfer period
+[DataCollect]
+client_buf_size = 
+transfer_period =
+collect_port = 
+
+# ML_Process sections apply to trainer and predictor.
+# It can use more than one algorithm.
+# model_name must be model class name
+# dir_project means root dir that contain input and output dir
+# dir input means root dir that contain input data
+[ML_Process]
+model_num = 2
+model_names = K_Means, ANN
+window_size = 10
+dir_project = ./FP_project
+dir_input = input
+
+# Each algorithm has different parameters.
+# Each section contains the data transform functions that will 
+# work before the algorithm is executed.
+# Each session defines parameters for the models to be run.
+# The model name is either the name of the model supported
+# by the framework or the name of the model you have implemented.
+# At this time, the name of the model must be the same as
+# the class name of the implemented model.
+#
+# The parameters may vary depending on the model.
+# At the bottom of this sections there are the default parameter
+# settings for each model. You must use or modify it.
+#
+# Each session refers to the order that will be used to learn
+# and run the models that will work in the framework.
+# If you are using two models, set the enable entry
+# in the FIRST_MODEL and SECOND_MODEL sections to true
+# and set the rest to false.
+
+[FIRST_MODEL]
+enable = true
+model_name = K_Means
+model_dir = K_Means
+num_centroids = 4
+max_iters = 1000
+trained_centroid_file = centriod.csv
+
+[SECOND_MODEL]
+enable = true
+model_name = ANN
+model_dir = ANN
+num_nodes = "10,7"
+dropout_keep_prob = 0.5
+l2_reg_lambda = 0.0
+validation_sample_percentage = 0.1
+batch_size = 32
+num_epochs = 2
+validation_interval = 2000
+
+[THIRD_MODEL]
+enable = false
+model_name = model1
+param1 = 122
+param2 = parazz
+param3 = 2222
+
+[FOURTH_MODEL]
+enable = false
+model_name =
+arg1 =
+arg2 =
+
+# Below are the default parameters for the models supported by the framework.
+
+# K_Means Clustering Default Parameters
+# trained_centroid_file : file path to save centroids after clustering.
+#
+# [Xth_MODEL]
+# enable = true
+# model_name = K_Means
+# model_dir = K_Means
+# num_centroids = 4
+# max_iters = 1000
+# trained_centroid_file =
+#
+
+# Artificial Neural Network Default Parameters
+# dropout_keep_prob, l2_leg_lambda : prevent from overfitting.
+# validation_sample_percentage : ratio of validation data in learning data
+# batch_size : size of data to be used for learning at one time.
+# num_epochs : The number of learning times for the same data
+# validation_interval : Interval to evaluate the model learned to date with validation data
+#
+# [Xth_MODEL]
+# enable = true
+# model_name = ANN
+# model_dir = ANN
+# num_nodes = "10,7"
+# dropout_keep_prob = 0.5
+# l2_reg_lambda = 0.0
+# validation_sample_percentage = 0.1
+# batch_size = 32
+# num_epochs = 2
+# validation_interval = 2000
+#
+
+# In operations section, enter the operation sequence.
+#
+# In the "ML_PROCESS SECTION" above, you can define the order of
+# model learning operations in the order of the input models.
+# if Model_names = model1, model2,
+# The first_model entry defines the order of operations for model1, and
+# the second_model entry defines the order of operations for model2.
+# The steps of each operation are separated by ','.
+#
+# Below is an example of writing the operation sequence.
+#
+# first_model = TI:"data_path1", DT:"1col_del":"2", T:"ANN", DT:"transpose", TO:"output_path1"
+# second_model = TI:"data_path2", R:"first_model", DT:"transpose", T:"CNN"
+#
+# The above example defines a sequence of operations that
+# learns two models to create a predictive model.
+# For data transform functions, the arguments can be multiple,
+# such as :"arg1":"arg2".
+#
+# Option "TO" is the path where the learned model is saved.
+# If not set, it will be saved in the default path.
+#
+# All elements must be enclosed in double quotes.
+# (Data path, model name, data transformation function and arguments, etc.)
+#
+# 'TI' : Input data path when train
+# 'PI' : Input data path when predict
+# 'TO' : Output path when train
+# 'PO' : Output path when predict
+# 'DT' : Data transform method
+# 'T'  : Train model
+# 'R'  : Run model (Predict)
+#
+
+
+[predict_operations]
+# predict data source can be pipe...
+predict_operations = PI:"predict_data", DT:"deduplicates":"1":"2", R:"first_model", DT:"1col_del", R:"second_model"
+
+[Train_operations]
+first_model = TI:"train_data", T:"first_model", M:"transpose", TO:"output_path"
+second_model = TI:"train_data", M:"deduplicates":"1":"3", R:"first_model", T:"second_model", M:"transpose"
+third_model =
+fourth_model =
+
+
