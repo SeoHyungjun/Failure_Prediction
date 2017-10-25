@@ -1,3 +1,4 @@
+# progress
 1. 환경구축
 normal 데이터 수집 시작
 
