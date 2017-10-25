@@ -12,21 +12,20 @@ normal 데이터 수집 시작
 
 * 지속적 I/O 발생
   - filebench : fileserver, mailserver, webserver
-
-
+<br/>
 2. 자동화(형태만)
   - 장애 체크
   - 장애 발생기
-
+<br/>
 3. 프레임워크 설계 X
-
+<br/>
 
 # base table
 * 테이블 생성
   - 클라이언트(1,2)
   - 클러스터(1,2,3) 
   - 시스템 상태
-
+<br/>
 * 테이블 내용
  1. 클라이언트
    - 시스템 메트릭
