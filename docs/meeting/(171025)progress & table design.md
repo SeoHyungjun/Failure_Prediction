@@ -1,4 +1,4 @@
-#1. 환경구축
+1. 환경구축
 normal 데이터 수집 시작
 
 * ceph image 사용하는 VM 생성
@@ -13,14 +13,14 @@ normal 데이터 수집 시작
   - filebench : fileserver, mailserver, webserver
 
 
-#2. 자동화(형태만)
+2. 자동화(형태만)
   1) 장애 체크
   2) 장애 발생기
 
-#3. 프레임워크 설계 X
+3. 프레임워크 설계 X
 
 
-#base table
+base table
 *테이블 생성
   - 클라이언트(1,2)
   - 클러스터(1,2,3) 
