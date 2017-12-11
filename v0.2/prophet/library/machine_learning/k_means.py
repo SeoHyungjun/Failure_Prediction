@@ -1,7 +1,7 @@
 import os
 import random
 import sys
-from model import Model
+from base_ml import Machine_Learning
 
 import numpy as np
 import tensorflow as tf 
@@ -11,12 +11,13 @@ import set_output_dir
 import constant as ct
 
 
-class K_Means(Model):
+class K_Means(Machine_Learning):
     def __init__(self):
-        self.model_name = ct.KMEANS_MODEL_NAME
-        self.model_dir = ct.KMEANS_MODEL_DIR
+        '''
+        self.ml_name = ct.KMEANS_ML_NAME
+        self.ml_dir = ct.KMEANS_ML_DIR
         # output config
-        self.model_save_tag = ct.MODEL_SAVE_TAG
+        self.ml_save_tag = ct.ML_SAVE_TAG
         self.project_dirpath = ct.PROJECT_DIRPATH
         self.trained_centroid_file = ct.KMEANS_TRAINED_CENTROID_FILE
         # create_model
@@ -24,12 +25,14 @@ class K_Means(Model):
         self.session = tf.Session(graph=self.graph)
         self.centroid_num = ct.KMEANS_CENTROID_NUM
         self.max_iters = ct.KMEANS_MAX_ITERS
+        '''
+        pass
 
-    def create_model(self):
-        self.model_dir = str(self.model_sequence) + '_' + self.model_dir
+    def create_ml(self):
+        self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
         # make output directory
-        self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.model_dir, self.project_dirpath)
-        self.model_filepath = os.path.join(self.dirpath_trained_model, self.model_save_tag)
+        self.dirpath_trained_ml, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.ml_dir, self.project_dirpath)
+        self.ml_filepath = os.path.join(self.dirpath_trained_ml, self.ml_save_tag)
         
         x_width = self.x.shape[-1]
         with self.graph.as_default():

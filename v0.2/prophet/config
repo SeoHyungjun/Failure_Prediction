@@ -1,53 +1,78 @@
 # DataCollect section is related in Framework.
-# such as data collect buf size or data transfer period
-[DataCollect]
-client_buf_size = 
-transfer_period =
-collect_port = 
+# such as data collect buf size etc..
 
+
+# ======================================================== #
 # ML_Process sections apply to trainer and predictor.
 # It can use more than one algorithm.
-# model_name must be model class name
+# ml_name must be machine learning class name
 # dir_project means root dir that contain input and output dir
 # dir input means root dir that contain input data
 [ML_Process]
-model_num = 2
-model_names = K_Means, ANN
+ml_num = 2
+ml_names = K_Means, ANN
 window_size = 10
 dir_project = ./FP_project
 dir_input = input
+[Trainer]
+collect_port = 
+[Predictor]
+collect_port =
 
 # Each algorithm has different parameters.
 # Each section contains the data transform functions that will 
 # work before the algorithm is executed.
-# Each session defines parameters for the models to be run.
-# The model name is either the name of the model supported
-# by the framework or the name of the model you have implemented.
-# At this time, the name of the model must be the same as
-# the class name of the implemented model.
+# Each session defines parameters for the machine learnings to be run.
+# The machine learning name is either the name of the machine learning supported
+# by the framework or the name of the machine learning you have implemented.
+# At this time, the name of the machine learning must be the same as
+# the class name of the implemented machine learning.
 #
-# The parameters may vary depending on the model.
+# The parameters may vary depending on the machine learning.
 # At the bottom of this sections there are the default parameter
-# settings for each model. You must use or modify it.
+# settings for each machine learning. You must use or modify it.
 #
 # Each session refers to the order that will be used to learn
-# and run the models that will work in the framework.
-# If you are using two models, set the enable entry
+# and run the machine learnings that will work in the framework.
+# If you are using two machine learnings, set the enable entry
 # in the FIRST_MODEL and SECOND_MODEL sections to true
 # and set the rest to false.
 
-[FIRST_MODEL]
+[1st_ML]
 enable = true
-model_name = K_Means
-model_dir = K_Means
+ml_name = K_Means
+ml_dir = K_Means
 num_centroids = 4
-max_iters = 1000
 trained_centroid_file = centriod.csv
+# output config
+ml_save_tag = ml
+project_dirpath = ./FP_project
+trained_centroid_outfile = centroid.csv
+# machine learning model
+centroid_num = 4
+max_iters = 1000
+# [output directory]
+#INPUT_DIR = "input"
+#TRAINED_MODEL_DIR = "trained_model"
+#SUMMARY_DIR = "summary"
+#SUMMARY_TRAIN_DIR = "train"
+#SUMMARY_VALIDATION_DIR = "validation"
 
-[SECOND_MODEL]
-enable = true
-model_name = ANN
-model_dir = ANN
+# [ANN]
+# ANN_MODEL_DIR = "ANN"
+# ANN_MODEL_NAME = "ANN"
+# ANN_NODES_NUM = [8,5]
+## regularization : dropout_keep_prob, l2_reg_lambda(when not applied, each value are 1.0, 0.0)
+# ANN_DROPOUT_KEEP_PROB = 0.5
+# ANN_L2_REG_LAMBDA = 0.0
+# ANN_VALIDATION_SAMPLE_PERCENTAGE = 0.1
+# ANN_BATCH_SIZE = 32
+# ANN_EPOCHS_NUM = 1
+# ANN_VALIDATION_INTERVAL = 2000
+[2nd_ML]
+enable = false
+ml_name = ANN
+ml_dir = ANN
 num_nodes = "10,7"
 dropout_keep_prob = 0.5
 l2_reg_lambda = 0.0
@@ -56,16 +81,16 @@ batch_size = 32
 num_epochs = 2
 validation_interval = 2000
 
-[THIRD_MODEL]
+[3rd_ML]
 enable = false
-model_name = model1
+ml_name = ml1
 param1 = 122
 param2 = parazz
 param3 = 2222
 
-[FOURTH_MODEL]
+[4th_ML]
 enable = false
-model_name =
+ml_name =
 arg1 =
 arg2 =
 
@@ -103,6 +128,7 @@ arg2 =
 # validation_interval = 2000
 #
 
+# ======================================================== #
 # In operations section, enter the operation sequence.
 #
 # In the "ML_PROCESS SECTION" above, you can define the order of
@@ -128,24 +154,26 @@ arg2 =
 # All elements must be enclosed in double quotes.
 # (Data path, model name, data transformation function and arguments, etc.)
 #
-# 'TI' : Input data path when train
-# 'PI' : Input data path when predict
-# 'TO' : Output path when train
-# 'PO' : Output path when predict
-# 'DT' : Data transform method
-# 'T'  : Train model
-# 'R'  : Run model (Predict)
+# 'create' : Create machine learning model
+# 'restore' : Restore machine learning model
+# 'Train'  : Train machine learning model
+# 'Run'  : Run machine learning model(Predict)
 #
+# 'O' : Output directory path
+# 'DS' : Data selection method
+# 'DP' : Data preprocessing method
+# 'DT' : Data transform method
 
+[Train_Operations]
+1st_ML = create, train
+2nd_ML = create, train
 
-[predict_operations]
+[Predict_Operations]
 # predict data source can be pipe...
-predict_operations = PI:"predict_data", DT:"deduplicates":"1":"2", R:"first_model", DT:"1col_del", R:"second_model"
-
-[Train_operations]
-first_model = TI:"train_data", T:"first_model", M:"transpose", TO:"output_path"
-second_model = TI:"train_data", M:"deduplicates":"1":"3", R:"first_model", T:"second_model", M:"transpose"
-third_model =
-fourth_model =
-
-
+1st_ML = create, run
+2nd_ML = create, run
+#1st_ML = C:"/root/input", R, O:"/root/dir"
+#2nd_ML = C:"/root/input", R, O:"/root/dir"
+#first_ml = TI:"train_data", T:"first_ml", M:"transpose", TO:"output_path"
+#second_ml = TI:"train_data", M:"deduplicates":"1":"3", R:"first_ml", T:"second_ml", M:"transpose"
+#predict_operations = PI:"predict_data", DT:"deduplicates":"1":"2", R:"first_ml", DT:"1col_del", R:"second_ml"

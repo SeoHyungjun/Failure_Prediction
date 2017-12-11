@@ -5,12 +5,12 @@ TRAINED_MODEL_DIR = "trained_model"
 SUMMARY_DIR = "summary"
 SUMMARY_TRAIN_DIR = "train"
 SUMMARY_VALIDATION_DIR = "validation"
-MODEL_SAVE_TAG = "model"
+ML_SAVE_TAG = "ml"
 
 
 # [K_means]
-KMEANS_MODEL_DIR = "K_Means"
-KMEANS_MODEL_NAME = "K_Means"
+KMEANS_ML_DIR = "K_Means"
+KMEANS_ML_NAME = "K_Means"
 KMEANS_CENTROID_NUM = 4
 KMEANS_MAX_ITERS = 100
 KMEANS_TRAINED_CENTROID_FILE = "centroid.csv"

@@ -1,3 +1,0 @@
-MODEL_NAME,MODULE_PATH,CLASS_NAME
-K_Means,library/model/k_means.py,K_Means
-ANN,library/model/ann.py,ANN
