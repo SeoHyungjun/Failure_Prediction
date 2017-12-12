@@ -39,17 +39,18 @@ collect_port =
 enable = true
 ml_name = K_Means
 ml_dir = K_Means
-num_centroids = 4
+# train
+centroid_num = 4
 train_inputpath = /root/FP_input/in_kmeans.csv
+max_iters = 100
+# predict
+run_inputpath = /root/FP_input/in_kmeans.csv
 # output config
 project_dirpath = ./FP_project
 trained_centroid_outfile = centroid.csv
 run_result_file = run_result.csv
 trained_ml_dir = traind_ml 
 trained_ml_save_tag = kmeans
-# machine learning model
-centroid_num = 4
-max_iters = 100
 
 # [ANN]
 # ANN_NODES_NUM = [8,5]
@@ -57,16 +58,20 @@ max_iters = 100
 enable = true
 ml_name = ANN
 ml_dir = ANN
-train_inputpath = /root/FP_input/in_ann.csv
 nodes_num = 10,7
 output_node_num = 2
+# train
+train_inputpath = /root/FP_input/in_ann.csv
 dropout_keep_prob = 0.5
 l2_reg_lambda = 0.0
 validation_sample_percentage = 0.1
-batch_size = 32
+batch_size = 10
 epochs_num = 2
 validation_interval = 2000
+# predict
+run_inputpath = /root/FP_input/in_ann.csv
 # output config
+run_result_file = run_result.csv
 trained_ml_save_tag = ann
 project_dirpath = ./FP_project
 
@@ -74,7 +79,7 @@ project_dirpath = ./FP_project
 enable = false
 ml_name = ml1
 param1 = 122
-param2 = parazz
+param2 = para
 param3 = 2222
 
 [4th_ML]
@@ -155,13 +160,14 @@ arg2 =
 # 'DT' : Data transform method
 
 [Train_Operations]
-1st_ML = DP:"subtract_row", input, create, train
-2nd_ML = DP:"subtract_row", input, create, train
+1st_ML = input, create, train
+2nd_ML = input, create, train
+#1st_ML = DP:"subtract_row", input, create, train
 
 [Predict_Operations]
 # predict data source can be pipe...
-1st_ML = create, run
-2nd_ML = create, run
+1st_ML = restore, input, run
+2nd_ML = restore, input, run
 #1st_ML = C:"/root/input", R, O:"/root/dir"
 #2nd_ML = C:"/root/input", R, O:"/root/dir"
 #first_ml = TI:"train_data", T:"first_ml", M:"transpose", TO:"output_path"

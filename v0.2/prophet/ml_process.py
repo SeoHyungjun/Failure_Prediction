@@ -24,7 +24,7 @@ class ML_Process :
 
     # config reads the config file and config
     # Configuration item will be what you use. such as algorithm and data_transform...
-    def get_train_instance_operation(self, cfg_fname=g_config_filename):
+    def get_train_configured_instance_operation(self, cfg_fname=g_config_filename):
         """
         return configured instances and operation.
         """
@@ -44,6 +44,7 @@ class ML_Process :
                     ml_enable_list.append(section.lower())
                     ml_instance = get_classes.class_dict[entries['ML_NAME']]()      # get class instance
                     ml_instance.set_config(ml_instance, section_num = section[0], arg_dict = entries)         # set each config
+                    ml_instance.set_proper_config_type()
                     ml_instance_dict[section.lower()] = ml_instance    # section.lower() = 1st_ML, 2nd_ML, ...
             # when the machine learning written in config file doesn't exist, exception process is needed.
             except IndexError:
@@ -61,10 +62,13 @@ class ML_Process :
 
     # config reads the config file and config
     # Configuration item will be what you use. such as algorithm and data_transform...
-    def get_run_instance_operation(self, cfg_fname=g_config_filename):
+    def get_predictor_configured_instance_operation(self, cfg_fname=g_config_filename):
+        """
+        return configured instances and operation.
+        """
         ml_instance_dict = dict()
         ml_enable_list = []
-        run_oper_dict = dict() # key : first_ml, second_ml, .... value : operation unit list 
+        predict_oper_dict = dict()   # key : first_ml, second_ml, .... value : operation unit list
         config = cp.ConfigParser()
         config.read(cfg_fname)
 #        self.ml_num = int(config['ML_Process']['ml_num'])
@@ -75,24 +79,34 @@ class ML_Process :
         for section, entries in config.items() : 
             try :
                 if section.split('_')[1] == 'ML' and entries['enable'] == 'true':
-                    # print(items['model_name'])
+                    ml_enable_list.append(section.lower())
                     ml_instance = get_classes.class_dict[entries['ML_NAME']]()      # get class instance
-                    ml_instance.set_config(ml_instance, section_num = section[0], arg_dict = entries)
-                    ml_instance_dict[section.lower()] = ml_instance    # section.lower() = 1st_ml, 2nd_ml, ...
+                    ml_instance.set_config(ml_instance, section_num = section[0], arg_dict = entries)         # set each config
+                    ml_instance.set_proper_config_type()
+                    ml_instance_dict[section.lower()] = ml_instance    # section.lower() = 1st_ML, 2nd_ML, ...
             # when the machine learning written in config file doesn't exist, exception process is needed.
             except IndexError:
                 pass
-        print(ml_enable_list)
+        '''
+        train_operations_dict = config['Train_Operations'] # key:1st_ml; value:create, train, ..
+        for ml_order, train_operations_str in train_operations_dict.items():
+            if ml_order in ml_enable_list:
+                train_operations_list = train_operations_str.replace(' ', '').split(',')
+                train_oper_dict[ml_order.lower()] = []
+                for oper in train_operations_list:
+                    train_oper_dict[ml_order.lower()].append(op.operation_unit(oper))   # set each operation and input path as operation_unit
+        return (ml_instance_dict, train_oper_dict)
+        '''
 
         # get run_operations assing func as according to their type
-        run_operations_dict = config['Predict_Operations'] # key:first_ml ; value:I:"", T, O:"" ...
-        for ml_order, run_operations_str in run_operations_dict.items():
+        predict_operations_dict = config['Predict_Operations'] # key:1st_ml; value:create, train, ..
+        for ml_order, predict_operations_str in predict_operations_dict.items():
             if ml_order in ml_enable_list:
-                run_operations_list = run_operations_str.replace(' ', '').split(',')
-                run_oper_dict[ml_order.lower()] = []
-                for oper in run_operations_list:
-                    run_oper_dict[ml_order.lower()].append(op.operation_unit(oper))   # set each operation and input path as operation_unit
-        return (ml_instance_dict, run_oper_dict)
+                predict_operations_list = predict_operations_str.replace(' ', '').split(',')
+                predict_oper_dict[ml_order.lower()] = []
+                for oper in predict_operations_list:
+                    predict_oper_dict[ml_order.lower()].append(op.operation_unit(oper))   # set each operation and input path as operation_unit
+        return (ml_instance_dict, predict_oper_dict)
         '''
         predict_operations_list = config['predict_operations']['predict_operations'] \
                                     .replace(' ', '').split(',')

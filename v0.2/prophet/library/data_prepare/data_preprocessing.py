@@ -96,7 +96,7 @@ def create_window_data(data, y_cols, window_size, lead_time, strides=1):
     x = np.array(x)
     return x, y
 
-def _make_node_y_input(y_bundle, num_y_type):
+def make_node_y_input(y_bundle, num_y_type):
     """
     ex) y is 'a' or 'b' => y will be [1,0] or [0,1]
     output : nparray
@@ -109,7 +109,7 @@ def _make_node_y_input(y_bundle, num_y_type):
     node_y_input = np.array(node_y_input)
     return node_y_input
 
-def _divide_fold(x, y, num_fold):
+def divide_fold(x, y, num_fold):
     """
     randomly divide data into N fold. one fold is validation set.
     others are train set.
@@ -138,7 +138,7 @@ def _divide_fold(x, y, num_fold):
     y_train, y_val = y_shuffled[:val_index], y_shuffled[val_index:]
     return x_train, x_val, y_train, y_val
 
-def _batch_iterator(x, y, batch_size, num_epochs):
+def batch_iterator(x, y, batch_size, num_epochs):
     num_x = len(x)
     if num_x != len(y):
         print("the number of x and the number of y are different")

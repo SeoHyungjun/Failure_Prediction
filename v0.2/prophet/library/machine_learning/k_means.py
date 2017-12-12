@@ -31,11 +31,13 @@ class K_Means(Machine_Learning):
     def input(self):
         self.x = pd.read_csv(self.train_inputpath)
 
-    def create_ml(self):
-        self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
+    def set_proper_config_type(self):
         # read from config is string.
         self.centroid_num = int(self.centroid_num)
         self.max_iters = int(self.max_iters)
+
+    def create_ml(self):
+        self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
         # make output directory
         self.dirpath_trained_ml, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.ml_dir, self.project_dirpath)
 #        self.ml_filepath = os.path.join(self.dirpath_trained_ml, self.ml_save_tag)
@@ -65,9 +67,9 @@ class K_Means(Machine_Learning):
             # Initialize all variables of tensor
             self.session.run(tf.global_variables_initializer())
 
-    def restore_all(self):
+    def restore(self):
         # find latest filename of latest model
-        self.model_dir = str(self.model_sequence) + '_' + self.model_dir
+        self.model_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
         dirpath_model = os.path.join(self.project_dirpath, self.model_dir)
         self.dirpath_trained_model = os.path.join(dirpath_model, ct.TRAINED_MODEL_DIR)
         self.dirpath_summary_train = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_TRAIN_DIR)
@@ -129,6 +131,8 @@ class K_Means(Machine_Learning):
         print("Save learned model at step {}".format(global_step-1))
         
     def run(self):
+        self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
+        self.dirpath_trained_ml, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.ml_dir, self.project_dirpath)
         centroids = np.genfromtxt(os.path.join(self.dirpath_trained_ml, self.trained_centroid_outfile), delimiter=',')
         feed_dict = {
                 self.input_x : self.x,

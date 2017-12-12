@@ -9,7 +9,7 @@ from base_ml import Machine_Learning
 FAILURE_PREDICTION_PATH = os.environ['FAILURE_PREDICTION']
 sys.path.insert(0, os.path.join(FAILURE_PREDICTION_PATH, "library")) # upper directory
 from data_prepare import data_preprocessing as dp
-import make_batch
+#import make_batch
 import set_output_dir
 
 import constant as ct
@@ -40,8 +40,10 @@ class ANN(Machine_Learning):
         self.x = pd.read_csv(self.train_inputpath)
         self.y = self.x.iloc[:,-1].astype(int)
         self.x = self.x.iloc[:,0:-1]
+        self.x = np.array(self.x)
+        self.y = dp.make_node_y_input(self.y, self.output_node_num)
 
-    def create_ml(self):
+    def set_proper_config_type(self):
         # read from config is string.
         self.output_node_num = int(self.output_node_num)
         self.nodes_num = [int(x) for x in self.nodes_num.split(',')]
@@ -51,19 +53,18 @@ class ANN(Machine_Learning):
         self.epochs_num = int(self.epochs_num)
         self.validation_interval = int(self.validation_interval)
 
-        self.x = np.array(self.x)
-        self.y = dp._make_node_y_input(self.y, self.output_node_num)
+    def create_ml(self):
         self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
         # make output directory
         self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.ml_dir, self.project_dirpath)
         self.model_filepath = os.path.join(self.dirpath_trained_model, self.trained_ml_save_tag)
 
         x_width = self.x.shape[-1]
-        y_height = self.output_node_num
+        y_width = self.y.shape[-1]
         with self.graph.as_default():
             # Placeholders for input, output and dropout
             self.input_x = tf.placeholder(tf.float32, [None, x_width], name="input_x")
-            self.input_y = tf.placeholder(tf.int32, [None, y_height], name="input_y" )
+            self.input_y = tf.placeholder(tf.int32, [None, y_width], name="input_y" )
             # used when evaluation(keep_prob = 1.0)
             self.input_dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
            
@@ -96,9 +97,9 @@ class ANN(Machine_Learning):
             with tf.name_scope("output_layer"):
                 W = tf.get_variable(
                     "W",
-                    shape=[pre_num_node, self.output_node_num],
+                    shape=[pre_num_node, y_width],
                     initializer=tf.contrib.layers.xavier_initializer())
-                b = tf.Variable(tf.constant(0.1, shape=[self.output_node_num]), name="b")
+                b = tf.Variable(tf.constant(0.1, shape=[y_width]), name="b")
                 l2_loss += tf.nn.l2_loss(W)
                 l2_loss += tf.nn.l2_loss(b)
     
@@ -129,12 +130,11 @@ class ANN(Machine_Learning):
             # Initiazlize all variables of tensor
             self.session.run(tf.global_variables_initializer())
 
-    def restore_all(self):
-        dt = data_transform.Data_transform()
-        self.x = np.array(self.x)
-        self.y = dt._make_node_y_input(self.y, self.output_node_num)
+    def restore(self):
+#        self.x = np.array(self.x)
+#        self.y = dp.make_node_y_input(self.y, self.output_node_num)
         # find latest filename of latest model
-        self.ml_dir = str(self.model_sequence) + '_' + self.ml_dir
+        self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
         dirpath_model = os.path.join(self.project_dirpath, self.ml_dir)
         self.dirpath_trained_model = os.path.join(dirpath_model, ct.TRAINED_MODEL_DIR)
         self.dirpath_summary_train = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_TRAIN_DIR)
@@ -159,8 +159,8 @@ class ANN(Machine_Learning):
          
     def train(self):
         # make training/validation data batch by batch
-        x_train, x_val, y_train, y_val = make_input.divide_fold(self.x, self.y, num_fold=10)
-        batches = make_input.batch_iter(x_train, y_train, self.batch_size, self.epochs_num)
+        x_train, x_val, y_train, y_val = dp.divide_fold(self.x, self.y, num_fold=9)
+        batches = dp.batch_iterator(x_train, y_train, self.batch_size, self.epochs_num)
         # writer(tensorboard) 
         writer_train = tf.summary.FileWriter(self.dirpath_trained_model, self.session.graph)
         writer_validation = tf.summary.FileWriter(self.dirpath_summary_train, self.session.graph)
@@ -181,7 +181,7 @@ class ANN(Machine_Learning):
                 feed_dict = {
                     self.input_x : x_val,
                     self.input_y : y_val,
-                    self.input_dropout_keep_prob : 1.0
+                    self.input_dropout_keep_prob : 0.5
                 }
                 accuracy, summary_validation = self.session.run(
                     [self.accuracy, self.op_summary], feed_dict)
@@ -200,4 +200,9 @@ class ANN(Machine_Learning):
         }
         op_result = self.session.graph.get_operation_by_name("output_layer/predictions").outputs[0]
         result = self.session.run([op_result], feed_dict)
+        output_filepath = os.path.join(self.project_dirpath, self.ml_dir, self.run_result_file)
+        output = pd.DataFrame(data=result).T
+        output.columns = ['result']
+        output.to_csv(output_filepath, index=False)
+        print("result saved as \'{}\'".format(output_filepath))
         return result

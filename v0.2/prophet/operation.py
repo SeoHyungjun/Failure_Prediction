@@ -22,7 +22,7 @@ class operation_unit :
         elif self.oper_type == 'create':
             self.execute_oper_func = self.oper_create_type
         elif self.oper_type == 'restore':
-            self.execute_oper_fucn = self.oper_restore_type
+            self.execute_oper_func = self.oper_restore_type
         elif self.oper_type == 'train':
             self.execute_oper_func = self.oper_train_type
         elif self.oper_type == 'run':
@@ -71,6 +71,7 @@ class operation_unit :
 
     def oper_restore_type(self, ml_instance):
         print("[RESTORE] restore {} model".format(ml_instance.ml_name))
+        ml_instance.restore()
         print("")
 
     def oper_train_type(self, ml_instance):

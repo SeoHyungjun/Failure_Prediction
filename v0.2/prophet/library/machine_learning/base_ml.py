@@ -18,14 +18,21 @@ class Machine_Learning(ABC):
     
     @abstractmethod
     def input(self):
-        self.x = pd.read_csv(self.train_inputpath)
+        pass
+
+    @abstractmethod
+    def set_proper_config_type(self):
+        """
+        all variable read from config file are string, so needed to proper data type. ex) int
+        """
+        pass
 
     @abstractmethod
     def create_ml(self):
         pass
     
     @abstractmethod
-    def restore_all(self):
+    def restore(self):
         pass
   
     @abstractmethod
