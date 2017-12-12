@@ -11,7 +11,7 @@ import operation as op
 
 from abc import abstractmethod
 
-g_config_filename = 'config'
+g_config_filename = os.path.join(FAILURE_PREDICTION_PATH, 'config')
 
 class ML_Process :
     def __init__(self):

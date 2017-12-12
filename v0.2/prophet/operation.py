@@ -1,5 +1,10 @@
 #!/usr/bin/python3
 
+import os
+import sys
+FAILURE_PREDICTION_PATH = os.environ['FAILURE_PREDICTION']
+sys.path.insert(0, os.path.join(FAILURE_PREDICTION_PATH, 'library'))
+from data_prepare import data_preprocessing
 import tensorflow as tf
 
 class operation_unit :
@@ -9,7 +14,12 @@ class operation_unit :
         self.oper_type = split_opers[0]
         self.execute_oper_func = None
 
-        if self.oper_type == 'create':
+        if self.oper_type == 'DP':
+            self.execute_oper_func = self.oper_DP_type
+            self.DP_command = split_opers[1]
+        elif self.oper_type == 'input':
+            self.execute_oper_func = self.oper_input_type
+        elif self.oper_type == 'create':
             self.execute_oper_func = self.oper_create_type
         elif self.oper_type == 'restore':
             self.execute_oper_fucn = self.oper_restore_type
@@ -45,9 +55,17 @@ class operation_unit :
                 print("[Argument %d] : %s " % (i,  arg))
         '''
 
+    def oper_DP_type(self):
+        print("###### DP ########")
+        pass
+
+    def oper_input_type(self, ml_instance):
+        print("###### INPUT ########")
+        pass
+
     def oper_create_type(self, ml_instance):
         print("create {}".format(ml_instance.ml_name))
-        ml_instance.create_ml()
+#        ml_instance.create_ml()
         pass
 
     def oper_restore_type(self, ml_instance):

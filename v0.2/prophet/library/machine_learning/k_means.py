@@ -28,6 +28,10 @@ class K_Means(Machine_Learning):
         '''
         pass
 
+    def input(self):
+        pass
+
+
     def create_ml(self):
         self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
         # make output directory

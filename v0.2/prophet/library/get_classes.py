@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(FAILURE_PREDICTION_PATH, "library", "data_prepar
 import data_transform as dt
 import pandas as pd
 
-ml_tbl_path = os.path.join(".", "library", "ML_TBL.csv")
+ml_tbl_path = os.path.join(FAILURE_PREDICTION_PATH, "library", "ML_TBL.csv")
 pd_ml_tbl = pd.read_csv(ml_tbl_path)
 module_dirpaths = []   # save each module's import path
 

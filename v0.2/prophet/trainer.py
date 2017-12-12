@@ -15,7 +15,10 @@ class Trainer(ml_process.ML_Process):
             # each operation already have function to execute and parameter. only need to select what function to use. 
             for operation_unit in operations:
                 oper_type = operation_unit.oper_type
-                operation_unit.execute_oper_func(ml_instance)
+                if oper_type == 'DP':
+                    operation_unit.execute_oper_func()
+                else:
+                    operation_unit.execute_oper_func(ml_instance)
             
             # graph = tf.Graph()
         
