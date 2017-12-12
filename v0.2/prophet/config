@@ -1,21 +1,11 @@
-# DataCollect section is related in Framework.
-# such as data collect buf size etc..
-
-
-# ======================================================== #
-# ML_Process sections apply to trainer and predictor.
-# It can use more than one algorithm.
-# ml_name must be machine learning class name
-# dir_project means root dir that contain input and output dir
-# dir input means root dir that contain input data
+# ML_Process section is related in trainer and predictor together.
 [ML_Process]
 ml_num = 2
 ml_names = K_Means, ANN
-[Trainer]
-collect_port = 
-[Predictor]
-collect_port =
 
+
+# ================================================================== #
+#
 # Each algorithm has different parameters.
 # Each section contains the data transform functions that will 
 # work before the algorithm is executed.
@@ -34,142 +24,105 @@ collect_port =
 # If you are using two machine learnings, set the enable entry
 # in the FIRST_MODEL and SECOND_MODEL sections to true
 # and set the rest to false.
-
 [1st_ML]
 enable = true
-ml_name = K_Means
-ml_dir = K_Means
-# train
-centroid_num = 4
-train_inputpath = /root/FP_input/in_kmeans.csv
-max_iters = 100
-# predict
-run_inputpath = /root/FP_input/in_kmeans.csv
-# output config
-project_dirpath = ./FP_project
+ml_name = K_Means 
+ml_dir = K_Means 
+centroid_num = 4 
+train_inputpath = /root/FP_input/in_kmeans.csv 
+max_iters = 1000 
+run_inputpath = /root/FP_input/in_kmeans.csv 
+project_dirpath = ./FP_project 
 trained_centroid_outfile = centroid.csv
 run_result_file = run_result.csv
 trained_ml_dir = traind_ml 
 trained_ml_save_tag = kmeans
 
-# [ANN]
-# ANN_NODES_NUM = [8,5]
 [2nd_ML]
 enable = true
 ml_name = ANN
 ml_dir = ANN
 nodes_num = 10,7
 output_node_num = 2
-# train
 train_inputpath = /root/FP_input/in_ann.csv
 dropout_keep_prob = 0.5
 l2_reg_lambda = 0.0
 validation_sample_percentage = 0.1
-batch_size = 10
-epochs_num = 2
+batch_size = 1
+epochs_num = 3
 validation_interval = 2000
-# predict
 run_inputpath = /root/FP_input/in_ann.csv
-# output config
 run_result_file = run_result.csv
 trained_ml_save_tag = ann
 project_dirpath = ./FP_project
 
 [3rd_ML]
 enable = false
-ml_name = ml1
-param1 = 122
-param2 = para
-param3 = 2222
 
 [4th_ML]
 enable = false
-ml_name =
-arg1 =
-arg2 =
+
+[Xth_MODEL]
+enable = false
 
 # Below are the default parameters for the models supported by the framework.
+## Default K_Means section parameters
+# enable = true 
+# ml_name = K_Means 
+# ml_dir = K_Means 
+# centroid_num = 4 
+# train_inputpath = /root/FP_input/in_kmeans.csv 
+# max_iters = 1000 
+# run_inputpath = /root/FP_input/in_kmeans.csv 
+# project_dirpath = ./FP_project 
+# trained_centroid_outfile = centroid.csv
+# run_result_file = run_result.csv
+# trained_ml_dir = traind_ml 
+# trained_ml_save_tag = kmeans
 
-# K_Means Clustering Default Parameters
-# trained_centroid_file : file path to save centroids after clustering.
-#
-# [Xth_MODEL]
+## Defualt ANN section parameters
 # enable = true
-# model_name = K_Means
-# model_dir = K_Means
-# num_centroids = 4
-# max_iters = 1000
-# trained_centroid_file =
-#
-
-# Artificial Neural Network Default Parameters
-# dropout_keep_prob, l2_leg_lambda : prevent from overfitting.
-# validation_sample_percentage : ratio of validation data in learning data
-# batch_size : size of data to be used for learning at one time.
-# num_epochs : The number of learning times for the same data
-# validation_interval : Interval to evaluate the model learned to date with validation data
-#
-# [Xth_MODEL]
-# enable = true
-# model_name = ANN
-# model_dir = ANN
-# num_nodes = "10,7"
+# ml_name = ANN
+# ml_dir = ANN
+# nodes_num = 10,7
+# output_node_num = 2
+# train_inputpath = /root/FP_input/in_ann.csv
 # dropout_keep_prob = 0.5
 # l2_reg_lambda = 0.0
 # validation_sample_percentage = 0.1
-# batch_size = 32
-# num_epochs = 2
+# batch_size = 1
+# epochs_num = 3
 # validation_interval = 2000
-#
+# run_inputpath = /root/FP_input/in_ann.csv
+# run_result_file = run_result.csv
+# trained_ml_save_tag = ann
+# project_dirpath = ./FP_project
+
 
 # ======================================================== #
+#
 # In operations section, enter the operation sequence.
 #
-# In the "ML_PROCESS SECTION" above, you can define the order of
-# model learning operations in the order of the input models.
-# if Model_names = model1, model2,
-# The first_model entry defines the order of operations for model1, and
-# the second_model entry defines the order of operations for model2.
+# The 1st_ml entry defines the order of operations for 1st_ml, and
+# the 2nd_ml entry defines the order of operations for 2nd_ml.
 # The steps of each operation are separated by ','.
-#
-# Below is an example of writing the operation sequence.
-#
-# first_model = TI:"data_path1", DT:"1col_del":"2", T:"ANN", DT:"transpose", TO:"output_path1"
-# second_model = TI:"data_path2", R:"first_model", DT:"transpose", T:"CNN"
 #
 # The above example defines a sequence of operations that
 # learns two models to create a predictive model.
-# For data transform functions, the arguments can be multiple,
-# such as :"arg1":"arg2".
 #
-# Option "TO" is the path where the learned model is saved.
-# If not set, it will be saved in the default path.
-#
-# All elements must be enclosed in double quotes.
-# (Data path, model name, data transformation function and arguments, etc.)
-#
+# Below are operations that could be executed.
 # 'input' : Input data or data meatdata for machine learning
 # 'create' : Create machine learning model
 # 'restore' : Restore machine learning model
 # 'train'  : Train machine learning model
 # 'run'  : Run machine learning model(Predict)
-# 
-# 'O' : Output directory path
-# 'DS' : Data selection method
-# 'DP' : Data preprocessing method
-# 'DT' : Data transform method
 
+# Below is an example of writing the operation sequence.
 [Train_Operations]
 1st_ML = input, create, train
 2nd_ML = input, create, train
-#1st_ML = DP:"subtract_row", input, create, train
 
 [Predict_Operations]
 # predict data source can be pipe...
 1st_ML = restore, input, run
 2nd_ML = restore, input, run
-#1st_ML = C:"/root/input", R, O:"/root/dir"
-#2nd_ML = C:"/root/input", R, O:"/root/dir"
-#first_ml = TI:"train_data", T:"first_ml", M:"transpose", TO:"output_path"
-#second_ml = TI:"train_data", M:"deduplicates":"1":"3", R:"first_ml", T:"second_ml", M:"transpose"
-#predict_operations = PI:"predict_data", DT:"deduplicates":"1":"2", R:"first_ml", DT:"1col_del", R:"second_ml"
