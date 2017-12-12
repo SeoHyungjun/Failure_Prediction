@@ -43,11 +43,12 @@ enable = true
 ml_name = K_Means
 ml_dir = K_Means
 num_centroids = 4
-#input_file = 
+input_file = /root/FP_input/in_kmeans.csv
 # output config
-ml_save_tag = ml
 project_dirpath = ./FP_project
 trained_centroid_outfile = centroid.csv
+trained_ml_dir = traind_ml 
+trained_ml_save_tag = kmeans
 # machine learning model
 centroid_num = 4
 max_iters = 1000

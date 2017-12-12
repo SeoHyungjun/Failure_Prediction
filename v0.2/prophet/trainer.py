@@ -10,7 +10,7 @@ class Trainer(ml_process.ML_Process):
         self.ml_instance_dict, self.train_oper_dict = self.get_train_instance_operation()
         
         for ml_order, ml_instance in self.ml_instance_dict.items():
-            operations = self.train_oper_dict[ml_order]
+            operations = self.train_oper_dict[ml_order]  # operations have each ml's operation
             
             # each operation already have function to execute and parameter. only need to select what function to use. 
             for operation_unit in operations:

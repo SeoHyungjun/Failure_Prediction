@@ -25,6 +25,9 @@ class ML_Process :
     # config reads the config file and config
     # Configuration item will be what you use. such as algorithm and data_transform...
     def get_train_instance_operation(self, cfg_fname=g_config_filename):
+        """
+        return configured instances and operation.
+        """
         ml_instance_dict = dict()
         ml_enable_list = []
         train_oper_dict = dict()   # key : first_ml, second_ml, .... value : operation unit list

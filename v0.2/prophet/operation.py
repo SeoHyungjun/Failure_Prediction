@@ -56,29 +56,38 @@ class operation_unit :
         '''
 
     def oper_DP_type(self):
-        print("###### DP ########")
+        print("[DATA PREPARE] call {}".format(self.DP_command))
+        print("")
         pass
 
     def oper_input_type(self, ml_instance):
-        print("###### INPUT ########")
+        ml_instance.input()
+        print("[Input] input data or data source for {}".format(ml_instance.ml_name))
+        print("")
         pass
 
     def oper_create_type(self, ml_instance):
-        print("create {}".format(ml_instance.ml_name))
-#        ml_instance.create_ml()
+        ml_instance.create_ml()
+        print("[CREATE] create {} model".format(ml_instance.ml_name))
+        print("")
         pass
 
     def oper_restore_type(self, ml_instance):
-        print("###### restore ########")
+        print("[RESTORE] restore {} model".format(ml_instance.ml_name))
+        print("")
         pass
 
     def oper_train_type(self, ml_instance):
-        print("###### train ########")
+        ml_instance.train()
+        print("[TRAINING] training {} model".format(ml_instance.ml_name))
+        print("")
 #        ml_instance.train()
         pass
 
     def oper_run_type(self, ml_instance):
-        print("###### run ########")
+        print("[RUN] run {} model".format(ml_instance.ml_name))
+        print("")
+        print("")
         pass
 
 #    def oper_PO_type(self, model, path):

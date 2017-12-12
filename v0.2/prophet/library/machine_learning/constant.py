@@ -1,7 +1,7 @@
 # [output directory]
 PROJECT_DIRPATH = "./FP_project" # only configurable in output directory config
 INPUT_DIR = "input"
-TRAINED_MODEL_DIR = "trained_model"
+TRAINED_MODEL_DIR = "trained_ml"
 SUMMARY_DIR = "summary"
 SUMMARY_TRAIN_DIR = "train"
 SUMMARY_VALIDATION_DIR = "validation"

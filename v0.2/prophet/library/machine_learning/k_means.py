@@ -21,22 +21,23 @@ class K_Means(Machine_Learning):
         self.project_dirpath = ct.PROJECT_DIRPATH
         self.trained_centroid_file = ct.KMEANS_TRAINED_CENTROID_FILE
         # create_model
-        self.graph = tf.Graph()
-        self.session = tf.Session(graph=self.graph)
         self.centroid_num = ct.KMEANS_CENTROID_NUM
         self.max_iters = ct.KMEANS_MAX_ITERS
         '''
+        self.graph = tf.Graph()
+        self.session = tf.Session(graph=self.graph)
         pass
 
     def input(self):
-        pass
-
+        self.x = pd.read_csv(self.input_file)
 
     def create_ml(self):
         self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
+        self.centroid_num = int(self.centroid_num)
+        self.max_iters = int(self.max_iters)
         # make output directory
         self.dirpath_trained_ml, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.ml_dir, self.project_dirpath)
-        self.ml_filepath = os.path.join(self.dirpath_trained_ml, self.ml_save_tag)
+#        self.ml_filepath = os.path.join(self.dirpath_trained_ml, self.ml_save_tag)
         
         x_width = self.x.shape[-1]
         with self.graph.as_default():
@@ -50,6 +51,7 @@ class K_Means(Machine_Learning):
             expanded_point = tf.expand_dims(self.input_x, 1)
             distances = tf.reduce_sum(tf.square(tf.subtract(expanded_point, expanded_centroids)), -1)
             self.assignments = tf.argmin(distances, -1, name="assignment")
+
             points_per_centroid = [tf.gather(self.input_x, tf.reshape(tf.where(tf.equal(self.assignments, centroid_index)), [-1])) for centroid_index in range(self.centroid_num)]
             updated_centroids = [tf.reduce_mean(points, reduction_indices=0)
                     for points in points_per_centroid]
@@ -58,10 +60,10 @@ class K_Means(Machine_Learning):
             self.initial_step = 0
             self.global_step = tf.assign(tf.Variable(0, dtype=tf.int32), self.input_step, name="global_step") 
             # saver operation
-            self.saver_model = tf.train.Saver(tf.global_variables(), name="saver_model")
+            self.saver_ml = tf.train.Saver(tf.global_variables(), name="saver_ml")
             # Initialize all variables of tensor
             self.session.run(tf.global_variables_initializer())
-    
+
     def restore_all(self):
         # find latest filename of latest model
         self.model_dir = str(self.model_sequence) + '_' + self.model_dir
@@ -86,7 +88,7 @@ class K_Means(Machine_Learning):
             self.initial_step = int(latest_model.split('-')[-1])
             self.global_step = self.session.graph.get_operation_by_name("global_step").outputs[0]
             # saver operation
-            self.saver_model = tf.train.Saver(tf.global_variables(), name="saver_model")
+            self.saver_ml = tf.train.Saver(tf.global_variables(), name="saver_ml")
      
     def train(self):
         if self.centroid_num >= len(self.x):
@@ -120,9 +122,9 @@ class K_Means(Machine_Learning):
             feed_dict.update({self.input_centroids:updated_centroids})
         print("End {}st step, sum_distances = {}".format(global_step, sum_distances))
         print("[Finish]\nsum_distances = {}".format(sum_distances))
-        filepath_trained_model = os.path.join(self.dirpath_trained_model, self.model_save_tag) 
-        self.saver_model.save(self.session, filepath_trained_model, global_step=global_step-1)
-        np.savetxt(os.path.join(self.dirpath_trained_model, ct.KMEANS_TRAINED_CENTROID_FILE), updated_centroids, delimiter=',')
+        filepath_trained_ml = os.path.join(self.dirpath_trained_ml, self.trained_ml_save_tag) 
+        self.saver_ml.save(self.session, filepath_trained_ml, global_step=global_step-1)
+        np.savetxt(os.path.join(self.dirpath_trained_ml, self.trained_centroid_outfile), updated_centroids, delimiter=',')
         print("Save learned model at step {}".format(global_step-1))
         
     def run(self):
