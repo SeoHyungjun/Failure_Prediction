@@ -26,7 +26,7 @@ class operation_unit :
         elif self.oper_type == 'train':
             self.execute_oper_func = self.oper_train_type
         elif self.oper_type == 'run':
-            self.execute_oper_fucn = self.oper_run_type
+            self.execute_oper_func = self.oper_run_type
 #        elif self.oper_type == 'DP':
 #            self.dt_func = split_opers[1].split('"')[1]
 #            self.dt_func_args = [arg.split('"')[1] for arg in split_opers[2:]] # args for DT type
@@ -58,42 +58,32 @@ class operation_unit :
     def oper_DP_type(self):
         print("[DATA PREPARE] call {}".format(self.DP_command))
         print("")
-        pass
 
     def oper_input_type(self, ml_instance):
         ml_instance.input()
         print("[Input] input data or data source for {}".format(ml_instance.ml_name))
         print("")
-        pass
 
     def oper_create_type(self, ml_instance):
-        ml_instance.create_ml()
         print("[CREATE] create {} model".format(ml_instance.ml_name))
+        ml_instance.create_ml()
         print("")
-        pass
 
     def oper_restore_type(self, ml_instance):
         print("[RESTORE] restore {} model".format(ml_instance.ml_name))
         print("")
-        pass
 
     def oper_train_type(self, ml_instance):
-        ml_instance.train()
         print("[TRAINING] training {} model".format(ml_instance.ml_name))
+        ml_instance.train()
         print("")
-#        ml_instance.train()
-        pass
 
     def oper_run_type(self, ml_instance):
-        print("[RUN] run {} model".format(ml_instance.ml_name))
+        print("[RUN] run {} model using \'{}\'".format(ml_instance.ml_name, ml_instance.input_filepath))
+        ml_instance.run()
         print("")
-        print("")
-        pass
 
-#    def oper_PO_type(self, model, path):
-#        pass
-
-    '''
+    ''' 
     # operation for T type.
     def oper_T_type(self, ml_instace=None, retrain=False):
         if machine_learning is None:

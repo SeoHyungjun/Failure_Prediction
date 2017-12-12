@@ -29,7 +29,7 @@ class K_Means(Machine_Learning):
         pass
 
     def input(self):
-        self.x = pd.read_csv(self.input_file)
+        self.x = pd.read_csv(self.input_filepath)
 
     def create_ml(self):
         self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
@@ -121,17 +121,21 @@ class K_Means(Machine_Learning):
             print("End {}st step, sum_distances = {}".format(global_step, sum_distances), end="\r")
             feed_dict.update({self.input_centroids:updated_centroids})
         print("End {}st step, sum_distances = {}".format(global_step, sum_distances))
-        print("[Finish]\nsum_distances = {}".format(sum_distances))
+        print("[Train_Result]\nsum_distances = {}".format(sum_distances))
         filepath_trained_ml = os.path.join(self.dirpath_trained_ml, self.trained_ml_save_tag) 
         self.saver_ml.save(self.session, filepath_trained_ml, global_step=global_step-1)
         np.savetxt(os.path.join(self.dirpath_trained_ml, self.trained_centroid_outfile), updated_centroids, delimiter=',')
         print("Save learned model at step {}".format(global_step-1))
         
     def run(self):
-        centroids = np.genfromtxt(os.path.join(self.dirpath_trained_model, self.trained_centroid_file), delimiter=',')
+        centroids = np.genfromtxt(os.path.join(self.dirpath_trained_ml, self.trained_centroid_outfile), delimiter=',')
         feed_dict = {
                 self.input_x : self.x,
                 self.input_centroids : centroids,
         }
         result = self.session.run(self.assignments, feed_dict)
+        output_filepath = os.path.join(self.project_dirpath, self.ml_dir, self.run_file)
+        output = pd.DataFrame(data=result, columns=['cluster_num'])
+        output.to_csv(output_filepath)
+        print("result saved as \'{}\'".format(output_filepath))
         return result

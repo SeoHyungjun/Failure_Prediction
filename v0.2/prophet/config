@@ -43,10 +43,11 @@ enable = true
 ml_name = K_Means
 ml_dir = K_Means
 num_centroids = 4
-input_file = /root/FP_input/in_kmeans.csv
+input_filepath = /root/FP_input/in_kmeans.csv
 # output config
 project_dirpath = ./FP_project
 trained_centroid_outfile = centroid.csv
+run_file = run_result.csv
 trained_ml_dir = traind_ml 
 trained_ml_save_tag = kmeans
 # machine learning model
@@ -158,8 +159,8 @@ arg2 =
 # 'input' : Input data or data meatdata for machine learning
 # 'create' : Create machine learning model
 # 'restore' : Restore machine learning model
-# 'Train'  : Train machine learning model
-# 'Run'  : Run machine learning model(Predict)
+# 'train'  : Train machine learning model
+# 'run'  : Run machine learning model(Predict)
 # 
 # 'O' : Output directory path
 # 'DS' : Data selection method
@@ -167,8 +168,8 @@ arg2 =
 # 'DT' : Data transform method
 
 [Train_Operations]
-1st_ML = DP:"make_batch", input, create, train
-2nd_ML = DP:"make_batch", input, create, train
+1st_ML = DP:"subtract_row", input, create, train, run
+2nd_ML = DP:"subtract_row", input, create, train
 
 [Predict_Operations]
 # predict data source can be pipe...
