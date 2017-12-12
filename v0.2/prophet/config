@@ -11,9 +11,6 @@
 [ML_Process]
 ml_num = 2
 ml_names = K_Means, ANN
-window_size = 10
-dir_project = ./FP_project
-dir_input = input
 [Trainer]
 collect_port = 
 [Predictor]
@@ -43,45 +40,35 @@ enable = true
 ml_name = K_Means
 ml_dir = K_Means
 num_centroids = 4
-input_filepath = /root/FP_input/in_kmeans.csv
+train_inputpath = /root/FP_input/in_kmeans.csv
 # output config
 project_dirpath = ./FP_project
 trained_centroid_outfile = centroid.csv
-run_file = run_result.csv
+run_result_file = run_result.csv
 trained_ml_dir = traind_ml 
 trained_ml_save_tag = kmeans
 # machine learning model
 centroid_num = 4
-max_iters = 1000
-# [output directory]
-#INPUT_DIR = "input"
-#TRAINED_MODEL_DIR = "trained_model"
-#SUMMARY_DIR = "summary"
-#SUMMARY_TRAIN_DIR = "train"
-#SUMMARY_VALIDATION_DIR = "validation"
+max_iters = 100
 
 # [ANN]
-# ANN_MODEL_DIR = "ANN"
-# ANN_MODEL_NAME = "ANN"
 # ANN_NODES_NUM = [8,5]
-## regularization : dropout_keep_prob, l2_reg_lambda(when not applied, each value are 1.0, 0.0)
-# ANN_DROPOUT_KEEP_PROB = 0.5
-# ANN_L2_REG_LAMBDA = 0.0
-# ANN_VALIDATION_SAMPLE_PERCENTAGE = 0.1
-# ANN_BATCH_SIZE = 32
-# ANN_EPOCHS_NUM = 1
-# ANN_VALIDATION_INTERVAL = 2000
 [2nd_ML]
-enable = false
+enable = true
 ml_name = ANN
 ml_dir = ANN
-num_nodes = "10,7"
+train_inputpath = /root/FP_input/in_ann.csv
+nodes_num = 10,7
+output_node_num = 2
 dropout_keep_prob = 0.5
 l2_reg_lambda = 0.0
 validation_sample_percentage = 0.1
 batch_size = 32
-num_epochs = 2
+epochs_num = 2
 validation_interval = 2000
+# output config
+trained_ml_save_tag = ann
+project_dirpath = ./FP_project
 
 [3rd_ML]
 enable = false
@@ -168,7 +155,7 @@ arg2 =
 # 'DT' : Data transform method
 
 [Train_Operations]
-1st_ML = DP:"subtract_row", input, create, train, run
+1st_ML = DP:"subtract_row", input, create, train
 2nd_ML = DP:"subtract_row", input, create, train
 
 [Predict_Operations]

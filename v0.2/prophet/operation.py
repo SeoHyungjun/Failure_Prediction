@@ -79,7 +79,7 @@ class operation_unit :
         print("")
 
     def oper_run_type(self, ml_instance):
-        print("[RUN] run {} model using \'{}\'".format(ml_instance.ml_name, ml_instance.input_filepath))
+        print("[RUN] run {} model using \'{}\'".format(ml_instance.ml_name, ml_instance.train_inputpath))
         ml_instance.run()
         print("")
 

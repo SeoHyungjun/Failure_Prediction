@@ -50,7 +50,7 @@ class ML_Process :
                 pass
 
         # get train_operations assing func as according to their type
-        train_operations_dict = config['Train_Operations'] # key:first_ml ; value:I:"", T, O:"" ...
+        train_operations_dict = config['Train_Operations'] # key:1st_ml; value:create, train, ..
         for ml_order, train_operations_str in train_operations_dict.items():
             if ml_order in ml_enable_list:
                 train_operations_list = train_operations_str.replace(' ', '').split(',')

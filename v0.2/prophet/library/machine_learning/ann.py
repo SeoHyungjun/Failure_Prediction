@@ -3,11 +3,12 @@ import os
 #sys.path.insert(0, '../data_transform')
 import tensorflow as tf
 import numpy as np
+import pandas as pd
 
 from base_ml import Machine_Learning
 FAILURE_PREDICTION_PATH = os.environ['FAILURE_PREDICTION']
 sys.path.insert(0, os.path.join(FAILURE_PREDICTION_PATH, "library")) # upper directory
-import data_prepare.data_transform
+from data_prepare import data_preprocessing as dp
 import make_batch
 import set_output_dir
 
@@ -16,14 +17,14 @@ import constant as ct
 class ANN(Machine_Learning):
 
     def __init__(self):
-        self.model_name = ct.ANN_MODEL_NAME
-        self.model_dir = ct.ANN_MODEL_DIR
-        # output config
-        self.model_save_tag = ct.MODEL_SAVE_TAG
-        self.project_dirpath = ct.PROJECT_DIRPATH
-        # create_model
         self.graph = tf.Graph()
         self.session = tf.Session(graph=self.graph)
+        '''
+        self.ml_dir = ct.ANN_MODEL_DIR
+        # output config
+        self.trained_ml_save_tag = ct.MODEL_SAVE_TAG
+        self.project_dirpath = ct.PROJECT_DIRPATH
+        # create_model
         self.nodes_num = ct.ANN_NODES_NUM
         self.dropout_keep_prob = ct.ANN_DROPOUT_KEEP_PROB
         self.l2_reg_lambda = ct.ANN_L2_REG_LAMBDA
@@ -31,24 +32,38 @@ class ANN(Machine_Learning):
         self.batch_size = ct.ANN_BATCH_SIZE
         self.epochs_num = ct.ANN_EPOCHS_NUM
         self.validation_interval = ct.ANN_VALIDATION_INTERVAL
-        self.y_type_num = None
-        self.y_type_num = 2
+        self.output_node_num = None
+        self.output_node_num = 2
+        '''
+
+    def input(self):
+        self.x = pd.read_csv(self.train_inputpath)
+        self.y = self.x.iloc[:,-1].astype(int)
+        self.x = self.x.iloc[:,0:-1]
 
     def create_ml(self):
-        dt = data_transform.Data_transform()
+        # read from config is string.
+        self.output_node_num = int(self.output_node_num)
+        self.nodes_num = [int(x) for x in self.nodes_num.split(',')]
+        self.l2_reg_lambda = float(self.l2_reg_lambda)
+        self.validation_sample_percentage = float(self.validation_sample_percentage)
+        self.batch_size = int(self.batch_size)
+        self.epochs_num = int(self.epochs_num)
+        self.validation_interval = int(self.validation_interval)
+
         self.x = np.array(self.x)
-        self.y = dt._make_node_y_input(self.y, self.y_type_num)
-        self.model_dir = str(self.model_sequence) + '_' + self.model_dir
+        self.y = dp._make_node_y_input(self.y, self.output_node_num)
+        self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
         # make output directory
-        self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.model_dir, self.project_dirpath)
-        self.model_filepath = os.path.join(self.dirpath_trained_model, self.model_save_tag)
+        self.dirpath_trained_model, self.dirpath_summary_train, self.dirpath_summary_validation = set_output_dir.make_dir(self.ml_dir, self.project_dirpath)
+        self.model_filepath = os.path.join(self.dirpath_trained_model, self.trained_ml_save_tag)
 
         x_width = self.x.shape[-1]
-        num_y_type = self.y.shape[-1]
+        y_height = self.output_node_num
         with self.graph.as_default():
             # Placeholders for input, output and dropout
             self.input_x = tf.placeholder(tf.float32, [None, x_width], name="input_x")
-            self.input_y = tf.placeholder(tf.int32, [None, num_y_type], name="input_y" )
+            self.input_y = tf.placeholder(tf.int32, [None, y_height], name="input_y" )
             # used when evaluation(keep_prob = 1.0)
             self.input_dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob") 
            
@@ -81,9 +96,9 @@ class ANN(Machine_Learning):
             with tf.name_scope("output_layer"):
                 W = tf.get_variable(
                     "W",
-                    shape=[pre_num_node, num_y_type],
+                    shape=[pre_num_node, self.output_node_num],
                     initializer=tf.contrib.layers.xavier_initializer())
-                b = tf.Variable(tf.constant(0.1, shape=[num_y_type]), name="b")
+                b = tf.Variable(tf.constant(0.1, shape=[self.output_node_num]), name="b")
                 l2_loss += tf.nn.l2_loss(W)
                 l2_loss += tf.nn.l2_loss(b)
     
@@ -117,10 +132,10 @@ class ANN(Machine_Learning):
     def restore_all(self):
         dt = data_transform.Data_transform()
         self.x = np.array(self.x)
-        self.y = dt._make_node_y_input(self.y, self.y_type_num)
+        self.y = dt._make_node_y_input(self.y, self.output_node_num)
         # find latest filename of latest model
-        self.model_dir = str(self.model_sequence) + '_' + self.model_dir
-        dirpath_model = os.path.join(self.project_dirpath, self.model_dir)
+        self.ml_dir = str(self.model_sequence) + '_' + self.ml_dir
+        dirpath_model = os.path.join(self.project_dirpath, self.ml_dir)
         self.dirpath_trained_model = os.path.join(dirpath_model, ct.TRAINED_MODEL_DIR)
         self.dirpath_summary_train = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_TRAIN_DIR)
         self.dirpath_summary_validation = os.path.join(dirpath_model, ct.SUMMARY_DIR, ct.SUMMARY_VALIDATION_DIR)
@@ -173,7 +188,7 @@ class ANN(Machine_Learning):
                 print ("validation at step {}, accuracy = {}".format(current_step, accuracy))
                 writer_validation.add_summary(summary_validation, current_step)
         # save trained model
-        filepath_trained_model = os.path.join(self.dirpath_trained_model, self.model_save_tag) 
+        filepath_trained_model = os.path.join(self.dirpath_trained_model, self.trained_ml_save_tag) 
         self.saver_model.save(self.session, filepath_trained_model, global_step=current_step)
         print("Save learned at step {}".format(current_step))
 

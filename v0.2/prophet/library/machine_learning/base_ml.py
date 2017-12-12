@@ -15,6 +15,10 @@ class Machine_Learning(ABC):
     def __init__(self):
         self.ml_name =''
         self.arg_dict = {}
+    
+    @abstractmethod
+    def input(self):
+        self.x = pd.read_csv(self.train_inputpath)
 
     @abstractmethod
     def create_ml(self):

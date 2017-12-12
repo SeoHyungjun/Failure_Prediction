@@ -29,10 +29,11 @@ class K_Means(Machine_Learning):
         pass
 
     def input(self):
-        self.x = pd.read_csv(self.input_filepath)
+        self.x = pd.read_csv(self.train_inputpath)
 
     def create_ml(self):
         self.ml_dir = str(self.ml_sequence_num) + '_' + self.ml_dir
+        # read from config is string.
         self.centroid_num = int(self.centroid_num)
         self.max_iters = int(self.max_iters)
         # make output directory
@@ -134,8 +135,8 @@ class K_Means(Machine_Learning):
                 self.input_centroids : centroids,
         }
         result = self.session.run(self.assignments, feed_dict)
-        output_filepath = os.path.join(self.project_dirpath, self.ml_dir, self.run_file)
+        output_filepath = os.path.join(self.project_dirpath, self.ml_dir, self.run_result_file)
         output = pd.DataFrame(data=result, columns=['cluster_num'])
-        output.to_csv(output_filepath)
+        output.to_csv(output_filepath, index=False)
         print("result saved as \'{}\'".format(output_filepath))
         return result
