@@ -1,0 +1,100 @@
+# ML_Process section is related in trainer and predictor together.
+[ML_Process]
+ml_num = 2
+ml_names = 
+
+
+# ================================================================== #
+#
+# Each algorithm has different parameters.
+# Each section contains the data transform functions that will 
+# work before the algorithm is executed.
+# Each session defines parameters for the machine learnings to be run.
+# The machine learning name is either the name of the machine learning supported
+# by the framework or the name of the machine learning you have implemented.
+# At this time, the name of the machine learning must be the same as
+# the class name of the implemented machine learning.
+#
+# The parameters may vary depending on the machine learning.
+# At the bottom of this sections there are the default parameter
+# settings for each machine learning. You must use or modify it.
+#
+# Each session refers to the order that will be used to learn
+# and run the machine learnings that will work in the framework.
+# If you are using two machine learnings, set the enable entry
+# in the FIRST_MODEL and SECOND_MODEL sections to true
+# and set the rest to false.
+[1st_ML]
+enable = false
+
+[2nd_ML]
+enable = false
+
+[3rd_ML]
+enable = false
+
+[4th_ML]
+enable = false
+
+[Xth_MODEL]
+enable = false
+
+# Below are the default parameters for the models supported by the framework.
+## Default K_Means section parameters
+# enable = true 
+# ml_name = K_Means 
+# ml_dir = K_Means 
+# centroid_num = 4 
+# train_inputpath = /root/FP_input/in_kmeans.csv 
+# max_iters = 1000 
+# run_inputpath = /root/FP_input/in_kmeans.csv 
+# project_dirpath = ./FP_project 
+# trained_centroid_outfile = centroid.csv
+# run_result_file = run_result.csv
+# trained_ml_dir = traind_ml 
+# trained_ml_save_tag = kmeans
+
+## Defualt ANN section parameters
+# enable = true
+# ml_name = ANN
+# ml_dir = ANN
+# nodes_num = 10,7
+# output_node_num = 2
+# train_inputpath = /root/FP_input/in_ann.csv
+# dropout_keep_prob = 0.5
+# l2_reg_lambda = 0.0
+# validation_sample_percentage = 0.1
+# batch_size = 1
+# epochs_num = 3
+# validation_interval = 2000
+# run_inputpath = /root/FP_input/in_ann.csv
+# run_result_file = run_result.csv
+# trained_ml_save_tag = ann
+# project_dirpath = ./FP_project
+
+
+# ======================================================== #
+#
+# In operations section, enter the operation sequence.
+#
+# The 1st_ml entry defines the order of operations for 1st_ml, and
+# the 2nd_ml entry defines the order of operations for 2nd_ml.
+# The steps of each operation are separated by ','.
+#
+# The above example defines a sequence of operations that
+# learns two models to create a predictive model.
+#
+# Below are operations that could be executed.
+# 'input' : Input data or data meatdata for machine learning
+# 'create' : Create machine learning model
+# 'restore' : Restore machine learning model
+# 'train'  : Train machine learning model
+# 'run'  : Run machine learning model(Predict)
+
+# Below is an example of writing the operation sequence.
+[Train_Operations]
+1st_ML = input, create, train
+
+[Predict_Operations]
+# predict data source can be pipe...
+1st_ML = restore, input, run
