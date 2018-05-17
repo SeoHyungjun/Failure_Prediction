@@ -62,4 +62,3 @@ Cscope tag: lderr
              lderr(cct) << __func__ << " got " << m->pgid << " id " << m->id
   31   3643  osdc/Objecter.cc <<handle_osd_backoff>>
              lderr(cct) << __func__ << " " << m->pgid << " id " << m->id
-Type number and <Enter> (empty cancels): 

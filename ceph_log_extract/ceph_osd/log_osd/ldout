@@ -1,4 +1,0 @@
-Cscope tag: ldout
-   #   line  filename / context / line
-   1     54  osd/ClassHandler.cc <<open_all_classes>>
-             ldout(cct, 10) << __func__ << dendl;

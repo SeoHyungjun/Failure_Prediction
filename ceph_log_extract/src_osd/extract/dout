@@ -835,7 +835,8 @@ Cscope tag: dout
  417    188  osd/PG.cc <<get_with_id>>
              dout(20) << __func__ << ": " << info.pgid << " got id " << id << " (new) ref==" << ref << dendl;
  418    196  osd/PG.cc <<put_with_id>>
-             dout(20) << __func__ << ": " << info.pgid << " put id " << id << " (current) ref==" << ref << dendl; 419    209  osd/PG.cc <<dump_live_ids>>
+             dout(20) << __func__ << ": " << info.pgid << " put id " << id << " (current) ref==" << ref << dendl; 
+ 419    209  osd/PG.cc <<dump_live_ids>>
              dout(0) << "\t" << __func__ << ": " << info.pgid << " live ids:" << dendl;
  420    213  osd/PG.cc <<dump_live_ids>>
              dout(0) << "\t\tid: " << *i << dendl;
@@ -2030,7 +2031,8 @@ Cscope tag: dout
 1015  11213  osd/PrimaryLogPG.cc <<recover_missing>>
              dout(7) << __func__ << " " << soid
 1016  11233  osd/PrimaryLogPG.cc <<recover_missing>>
-             dout(20) << __func__ << ": soid " << soid << " needs to be deleted from replica " << shard << dendl;1017  11261  osd/PrimaryLogPG.cc <<recover_missing>>
+             dout(20) << __func__ << ": soid " << soid << " needs to be deleted from replica " << shard << dendl;
+1017  11261  osd/PrimaryLogPG.cc <<recover_missing>>
              dout(10) << " missing but already recovering head " << head << dendl;
 1018  11295  osd/PrimaryLogPG.cc <<remove_missing_object>>
              dout(20) << __func__ << " " << soid << " " << v << dendl;
@@ -2596,6 +2598,3 @@ Cscope tag: dout
              dout(10) << "send_notify" << dendl;
 1299    488  osd/Watch.cc <<notify_ack>>
              dout(10) << "notify_ack" << dendl;
-Type number and <Enter> (empty cancels): 
-
-E492: Not an editor command: redit > lderr

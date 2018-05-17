@@ -1,0 +1,44 @@
+Cscope tag: ldout
+   #   line  filename / context / line
+   1     54  osd/ClassHandler.cc <<open_all_classes>>
+             ldout(cct, 10) << __func__ << dendl;
+   2     70  osd/ClassHandler.cc <<open_all_classes>>
+             ldout(cct, 10) << __func__ << " found " << cname << dendl;
+   3    125  osd/ClassHandler.cc <<_get_class>>
+             ldout(cct, 0) << "_get_class not permitted to load " << cname << dendl;
+   4    129  osd/ClassHandler.cc <<_get_class>>
+             ldout(cct, 10) << "_get_class adding new class name " << cname << " " << cls << dendl;
+   5    149  osd/ClassHandler.cc <<_load_class>>
+             ldout(cct, 10) << "_load_class " << cls->name << " from " << fname << dendl;
+   6    157  osd/ClassHandler.cc <<_load_class>>
+             ldout(cct, 0) << __func__ << " could not stat class " << fname
+   7    160  osd/ClassHandler.cc <<_load_class>>
+             ldout(cct, 0) << "_load_class could not open class " << fname
+   8    194  osd/ClassHandler.cc <<_load_class>>
+             ldout(cct, 10) << "_load_class " << cls->name << " satisfied dependency " << dc->name << dendl;
+   9    205  osd/ClassHandler.cc <<_load_class>>
+             ldout(cct, 10) << "_load_class " << cls->name << " success" << dendl;
+  10    217  osd/ClassHandler.cc <<register_class>>
+             ldout(cct, 10) << "register_class " << cname << " status " << cls->status << dendl;
+  11    220  osd/ClassHandler.cc <<register_class>>
+             ldout(cct, 0) << "class " << cname << " isn't ...s registering under the wrong name?" << dendl;
+  12    242  osd/ClassHandler.cc <<register_method>>
+             ldout(handler->cct, 10) << "register_method " ...gs " << flags << " " << (void *)func << dendl;
+  13    256  osd/ClassHandler.cc <<register_cxx_method>>
+             ldout(handler->cct, 10) << "register_cxx_metho...gs " << flags << " " << (void *)func << dendl;
+  14    231  osd/OSDMap.cc <<propagate_snaps_to_tiers>>
+             ldout(cct, 10) << __func__ << " from " << new_pool.first << " to "
+  15   1551  osd/OSDMap.cc <<clean_temps>>
+             ldout(cct, 10) << __func__ << dendl;
+  16   1561  osd/OSDMap.cc <<clean_temps>>
+             ldout(cct, 10) << __func__ << " removing pg_temp " << pg.first
+  17   1575  osd/OSDMap.cc <<clean_temps>>
+             ldout(cct, 10) << __func__ << " removing pg_temp " << pg.first
+  18   1585  osd/OSDMap.cc <<clean_temps>>
+             ldout(cct, 10) << __func__ << " removing pg_temp " << pg.first << " "
+  19   1597  osd/OSDMap.cc <<clean_temps>>
+             ldout(cct, 10) << __func__ << " removing primary_temp " << pg.first
+  20   1609  osd/OSDMap.cc <<clean_temps>>
+             ldout(cct, 10) << __func__ << " removing primary_temp "
+  21   1624  osd/OSDMap.cc <<maybe_remove_pg_upmaps>>
+             ldout(cct, 10) << __func__ << dendl;

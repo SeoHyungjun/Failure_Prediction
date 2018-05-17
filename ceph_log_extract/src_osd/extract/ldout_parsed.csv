@@ -1,0 +1,22 @@
+tag,filename,func,line,message
+ldout,osd/ClassHandler.cc,<<open_all_classes>>,54, __func__
+ldout,osd/ClassHandler.cc,<<open_all_classes>>,70," __func__ "" found "" cname"
+ldout,osd/ClassHandler.cc,<<_get_class>>,125," ""_get_class not permitted to load "" cname"
+ldout,osd/ClassHandler.cc,<<_get_class>>,129," ""_get_class adding new class name "" cname "" "" cls"
+ldout,osd/ClassHandler.cc,<<_load_class>>,149," ""_load_class "" cls->name "" from "" fname"
+ldout,osd/ClassHandler.cc,<<_load_class>>,157," __func__ "" could not stat class "" fname"
+ldout,osd/ClassHandler.cc,<<_load_class>>,160," ""_load_class could not open class "" fname"
+ldout,osd/ClassHandler.cc,<<_load_class>>,194," ""_load_class "" cls->name "" satisfied dependency "" dc->name"
+ldout,osd/ClassHandler.cc,<<_load_class>>,205," ""_load_class "" cls->name "" success"""
+ldout,osd/ClassHandler.cc,<<register_class>>,217," ""register_class "" cname "" status "" cls->status"
+ldout,osd/ClassHandler.cc,<<register_class>>,220," ""class "" cname "" isn't ...s registering under the wrong name?"""
+ldout,osd/ClassHandler.cc,<<register_method>>,242," ""register_method "" ...gs "" flags "" "" (void *)func"
+ldout,osd/ClassHandler.cc,<<register_cxx_method>>,256," ""register_cxx_metho...gs "" flags "" "" (void *)func"
+ldout,osd/OSDMap.cc,<<propagate_snaps_to_tiers>>,231," __func__ "" from "" new_pool.first "" to """
+ldout,osd/OSDMap.cc,<<clean_temps>>,1551, __func__
+ldout,osd/OSDMap.cc,<<clean_temps>>,1561," __func__ "" removing pg_temp "" pg.first"
+ldout,osd/OSDMap.cc,<<clean_temps>>,1575," __func__ "" removing pg_temp "" pg.first"
+ldout,osd/OSDMap.cc,<<clean_temps>>,1585," __func__ "" removing pg_temp "" pg.first "" """
+ldout,osd/OSDMap.cc,<<clean_temps>>,1597," __func__ "" removing primary_temp "" pg.first"
+ldout,osd/OSDMap.cc,<<clean_temps>>,1609," __func__ "" removing primary_temp """
+ldout,osd/OSDMap.cc,<<maybe_remove_pg_upmaps>>,1624, __func__
