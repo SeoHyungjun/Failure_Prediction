@@ -1,0 +1,65 @@
+Cscope tag: lderr
+   #   line  filename / context / line
+   1    237  osd/ClassHandler.cc <<register_method>>
+             lderr(handler->cct) << "register_method " << name << "." << mname
+   2    219  osd/OSDMap.cc <<propagate_snaps_to_tiers>>
+             lderr(cct) << __func__ << " no pool " << tier_pool << dendl;
+   3    227  osd/OSDMap.cc <<propagate_snaps_to_tiers>>
+             lderr(cct) << __func__ << " " << r->first << " tier_of != " << new_pool.first << dendl;
+   4   1647  osd/OSDMap.cc <<maybe_remove_pg_upmaps>>
+             lderr(cct) << __func__ << " unable to load crush-rule of pg "
+   5   1656  osd/OSDMap.cc <<maybe_remove_pg_upmaps>>
+             lderr(cct) << __func__ << " unable to get crush weight_map for "
+   6   1666  osd/OSDMap.cc <<maybe_remove_pg_upmaps>>
+             lderr(cct) << __func__ << " unable to load failure-domain-type of pg "
+   7   1683  osd/OSDMap.cc <<maybe_remove_pg_upmaps>>
+             lderr(cct) << __func__ << " unable to get parent of raw osd."
+   8   3645  osd/OSDMap.cc <<build_simple_optioned>>
+             lderr(cct) << "[osd." << o << "] in config has i...n_max_osd " << cct->_conf->mon_max_osd << dendl;
+   9   3711  osd/OSDMap.cc <<build_simple_optioned>>
+             lderr(cct) << ss.str() << dendl;
+  10   7883  osd/PG.cc <<react>>
+             lderr(pg->cct) << __func__ << " removed_snaps already contains "
+  11   7887  osd/PG.cc <<react>>
+             lderr(pg->cct) << __func__ << " removed_snaps already contains "
+  12   7900  osd/PG.cc <<react>>
+             lderr(pg->cct) << __func__ << " first mimic map, filtering purged_snaps"
+  13   7920  osd/PG.cc <<react>>
+             lderr(pg->cct) << __func__ << " purged_snaps does not contain "
+  14  15108  osd/PrimaryLogPG.cc <<react>>
+             lderr(pg->cct) << "get_next_objects_to_trim returned "
+  15     89  osdc/Journaler.cc <<_set_layout>>
+             lderr(cct) << "may got older pool id from header layout" << dendl;
+  16    482  osdc/Journaler.cc <<_finish_write_head>>
+             lderr(cct) << "_finish_write_head got " << cpp_strerror(r) << dendl;
+  17    517  osdc/Journaler.cc <<_finish_flush>>
+             lderr(cct) << "_finish_flush got " << cpp_strerror(r) << dendl;
+  18    832  osdc/Journaler.cc <<_finish_prezero>>
+             lderr(cct) << "_prezeroed got " << cpp_strerror(r) << dendl;
+  19    939  osdc/Journaler.cc <<_finish_read>>
+             lderr(cct) << "_decode error from assimilate_prefetch" << dendl;
+  20   1216  osdc/Journaler.cc <<_finish_erase>>
+             lderr(cct) << "Failed to delete journal " << ino << " data: "
+  21   1244  osdc/Journaler.cc <<try_read_entry>>
+             lderr(cct) << __func__ << ": decode error from journal_stream" << dendl;
+  22   1258  osdc/Journaler.cc <<try_read_entry>>
+             lderr(cct) << __func__ << ": decode error from _is_readable" << dendl;
+  23   1367  osdc/Journaler.cc <<_finish_trim>>
+             lderr(cct) << "_finish_trim got " << cpp_strerror(r) << dendl;
+  24   1383  osdc/Journaler.cc <<handle_write_error>>
+             lderr(cct) << "handle_write_error " << cpp_strerror(r) << dendl;
+  25   1392  osdc/Journaler.cc <<handle_write_error>>
+             lderr(cct) << __func__ << ": multiple write errors, handler already called"
+  26    376  osdc/ObjectCacher.cc <<audit_buffers>>
+             lderr(oc->cct) << "AUDIT FAILURE: map position " << it->first
+  27    382  osdc/ObjectCacher.cc <<audit_buffers>>
+             lderr(oc->cct) << "AUDIT FAILURE: " << it->first << " " << *it->second
+  28    393  osdc/ObjectCacher.cc <<audit_buffers>>
+             lderr(oc->cct) << "AUDIT FAILURE: waiter at " << w_it->first
+  29    382  osdc/Objecter.cc <<init>>
+             lderr(cct) << "error registering admin socket command: "
+  30   3613  osdc/Objecter.cc <<handle_osd_backoff>>
+             lderr(cct) << __func__ << " got " << m->pgid << " id " << m->id
+  31   3643  osdc/Objecter.cc <<handle_osd_backoff>>
+             lderr(cct) << __func__ << " " << m->pgid << " id " << m->id
+Type number and <Enter> (empty cancels): 
