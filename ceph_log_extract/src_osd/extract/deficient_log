@@ -1,486 +1,485 @@
-lderr,osdc/Objecter.cc,<<handle_osd_backoff>>,3643, <<handle_osd_backoff>> " " m->pgid " id " m->id
-ldout,osd/ClassHandler.cc,<<_load_class>>,157, <<_load_class>> " could not stat class " fname
-ldout,osd/ClassHandler.cc,<<_load_class>>,160, "_load_class could not open class " fname
-ldout,osd/OSDMap.cc,<<propagate_snaps_to_tiers>>,231, <<propagate_snaps_to_tiers>> " from " new_pool.first " to "
-ldout,osd/OSDMap.cc,<<clean_temps>>,1561, <<clean_temps>> " removing pg_temp " pg.first
-ldout,osd/OSDMap.cc,<<clean_temps>>,1575, <<clean_temps>> " removing pg_temp " pg.first
-ldout,osd/OSDMap.cc,<<clean_temps>>,1585, <<clean_temps>> " removing pg_temp " pg.first " "
-ldout,osd/OSDMap.cc,<<clean_temps>>,1597, <<clean_temps>> " removing primary_temp " pg.first
-ldout,osd/OSDMap.cc,<<clean_temps>>,1609, <<clean_temps>> " removing primary_temp "
-dout,osd/ECBackend.cc,<<handle_recovery_push>>,306, <<handle_recovery_push>> ": Adding oid "
-dout,osd/ECBackend.cc,<<handle_recovery_push>>,341, <<handle_recovery_push>> ": Removing oid "
-dout,osd/ECBackend.cc,<<continue_recovery_op>>,566, <<continue_recovery_op>> ": canceling recovery op for obj " op.hoid
-dout,osd/ECBackend.cc,<<continue_recovery_op>>,609, <<continue_recovery_op>> ": before_progress=" op.recovery_progress
-dout,osd/ECBackend.cc,<<continue_recovery_op>>,650, <<continue_recovery_op>> ": on_peer_recover on " *i
-dout,osd/ECBackend.cc,<<handle_sub_write>>,899, <<handle_sub_write>> ": removing object " *i
-dout,osd/ECBackend.cc,<<handle_sub_read>>,1008, <<handle_sub_read>> ": Error " r
-dout,osd/ECBackend.cc,<<handle_sub_read>>,1034, <<handle_sub_read>> ": Bad hash for " i->first " digest 0x"
-dout,osd/ECBackend.cc,<<handle_sub_read>>,1052, <<handle_sub_read>> ": fulfilling attr request on "
-dout,osd/ECBackend.cc,<<handle_sub_read_reply>>,1225, <<handle_sub_read_reply>> " Error(s) ignored for " iter->first
-dout,osd/ECBackend.cc,<<filter_read_op>>,1319, <<filter_read_op>> ": canceling " req
-dout,osd/ECBackend.cc,<<try_state_to_reads>>,1807, <<try_state_to_reads>> ": blocking " *op
-dout,osd/ECBackend.cc,<<try_state_to_reads>>,1815, <<try_state_to_reads>> ": invalidating cache after this op"
-dout,osd/ECBackend.cc,<<try_finish_rmw>>,2073, <<try_finish_rmw>> ": clearing pipeline_state "
-dout,osd/ECBackend.cc,<<be_deep_scrub>>,2430, <<be_deep_scrub>> " " poid " got "
-dout,osd/ECBackend.cc,<<be_deep_scrub>>,2436, <<be_deep_scrub>> " " poid " got "
-dout,osd/ECBackend.cc,<<be_deep_scrub>>,2460, "_scan_list " poid " got incorrect size on read 0x"
-dout,osd/ECBackend.cc,<<be_deep_scrub>>,2471, "_scan_list " poid " got incorrect hash on read 0x"
-dout,osd/OSD.cc,<<agent_entry>>,495, <<agent_entry>>
-dout,osd/OSD.cc,<<agent_entry>>,518, "high_count " flush_mode_high_count
-dout,osd/OSD.cc,<<agent_entry>>,523, <<agent_entry>> " " pg->pg_id
-dout,osd/OSD.cc,<<promote_throttle_recalibrate>>,576, <<promote_throttle_recalibrate>> " " attempts " attempts, promoted "
-dout,osd/OSD.cc,<<promote_throttle_recalibrate>>,591, <<promote_throttle_recalibrate>> " po " po " pb " pb " avg_size "
-dout,osd/OSD.cc,<<promote_throttle_recalibrate>>,621, <<promote_throttle_recalibrate>> " actual " actual
-dout,osd/OSD.cc,<<check_full_status>>,695, <<check_full_status>> " cur ratio " ratio
-dout,osd/OSD.cc,<<check_full_status>>,706, <<check_full_status>> " " get_full_state_name(cur_state)
-dout,osd/OSD.cc,<<requeue_pg_temp>>,959, <<requeue_pg_temp>> " " old_wanted " + " old_pending " -> "
-dout,osd/OSD.cc,<<forget_peer_epoch>>,1041, "forget_peer_epoch osd." peer " as_of " as_of
-dout,osd/OSD.cc,<<forget_peer_epoch>>,1045, "forget_peer_epoch osd." peer " as_of " as_of
-dout,osd/OSD.cc,<<should_share_map>>,1055, "should_share_map "
-dout,osd/OSD.cc,<<should_share_map>>,1063, "client session last_sent_epoch: "
-dout,osd/OSD.cc,<<should_share_map>>,1082, name " " con->get_peer_addr()
-dout,osd/OSD.cc,<<share_map>>,1099, "share_map "
-dout,osd/OSD.cc,<<share_map>>,1113, name " has old map " epoch
-dout,osd/OSD.cc,<<share_map>>,1124, name " " con->get_peer_addr()
-dout,osd/OSD.cc,<<can_inc_scrubs_pending>>,1160, <<can_inc_scrubs_pending>> " " scrubs_pending " -> " (scrubs_pending+1)
-dout,osd/OSD.cc,<<can_inc_scrubs_pending>>,1165, <<can_inc_scrubs_pending>> " " scrubs_pending " + " scrubs_active
-dout,osd/OSD.cc,<<inc_scrubs_pending>>,1178, "inc_scrubs_pending " scrubs_pending " -> " (scrubs_pending+1)
-dout,osd/OSD.cc,<<dec_scrubs_pending>>,1193, "dec_scrubs_pending " scrubs_pending " -> " (scrubs_pending-1)
-dout,osd/OSD.cc,<<inc_scrubs_active>>,1206, "inc_scrubs_active " (scrubs_active-1) " -> " scrubs_active
-dout,osd/OSD.cc,<<inc_scrubs_active>>,1211, "inc_scrubs_active " (scrubs_active-1) " -> " scrubs_active
-dout,osd/OSD.cc,<<dec_scrubs_active>>,1221, "dec_scrubs_active " scrubs_active " -> " (scrubs_active-1)
-dout,osd/OSD.cc,<<send_incremental_map>>,1334, "send_incremental_map " since " -> " to
-dout,osd/OSD.cc,<<send_incremental_map>>,1352, " " (to - since) " > max " cct->_conf->osd_map_share_max_epochs
-dout,osd/OSD.cc,<<handle_misdirected_op>>,1553, <<handle_misdirected_op>> ": " *pg " no longer have map for "
-dout,osd/OSD.cc,<<handle_misdirected_op>>,1563, <<handle_misdirected_op>> ": " *pg " primary changed since "
-dout,osd/OSD.cc,<<asok_command>>,2247, "finished manual compaction in "
-dout,osd/OSD.cc,<<init>>,2403, "init " dev_path
-dout,osd/OSD.cc,<<init>>,2417, "journal looks like " (journal_is_rotational ? "hdd" : "ssd")
-dout,osd/OSD.cc,<<init>>,2580, "using " op_queue " op queue with priority op cut off at " 
-dout,osd/OSD.cc,<<maybe_wait_for_max_pg>>,4025, <<maybe_wait_for_max_pg>> " withhold creation of pg " pgid
-dout,osd/OSD.cc,<<resume_creating_pg>>,4058, <<resume_creating_pg>> " pending_creates_from_mon "
-dout,osd/OSD.cc,<<resume_creating_pg>>,4085, <<resume_creating_pg>> ": resolicit pg creates from mon since "
-dout,osd/OSD.cc,<<resume_creating_pg>>,4094, <<resume_creating_pg>> ": resolicit osdmap from mon since "
-dout,osd/OSD.cc,<<resume_creating_pg>>,4102, <<resume_creating_pg>> ": re-subscribe osdmap(onetime) since "
-dout,osd/OSD.cc,<<build_initial_pg_history>>,4191, <<build_initial_pg_history>> " " *h " " *pi
-dout,osd/OSD.cc,<<_add_heartbeat_peer>>,4312, "_add_heartbeat_peer: new peer osd." p
-dout,osd/OSD.cc,<<_add_heartbeat_peer>>,4318, "_add_heartbeat_peer: new peer osd." p
-dout,osd/OSD.cc,<<_remove_heartbeat_peer>>,4333, " removing heartbeat peer osd." n
-dout,osd/OSD.cc,<<handle_osd_ping>>,4469, "handle_osd_ping from " m->get_source_inst()
-dout,osd/OSD.cc,<<handle_osd_ping>>,4502, "Dropping heartbeat from " from
-dout,osd/OSD.cc,<<handle_osd_ping>>,4512, "Dropping heartbeat from " from
-dout,osd/OSD.cc,<<handle_osd_ping>>,4556, "handle_osd_ping got reply from osd." from
-dout,osd/OSD.cc,<<handle_osd_ping>>,4567, "handle_osd_ping got reply from osd." from
-dout,osd/OSD.cc,<<handle_osd_ping>>,4582, "handle_osd_ping canceling queued "
-dout,osd/OSD.cc,<<handle_osd_ping>>,4589, "handle_osd_ping canceling in-flight "
-dout,osd/OSD.cc,<<handle_osd_ping>>,4612, "handle_osd_ping " m->get_source_inst()
-dout,osd/OSD.cc,<<heartbeat_check>>,4654, "heartbeat_check we haven't sent ping to osd." p->first
-dout,osd/OSD.cc,<<heartbeat_check>>,4659, "heartbeat_check osd." p->first
-dout,osd/OSD.cc,<<heartbeat_reset>>,4769, "heartbeat_reset failed hb con " con " for osd." p->second.peer
-dout,osd/OSD.cc,<<heartbeat_reset>>,4788, "heartbeat_reset failed hb con " con " for osd." p->second.peer
-dout,osd/OSD.cc,<<tick_without_osd_lock>>,4861, <<tick_without_osd_lock>> " max_waiting_epoch " max_waiting_epoch
-dout,osd/OSD.cc,<<ms_handle_fast_connect>>,5168, " new session (outgoing) " s " con=" s->con
-dout,osd/OSD.cc,<<ms_handle_fast_accept>>,5187, "new session (incoming)" s " con=" con
-dout,osd/OSD.cc,<<start_boot>>,5267, "start_boot - have maps " superblock.oldest_map
-dout,osd/OSD.cc,<<_preboot>>,5284, <<_preboot>> " _preboot mon has osdmaps "
-dout,osd/OSD.cc,<<_is_healthy>>,5372, "is_healthy false -- only " up "/" num " up peers (less than "
-dout,osd/OSD.cc,<<_send_boot>>,5435, " client_addr " client_messenger->get_myaddr()
-dout,osd/OSD.cc,<<queue_want_up_thru>>,5509, "queue_want_up_thru now " want " (was " up_thru_wanted ")"
-dout,osd/OSD.cc,<<queue_want_up_thru>>,5515, "queue_want_up_thru want " want " <= queued " up_thru_wanted
-dout,osd/OSD.cc,<<request_full_map>>,5537, <<request_full_map>> " " first ".." last
-dout,osd/OSD.cc,<<got_full_map>>,5570, <<got_full_map>> " " e ", requested " requested_full_first
-dout,osd/OSD.cc,<<got_full_map>>,5576, <<got_full_map>> " " e ", requested " requested_full_first
-dout,osd/OSD.cc,<<got_full_map>>,5584, <<got_full_map>> " " e ", requested " requested_full_first
-dout,osd/OSD.cc,<<requeue_failures>>,5600, <<requeue_failures>> " " old_queue " + " old_pending " -> "
-dout,osd/OSD.cc,<<handle_scrub>>,6728, "handle_scrub fsid " m->fsid " != " monc->get_fsid()
-dout,osd/OSD.cc,<<handle_fast_scrub>>,6770, <<handle_fast_scrub>> " fsid " m->fsid " != " monc->get_fsid()
-dout,osd/OSD.cc,<<scrub_time_permit>>,6853, <<scrub_time_permit>> " should run between week day " cct->_conf->osd_scrub_begin_week_day
-dout,osd/OSD.cc,<<scrub_time_permit>>,6870, <<scrub_time_permit>> " should run between " cct->_conf->osd_scrub_begin_hour
-dout,osd/OSD.cc,<<scrub_time_permit>>,6874, <<scrub_time_permit>> " should run between " cct->_conf->osd_scrub_begin_hour
-dout,osd/OSD.cc,<<scrub_load_below_threshold>>,6893, <<scrub_load_below_threshold>> " loadavg per cpu " loadavg_per_cpu
-dout,osd/OSD.cc,<<scrub_load_below_threshold>>,6901, <<scrub_load_below_threshold>> " loadavg " loadavgs[0]
-dout,osd/OSD.cc,<<scrub_load_below_threshold>>,6908, <<scrub_load_below_threshold>> " loadavg " loadavgs[0]
-dout,osd/OSD.cc,<<sched_scrub>>,6940, "sched_scrub " scrub.pgid " scheduled at " scrub.sched_time
-dout,osd/OSD.cc,<<sched_scrub>>,6946, <<sched_scrub>> " not scheduling scrub for " scrub.pgid " due to "
-dout,osd/OSD.cc,<<sched_scrub>>,6954, "sched_scrub scrubbing " scrub.pgid " at " scrub.sched_time
-dout,osd/OSD.cc,<<handle_osd_map>>,7172, "handle_osd_map fsid " m->fsid " != "
-dout,osd/OSD.cc,<<handle_osd_map>>,7187, "got osd map from Session " session
-dout,osd/OSD.cc,<<handle_osd_map>>,7202, "handle_osd_map epochs [" first "," last "], i have "
-dout,osd/OSD.cc,<<handle_osd_map>>,7227, "handle_osd_map message skips epochs "
-dout,osd/OSD.cc,<<handle_osd_map>>,7260, <<handle_osd_map>> " waiting for pgs to consume " need
-dout,osd/OSD.cc,<<handle_osd_map>>,7337, "got incremental " e
-dout,osd/OSD.cc,<<handle_osd_map>>,7341, "my encoded map was:\n";
-dout,osd/OSD.cc,<<handle_osd_map>>,7365, <<handle_osd_map>> " still missing full maps " requested_full_first
-dout,osd/OSD.cc,<<handle_osd_map>>,7396, <<handle_osd_map>> " recording final pg_pool_t for pool "
-dout,osd/OSD.cc,<<_committed_osd_maps>>,7447, " advance to epoch " cur
-dout,osd/OSD.cc,<<_committed_osd_maps>>,7481, <<_committed_osd_maps>> " NOUP flag changed in " newmap->get_epoch()
-dout,osd/OSD.cc,<<_committed_osd_maps>>,7598, <<_committed_osd_maps>> " marked down "
-dout,osd/OSD.cc,<<_committed_osd_maps>>,7625, <<_committed_osd_maps>> " marked down:"
-dout,osd/OSD.cc,<<_committed_osd_maps>>,7633, <<_committed_osd_maps>> " marked down:"
-dout,osd/OSD.cc,<<_committed_osd_maps>>,7641, <<_committed_osd_maps>> " marked down:"
-dout,osd/OSD.cc,<<_committed_osd_maps>>,7678, "handle_osd_ping canceling in-flight failure report for osd."
-dout,osd/OSD.cc,<<_committed_osd_maps>>,7689, " msg say newest map is " m->newest_map
-dout,osd/OSD.cc,<<check_osdmap_features>>,7720, "crush map has features " features
-dout,osd/OSD.cc,<<check_osdmap_features>>,7731, "crush map has features " features
-dout,osd/OSD.cc,<<check_osdmap_features>>,7744, "crush map has features " features
-dout,osd/OSD.cc,<<require_mon_peer>>,7972, "require_mon_peer received from non-mon "
-dout,osd/OSD.cc,<<require_mon_or_mgr_peer>>,7984, "require_mon_or_mgr_peer received from non-mon, non-mgr "
-dout,osd/OSD.cc,<<require_osd_peer>>,7995, "require_osd_peer received from non-osd "
-dout,osd/OSD.cc,<<require_same_peer_instance>>,8026, "from dead osd." from ", marking down, "
-dout,osd/OSD.cc,<<require_same_or_newer_map>>,8057, "require_same_or_newer_map " epoch
-dout,osd/OSD.cc,<<require_same_or_newer_map>>,8064, "waiting for newer map epoch " epoch
-dout,osd/OSD.cc,<<handle_pg_create>>,8180, "mkpg " on " not acting_primary (" acting_primary
-dout,osd/OSD.cc,<<handle_pg_create>>,8197, <<handle_pg_create>> ": got obsolete pg create on pgid "
-dout,osd/OSD.cc,<<handle_fast_pg_create>>,8402, <<handle_fast_pg_create>> " " pgid " e" created
-dout,osd/OSD.cc,<<handle_pg_query_nopg>>,8609, " pg " pgid " dne, and pg has changed in "
-dout,osd/OSD.cc,<<_maybe_queue_recovery>>,8657, <<_maybe_queue_recovery>> " starting " to_start
-dout,osd/OSD.cc,<<_recover_now>>,8681, <<_recover_now>> " active " recovery_ops_active
-dout,osd/OSD.cc,<<do_recovery>>,8712, "do_recovery wake up at "
-dout,osd/OSD.cc,<<do_recovery>>,8729, "Recovery event scheduled at "
-dout,osd/OSD.cc,<<do_recovery>>,8751, "do_recovery started " started "/" reserved_pushes
-dout,osd/OSD.cc,<<start_recovery_op>>,8770, "start_recovery_op " *pg " " soid
-dout,osd/OSD.cc,<<finish_recovery_op>>,8786, "finish_recovery_op " *pg " " soid
-dout,osd/OSD.cc,<<release_reserved_pushes>>,8812, <<release_reserved_pushes>> "(" pushes "), recovery_ops_reserved "
-dout,osd/OSD.cc,<<enqueue_op>>,8836, "enqueue_op " op " prio " op->get_req()->get_priority()
-dout,osd/OSD.cc,<<dequeue_op>>,8895, "dequeue_op " op " prio " op->get_req()->get_priority()
-dout,osd/OSD.cc,<<init_op_flags>>,9260, "class " cname " method " mname " "
-dout,osd/OSD.cc,<<update_pg_epoch>>,9378, "min was " pg_slots_by_epoch.begin()->epoch
-dout,osd/OSD.cc,<<update_pg_epoch>>,9384, "min is now " pg_slots_by_epoch.begin()->epoch
-dout,osd/OSD.cc,<<wait_min_pg_epoch>>,9407, need " waiting on "
-dout,osd/OSD.cc,<<consume_map>>,9437, new_osdmap->get_epoch()
-dout,osd/OSD.cc,<<consume_map>>,9449, <<consume_map>> " " pgid
-dout,osd/OSD.cc,<<consume_map>>,9457, <<consume_map>> " " pgid
-dout,osd/OSD.cc,<<consume_map>>,9468, <<consume_map>> " " pgid " maps to us, keeping"
-dout,osd/OSD.cc,<<consume_map>>,9476, <<consume_map>> " " pgid
-dout,osd/OSD.cc,<<_wake_pg_slot>>,9509, <<_wake_pg_slot>> " " pgid
-dout,osd/OSD.cc,<<unprime_split_children>>,9638, <<unprime_split_children>> " parent " parent " clearing " i.first
-dout,osd/OSD.cc,<<_add_slot_waiter>>,9661, <<_add_slot_waiter>> " " pgid
-dout,osd/OSD.cc,<<_add_slot_waiter>>,9667, <<_add_slot_waiter>> " " pgid
-dout,osd/OSD.cc,<<_process>>,9718, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9725, <<_process>> " " slot->to_process.back()
-dout,osd/OSD.cc,<<_process>>,9756, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9763, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9773, <<_process>> " slot " token " no longer attached to "
-dout,osd/OSD.cc,<<_process>>,9780, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9800, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9804, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9817, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9821, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9839, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9843, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9849, <<_process>> " " token
-dout,osd/OSD.cc,<<_process>>,9854, <<_process>> " " token
-dout,osd/OSD.cc,<<_enqueue_front>>,9971, <<_enqueue_front>>
-dout,osd/PG.cc,<<proc_master_log>>,407, "proc_master_log for osd." from ": "
-dout,osd/PG.cc,<<proc_replica_log>>,442, "proc_replica_log for osd." from ": "
-dout,osd/PG.cc,<<proc_replica_log>>,455, " after missing " i->first " need " i->second.need
-dout,osd/PG.cc,<<proc_replica_info>>,471, " got info " oinfo " from down osd." from
-dout,osd/PG.cc,<<needs_recovery>>,845, <<needs_recovery>> " primary has " missing.num_missing()
-dout,osd/PG.cc,<<needs_recovery>>,858, <<needs_recovery>> " osd." peer " doesn't have missing set"
-dout,osd/PG.cc,<<needs_recovery>>,863, <<needs_recovery>> " osd." peer " has "
-dout,osd/PG.cc,<<all_unfound_are_queried_or_lost>>,1002, "all_unfound_are_queried_or_lost all of might_have_unfound " might_have_unfound
-dout,osd/PG.cc,<<build_prior>>,1050, "up_thru " get_osdmap()->get_up_thru(osd->whoami)
-dout,osd/PG.cc,<<build_prior>>,1055, "up_thru " get_osdmap()->get_up_thru(osd->whoami)
-dout,osd/PG.cc,<<choose_acting>>,1626, <<choose_acting>> " no suitable info found (incomplete backfills?),"
-dout,osd/PG.cc,<<choose_acting>>,1685, <<choose_acting>> " want " want " != acting " acting
-dout,osd/PG.cc,<<choose_acting>>,1719, "choose_acting want=" want " backfill_targets="
-dout,osd/PG.cc,<<op_has_sufficient_caps>>,2114, "op_has_sufficient_caps "
-dout,osd/PG.cc,<<_activate_committed>>,2132, "_activate_committed " epoch
-dout,osd/PG.cc,<<_activate_committed>>,2137, "_activate_committed " epoch
-dout,osd/PG.cc,<<_activate_committed>>,2169, <<_activate_committed>> " flushes in progress, moving "
-dout,osd/PG.cc,<<start_recovery_op>>,2444, "start_recovery_op " soid
-dout,osd/PG.cc,<<finish_recovery_op>>,2459, "finish_recovery_op " soid
-dout,osd/PG.cc,<<release_backoffs>>,2619, <<release_backoffs>> " ? " r " " p->first
-dout,osd/PG.cc,<<release_backoffs>>,2625, <<release_backoffs>> " checking " p->first
-dout,osd/PG.cc,<<_update_calc_stats>>,2901, <<_update_calc_stats>> " actingset " actingset " upset "
-dout,osd/PG.cc,<<_update_calc_stats>>,2932, <<_update_calc_stats>> " shard " pg_whoami
-dout,osd/PG.cc,<<_update_calc_stats>>,2965, <<_update_calc_stats>> " shard " peer.first
-dout,osd/PG.cc,<<publish_stats_to_osd>>,3198, <<publish_stats_to_osd>> " reporting purged_snaps "
-dout,osd/PG.cc,<<publish_stats_to_osd>>,3204, "publish_stats_to_osd " pg_stats_publish.reported_epoch
-dout,osd/PG.cc,<<publish_stats_to_osd>>,3228, "publish_stats_to_osd " pg_stats_publish.reported_epoch
-dout,osd/PG.cc,<<upgrade>>,3316, <<upgrade>> " " info_struct_v " -> " latest_struct_v
-dout,osd/PG.cc,<<requeue_op>>,3907, <<requeue_op>> " " op " (waiting_for_map " p->first ")"
-dout,osd/PG.cc,<<requeue_map_waiters>>,3939, <<requeue_map_waiters>> " " p->first " front op "
-dout,osd/PG.cc,<<do_replica_scrub_map>>,4143, <<do_replica_scrub_map>> " discarding old from "
-dout,osd/PG.cc,<<do_replica_scrub_map>>,4157, "map version is "
-dout,osd/PG.cc,<<do_replica_scrub_map>>,4161, <<do_replica_scrub_map>> " waiting_on_whom was " scrubber.waiting_on_whom
-dout,osd/PG.cc,<<_request_scrub_map>>,4182, "scrub requesting scrubmap from osd." replica
-dout,osd/PG.cc,<<handle_scrub_reserve_request>>,4203, <<handle_scrub_reserve_request>> " ignoring reserve request: Already reserved"
-dout,osd/PG.cc,<<build_scrub_map_chunk>>,4527, <<build_scrub_map_chunk>> " [" start "," end ") "
-dout,osd/PG.cc,<<build_scrub_map_chunk>>,4574, <<build_scrub_map_chunk>> " done, got " map.objects.size() " items"
-dout,osd/PG.cc,<<replica_scrub>>,4655, "replica_scrub discarding old replica_scrub from "
-dout,osd/PG.cc,<<chunky_scrub>>,4862, "scrub state " Scrubber::state_string(scrubber.state)
-dout,osd/PG.cc,<<chunky_scrub>>,4914, <<chunky_scrub>> " preempted, " scrubber.preempt_left
-dout,osd/PG.cc,<<chunky_scrub>>,4975, <<chunky_scrub>> ": scrub blocked somewhere in range "
-dout,osd/PG.cc,<<chunky_scrub>>,5041, <<chunky_scrub>> " waiting_on_whom " scrubber.waiting_on_whom
-dout,osd/PG.cc,<<chunky_scrub>>,5073, "error: " scrubber.primary_scrubmap_pos.ret
-dout,osd/PG.cc,<<chunky_scrub>>,5079, <<chunky_scrub>> " waiting_on_whom was "
-dout,osd/PG.cc,<<chunky_scrub>>,5121, <<chunky_scrub>> " waiting on "
-dout,osd/PG.cc,<<chunky_scrub>>,5198, "scrub final state " Scrubber::state_string(scrubber.state)
-dout,osd/PG.cc,<<scrub_compare_maps>>,5261, <<scrub_compare_maps>> " replica " i " has "
-dout,osd/PG.cc,<<scrub_compare_maps>>,5289, <<scrub_compare_maps>> " osd." acting[0] " has "
-dout,osd/PG.cc,<<fulfill_log>>,5684, " sending info+missing+log since " query.since
-dout,osd/PG.cc,<<old_peering_msg>>,5762, "old_peering_msg reply_epoch " reply_epoch " query_epoch " query_epoch
-dout,osd/PG.cc,<<proc_primary_info>>,6054, <<proc_primary_info>> " updating purged_snaps to " oinfo.purged_snaps
-dout,osd/PG.cc,<<can_discard_op>>,6177, " changed after " m->get_map_epoch()
-dout,osd/PG.cc,<<can_discard_op>>,6184, <<can_discard_op>> " sent before last_force_op_resend "
-dout,osd/PG.cc,<<can_discard_op>>,6189, <<can_discard_op>> " pg split in "
-dout,osd/PG.cc,<<can_discard_op>>,6195, <<can_discard_op>> " sent before last_force_op_resend_preluminous "
-dout,osd/PG.cc,<<can_discard_replica_op>>,6233, "can_discard_replica_op pg changed " info.history
-dout,osd/PG.cc,<<handle_activate_map>>,6442, <<handle_activate_map>> ": Dirtying info: last_persisted is "
-dout,osd/PG.cc,<<handle_activate_map>>,6447, <<handle_activate_map>> ": Not dirtying info: last_persisted is "
-dout,osd/PGBackend.cc,<<recover_delete_object>>,50, <<recover_delete_object>> " will remove " oid " " v " from "
-dout,osd/PGBackend.cc,<<handle_recovery_delete_reply>>,166, <<handle_recovery_delete_reply>> " " oid " still missing on at least "
-dout,osd/PGBackend.cc,<<handle_recovery_delete_reply>>,173, <<handle_recovery_delete_reply>> " completed recovery, local_missing = "
-dout,osd/PGBackend.cc,<<on_change_cleanup>>,322, <<on_change_cleanup>> ": Removing oid "
-dout,osd/PGBackend.cc,<<be_scan_list>>,602, <<be_scan_list>> " " poid " got " r
-dout,osd/PGBackend.cc,<<be_scan_list>>,605, <<be_scan_list>> " " poid " got " r
-dout,osd/PGLog.cc,<<proc_replica_log>>,183, "proc_replica_log for osd." from ": "
-dout,osd/PGLog.cc,<<proc_replica_log>>,187, <<proc_replica_log>> ": osd." from " does not overlap, not looking "
-dout,osd/PGLog.cc,<<proc_replica_log>>,192, <<proc_replica_log>> ": osd." from " same log head, not looking "
-dout,osd/PGLog.cc,<<proc_replica_log>>,210, " before missing " i->first " need " i->second.need
-dout,osd/PGLog.cc,<<proc_replica_log>>,220, "merge_log point (usually last shared) is "
-dout,osd/PGLog.cc,<<rewind_divergent_log>>,291, "rewind_divergent_log truncate divergent future " 
-dout,osd/PGLog.cc,<<merge_log>>,324, "merge_log " olog " from osd." fromosd
-dout,osd/PGLog.cc,<<merge_log>>,405, "merge_log cut point (usually last shared) is "
-dout,osd/PGLog.cc,<<merge_log>>,453, "merge_log result " log " " missing 
-dout,osd/PGLog.cc,<<merge_log_dups>>,469, "merge_log copying olog dups to log " 
-dout,osd/PGLog.cc,<<merge_log_dups>>,485, "merge_log extending dups tail to " 
-dout,osd/PGLog.cc,<<merge_log_dups>>,510, "merge_log extending dups head to " 
-dout,osd/PGLog.cc,<<merge_log_dups>>,532, "merge_log removed dups overlapping log entries [" 
-dout,osd/PGLog.cc,<<rebuild_missing_set_with_deletes>>,928, <<rebuild_missing_set_with_deletes>> " extra missing entry: " p.first
-dout,osd/PrimaryLogPG.cc,<<on_local_recover>>,378, " got old revert version " recovery_info.version
-dout,osd/PrimaryLogPG.cc,<<should_send_op>>,566, <<should_send_op>> " issue_repop shipping empty opt to osd." peer
-dout,osd/PrimaryLogPG.cc,<<should_send_op>>,575, <<should_send_op>> " issue_repop shipping empty opt to osd." peer
-dout,osd/PrimaryLogPG.cc,<<block_write_on_full_cache>>,707, <<block_write_on_full_cache>> ": blocking object " oid
-dout,osd/PrimaryLogPG.cc,<<block_for_clean>>,717, <<block_for_clean>> ": blocking object " oid
-dout,osd/PrimaryLogPG.cc,<<block_write_on_snap_rollback>>,726, <<block_write_on_snap_rollback>> ": blocking object " oid.get_head()
-dout,osd/PrimaryLogPG.cc,<<block_write_on_degraded_snap>>,738, <<block_write_on_degraded_snap>> ": blocking object " snap.get_head()
-dout,osd/PrimaryLogPG.cc,<<maybe_force_recovery>>,803, <<maybe_force_recovery>> " peer " peer " min_version " min_obj->first
-dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1222, " pgnls pg=" m->get_pg()
-dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1230, " pgnls pg=" m->get_pg() " count " list_size
-dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1248, " pgnls lower_bound " lower_bound
-dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1253, "outside of PG bounds " pg_start " .. "
-dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1302, " pgnls candidate 0x" std::hex candidate.get_hash()
-dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1332, "pgnls item 0x" std::hex
-dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1360, " pgnls result=" result " outdata.length()="
-dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1393, " pgls pg=" m->get_pg()
-dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1494, " pgls result=" result " outdata.length()="
-dout,osd/PrimaryLogPG.cc,<<handle_backoff>>,1696, <<handle_backoff>> " backoff ack id " m->id
-dout,osd/PrimaryLogPG.cc,<<do_request>>,1713, <<do_request>> " waiting_for_map "
-dout,osd/PrimaryLogPG.cc,<<do_request>>,1720, <<do_request>> " min " op->min_epoch
-dout,osd/PrimaryLogPG.cc,<<do_request>>,2072, "do_op " *m
-dout,osd/PrimaryLogPG.cc,<<do_request>>,2152, <<do_request>> " dup " m->get_reqid()
-dout,osd/PrimaryLogPG.cc,<<do_request>>,2226, <<do_request>> ": clone " obc->obs.oi.soid
-dout,osd/PrimaryLogPG.cc,<<do_request>>,2236, <<do_request>> ": clone " obc->obs.oi.soid
-dout,osd/PrimaryLogPG.cc,<<do_request>>,2303, " provided locator " m->get_object_locator()
-dout,osd/PrimaryLogPG.cc,<<do_request>>,2360, <<do_request>> ": object " obc->obs.oi.soid
-dout,osd/PrimaryLogPG.cc,<<do_manifest_flush>>,2599, <<do_manifest_flush>> " read fail " " offset: " tgt_offset
-dout,osd/PrimaryLogPG.cc,<<do_manifest_flush>>,2624, <<do_manifest_flush>> " offset: " tgt_offset " len: " tgt_length
-dout,osd/PrimaryLogPG.cc,<<finish_manifest_flush>>,2638, <<finish_manifest_flush>> " " oid " tid " tid
-dout,osd/PrimaryLogPG.cc,<<maybe_handle_cache_detail>>,2730, <<maybe_handle_cache_detail>> " " obc->obs.oi " "
-dout,osd/PrimaryLogPG.cc,<<maybe_handle_cache_detail>>,2737, <<maybe_handle_cache_detail>> " (no obc)"
-dout,osd/PrimaryLogPG.cc,<<maybe_promote>>,2919, <<maybe_promote>> " missing_oid " missing_oid
-dout,osd/PrimaryLogPG.cc,<<do_cache_redirect>>,2977, "sending redirect to pool " pool.info.tier_of " for op "
-dout,osd/PrimaryLogPG.cc,<<finish_proxy_read>>,3141, <<finish_proxy_read>> " " oid " tid " tid
-dout,osd/PrimaryLogPG.cc,<<finish_proxy_read>>,3151, <<finish_proxy_read>> " tid " tid " != prdop " prdop
-dout,osd/PrimaryLogPG.cc,<<finish_proxy_read>>,3156, <<finish_proxy_read>> " oid " oid " != prdop " prdop
-dout,osd/PrimaryLogPG.cc,<<do_proxy_chunked_op>>,3386, <<do_proxy_chunked_op>> " chunk_index: " chunks->first
-dout,osd/PrimaryLogPG.cc,<<do_proxy_chunked_read>>,3490, <<do_proxy_chunked_read>> " Start do chunk proxy read for " *m
-dout,osd/PrimaryLogPG.cc,<<finish_proxy_write>>,3576, <<finish_proxy_write>> " " oid " tid " tid
-dout,osd/PrimaryLogPG.cc,<<finish_proxy_write>>,3612, <<finish_proxy_write>> " " oid " tid " tid
-dout,osd/PrimaryLogPG.cc,<<promote_object>>,3735, <<promote_object>> " " hoid
-dout,osd/PrimaryLogPG.cc,<<promote_object>>,3740, <<promote_object>> " " hoid
-dout,osd/PrimaryLogPG.cc,<<promote_object>>,3743, <<promote_object>> " " hoid
-dout,osd/PrimaryLogPG.cc,<<execute_ctx>>,3831, " ORDERSNAP flag set and snapc seq " ctx->snapc.seq
-dout,osd/PrimaryLogPG.cc,<<execute_ctx>>,3842, <<execute_ctx>> " " soid " " *ctx->ops
-dout,osd/PrimaryLogPG.cc,<<execute_ctx>>,3848, <<execute_ctx>> " " soid " " *ctx->ops
-dout,osd/PrimaryLogPG.cc,<<log_op_stats>>,4086, "log_op_stats " *m
-dout,osd/PrimaryLogPG.cc,<<trim_object>>,4274, coid " old_snaps " old_snaps
-dout,osd/PrimaryLogPG.cc,<<trim_object>>,4326, coid " snaps " old_snaps " -> "
-dout,osd/PrimaryLogPG.cc,<<trim_object>>,4426, coid " new snapset " snapset " on "
-dout,osd/PrimaryLogPG.cc,<<trim_object>>,4471, coid " writing updated snapset on " head_oid
-dout,osd/PrimaryLogPG.cc,<<do_tmapup>>,4740, " starting is \n";
-dout,osd/PrimaryLogPG.cc,<<do_tmapup>>,4747, "the update command is: \n";
-dout,osd/PrimaryLogPG.cc,<<do_tmapup>>,4791, "tmapup warning: key '" key "' < previous key '" last_in_key
-dout,osd/PrimaryLogPG.cc,<<do_tmapup>>,4874, " keep trailing " rest.length()
-dout,osd/PrimaryLogPG.cc,<<do_tmapup>>,4885, " final is \n";
-dout,osd/PrimaryLogPG.cc,<<do_checksum>>,5086, <<do_checksum>> ": length required when chunk size provided"
-dout,osd/PrimaryLogPG.cc,<<do_checksum>>,5108, <<do_checksum>> ": length (trimmed to 0x"
-dout,osd/PrimaryLogPG.cc,<<do_checksum>>,5129, <<do_checksum>> ": unknown crc type ("
-dout,osd/PrimaryLogPG.cc,<<do_read>>,5446, " read got " r " / " op.extent.length
-dout,osd/PrimaryLogPG.cc,<<do_sparse_read>>,5543, "sparse-read " miter->first "@" miter->second
-dout,osd/PrimaryLogPG.cc,<<do_sparse_read>>,5589, " sparse_read got " total_read " bytes from object "
-dout,osd/PrimaryLogPG.cc,<<_get_tmap>>,7577, "unsuccessful at decoding tmap for " ctx->new_obs.oi.soid
-dout,osd/PrimaryLogPG.cc,<<_get_tmap>>,7581, "successful at decoding tmap for " ctx->new_obs.oi.soid
-dout,osd/PrimaryLogPG.cc,<<_verify_no_head_clones>>,7590, <<_verify_no_head_clones>> " verifying clones are absent "
-dout,osd/PrimaryLogPG.cc,<<_verify_no_head_clones>>,7601, <<_verify_no_head_clones>> " cannot evict head before clone "
-dout,osd/PrimaryLogPG.cc,<<_verify_no_head_clones>>,7606, <<_verify_no_head_clones>> " cannot evict head, pending promote on clone "
-dout,osd/PrimaryLogPG.cc,<<_delete_oid>>,7639, <<_delete_oid>> " has or will have clones but no_whiteout=1"
-dout,osd/PrimaryLogPG.cc,<<_delete_oid>>,7642, <<_delete_oid>> " has or will have clones; will whiteout"
-dout,osd/PrimaryLogPG.cc,<<_delete_oid>>,7647, <<_delete_oid>> " " soid " whiteout=" (int )whiteout
-dout,osd/PrimaryLogPG.cc,<<_rollback_to>>,7732, "_rollback_to attempted to roll back to a missing or backfilling clone "
-dout,osd/PrimaryLogPG.cc,<<_rollback_to>>,7779, "_rollback_to deleting head on " soid.oid
-dout,osd/PrimaryLogPG.cc,<<_rollback_to>>,7795, "_rollback_to attempted to roll back to a degraded object "
-dout,osd/PrimaryLogPG.cc,<<_rollback_to>>,7807, "_rollback_to deleting " soid.oid
-dout,osd/PrimaryLogPG.cc,<<make_writeable>>,7881, "make_writeable " soid " snapset=" ctx->new_snapset
-dout,osd/PrimaryLogPG.cc,<<make_writeable>>,7993, " cloning v " ctx->obs->oi.version
-dout,osd/PrimaryLogPG.cc,<<make_writeable>>,8028, "make_writeable " soid
-dout,osd/PrimaryLogPG.cc,<<do_osd_op_effects>>,8117, "do_osd_op_effects applying watch connect on session "
-dout,osd/PrimaryLogPG.cc,<<do_osd_op_effects>>,8121, "do_osd_op_effects found existing watch watcher " watcher
-dout,osd/PrimaryLogPG.cc,<<do_osd_op_effects>>,8125, "do_osd_op_effects new watcher " watcher
-dout,osd/PrimaryLogPG.cc,<<prepare_transaction>>,8249, <<prepare_transaction>> " full, but proceeding due to FULL_FORCE or MDS"
-dout,osd/PrimaryLogPG.cc,<<finish_ctx>>,8277, <<finish_ctx>> " " soid " " ctx
-dout,osd/PrimaryLogPG.cc,<<finish_ctx>>,8317, " final snapset " ctx->new_snapset
-dout,osd/PrimaryLogPG.cc,<<finish_ctx>>,8341, <<finish_ctx>> " encoding snaps from " ctx->new_snapset
-dout,osd/PrimaryLogPG.cc,<<apply_stats>>,8386, <<apply_stats>> " " soid " < [" scrubber.start
-dout,osd/PrimaryLogPG.cc,<<apply_stats>>,8390, <<apply_stats>> " " soid " >= [" scrubber.start
-dout,osd/PrimaryLogPG.cc,<<do_copy_get>>,8653, " cursor.is_complete=" cursor.is_complete()
-dout,osd/PrimaryLogPG.cc,<<start_copy>>,8704, <<start_copy>> " " dest
-dout,osd/PrimaryLogPG.cc,<<_copy_some_manifest>>,8841, <<_copy_some_manifest>> " oid " obc->obs.oi.soid " num_chunks: " num_chunks
-dout,osd/PrimaryLogPG.cc,<<_copy_some_manifest>>,8867, <<_copy_some_manifest>> " tgt_oid: " soid.oid " tgt_offset: "
-dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,8901, <<process_copy_chunk>> " " oid " tid " tid
-dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,8910, <<process_copy_chunk>> " tid " tid " != cop " cop
-dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,8936, <<process_copy_chunk>> " clone snap " *p " has been deleted"
-dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,9002, <<process_copy_chunk>> std::hex
-dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,9048, "fill_in_final_tx: writing "
-dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,9073, <<process_copy_chunk>> " deleting partial temp object "
-dout,osd/PrimaryLogPG.cc,<<process_copy_chunk_manifest>>,9092, <<process_copy_chunk_manifest>> " " oid " tid " tid
-dout,osd/PrimaryLogPG.cc,<<process_copy_chunk_manifest>>,9103, <<process_copy_chunk_manifest>> " tid " tid " != cop " chunk_cop
-dout,osd/PrimaryLogPG.cc,<<process_copy_chunk_manifest>>,9162, <<process_copy_chunk_manifest>> " offset: " p.second->cursor.data_offset
-dout,osd/PrimaryLogPG.cc,<<_write_copy_chunk>>,9228, <<_write_copy_chunk>> " " cop
-dout,osd/PrimaryLogPG.cc,<<finish_promote>>,9364, <<finish_promote>> " " soid " r=" r
-dout,osd/PrimaryLogPG.cc,<<finish_promote>>,9393, <<finish_promote>>
-dout,osd/PrimaryLogPG.cc,<<finish_promote>>,9411, <<finish_promote>>
-dout,osd/PrimaryLogPG.cc,<<finish_promote_manifest>>,9569, <<finish_promote_manifest>> " " soid " r=" r
-dout,osd/PrimaryLogPG.cc,<<finish_flush>>,9896, <<finish_flush>> " " oid " tid " tid
-dout,osd/PrimaryLogPG.cc,<<finish_flush>>,9905, <<finish_flush>> " tid " tid " != fop " fop
-dout,osd/PrimaryLogPG.cc,<<try_flush_mark_clean>>,9951, <<try_flush_mark_clean>> " flushed_version " fop->flushed_version
-dout,osd/PrimaryLogPG.cc,<<try_flush_mark_clean>>,10014, <<try_flush_mark_clean>> " waiting on write lock " fop->op " "
-dout,osd/PrimaryLogPG.cc,<<try_flush_mark_clean>>,10074, <<try_flush_mark_clean>> " offset: " p.second.offset
-dout,osd/PrimaryLogPG.cc,<<repop_all_committed>>,10173, <<repop_all_committed>> ": repop tid " repop->rep_tid " all committed "
-dout,osd/PrimaryLogPG.cc,<<issue_repop>>,10261, "issue_repop rep_tid " repop->rep_tid
-dout,osd/PrimaryLogPG.cc,<<handle_watch_timeout>>,10668, "handle_watch_timeout waiting for degraded on obj "
-dout,osd/PrimaryLogPG.cc,<<handle_watch_timeout>>,10675, "handle_watch_timeout waiting for scrub on obj "
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10887, <<find_object_context>> " " oid
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10915, <<find_object_context>> " " oid " @" oid.snap
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10921, <<find_object_context>> " " oid " @" oid.snap
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10933, <<find_object_context>> " " oid " @" oid.snap
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10940, <<find_object_context>> " " oid " @" oid.snap
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10945, <<find_object_context>> " " oid " @" oid.snap
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10956, <<find_object_context>> " " oid " @" oid.snap
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10964, <<find_object_context>> " " oid " @" oid.snap
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10974, <<find_object_context>> " " oid " @" oid.snap
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10980, <<find_object_context>> " " head
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,11000, <<find_object_context>> " no clones with last >= oid.snap "
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,11009, <<find_object_context>> " " soid " missing, try again later"
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,11043, <<find_object_context>> " " soid
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,11057, <<find_object_context>> " " soid " [" first "," last
-dout,osd/PrimaryLogPG.cc,<<find_object_context>>,11062, <<find_object_context>> " " soid " [" first "," last
-dout,osd/PrimaryLogPG.cc,<<recover_missing>>,11213, <<recover_missing>> " " soid
-dout,osd/PrimaryLogPG.cc,<<recover_got>>,11420, "last_complete now " info.last_complete
-dout,osd/PrimaryLogPG.cc,<<recover_got>>,11424, "last_complete now " info.last_complete
-dout,osd/PrimaryLogPG.cc,<<do_update_log_missing_reply>>,11550, <<do_update_log_missing_reply>> " got reply from "
-dout,osd/PrimaryLogPG.cc,<<mark_all_unfound_lost>>,11588, <<mark_all_unfound_lost>> ": log before:\n";
-dout,osd/PrimaryLogPG.cc,<<clear_async_reads>>,11826, "clear ctx: "
-dout,osd/PrimaryLogPG.cc,<<on_activate>>,11914, <<on_activate>> ": bft=" backfill_targets
-dout,osd/PrimaryLogPG.cc,<<on_activate>>,11919, "target shard " *i
-dout,osd/PrimaryLogPG.cc,<<on_pool_change>>,12068, <<on_pool_change>> " requeuing full waiters (not in writeback) "
-dout,osd/PrimaryLogPG.cc,<<start_recovery_ops>>,12257, <<start_recovery_ops>> " needs_recovery: "
-dout,osd/PrimaryLogPG.cc,<<start_recovery_ops>>,12260, <<start_recovery_ops>> " missing_loc: "
-dout,osd/PrimaryLogPG.cc,<<recover_primary>>,12333, <<recover_primary>> " recovering " recovering.size()
-dout,osd/PrimaryLogPG.cc,<<recover_primary>>,12368, <<recover_primary>> " "
-dout,osd/PrimaryLogPG.cc,<<recover_primary>>,12441, " will pull " alternate_need " or " need
-dout,osd/PrimaryLogPG.cc,<<primary_error>>,12497, info.pgid " unexpectedly missing " soid " v" v
-dout,osd/PrimaryLogPG.cc,<<prep_object_replica_deletes>>,12521, "replica delete delayed on " soid
-dout,osd/PrimaryLogPG.cc,<<prep_object_replica_deletes>>,12526, "replica delete got recovery read lock on " soid
-dout,osd/PrimaryLogPG.cc,<<prep_object_replica_pushes>>,12558, "recovery delayed on " soid
-dout,osd/PrimaryLogPG.cc,<<prep_object_replica_pushes>>,12563, "recovery got recovery read lock on " soid
-dout,osd/PrimaryLogPG.cc,<<recover_replicas>>,12671, <<recover_replicas>> ": " soid.get_head()
-dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12759, <<recover_backfill>> " (" max ")"
-dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12787, "peer osd." *i
-dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12876, " BACKFILL removing " check
-dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12926, " BACKFILL keeping " check
-dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12936, " BACKFILL replacing " check
-dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12941, " BACKFILL pushing " backfill_info.begin
-dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12958, "backfill blocking on " backfill_info.begin
-dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12963, "need_ver_targs=" need_ver_targs
-dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12965, "backfill_targets=" backfill_targets
-dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,13100, " peer " bt
-dout,osd/PrimaryLogPG.cc,<<update_range>>,13157, <<update_range>> ": bi is old, rescanning local backfill_info"
-dout,osd/PrimaryLogPG.cc,<<update_range>>,13178, <<update_range>> ": bi is old, (" bi->version
-dout,osd/PrimaryLogPG.cc,<<update_range>>,13183, <<update_range>> ": updating from version " e.version
-dout,osd/PrimaryLogPG.cc,<<update_range>>,13189, <<update_range>> ": " e.soid " updated to version "
-dout,osd/PrimaryLogPG.cc,<<check_local>>,13278, " checking " p->soid
-dout,osd/PrimaryLogPG.cc,<<hit_set_create>>,13425, <<hit_set_create>> " previous set had approx " unique
-dout,osd/PrimaryLogPG.cc,<<hit_set_create>>,13440, <<hit_set_create>> " target_size " p->target_size
-dout,osd/PrimaryLogPG.cc,<<hit_set_persist>>,13513, <<hit_set_persist>> " backfill target osd." *p
-dout,osd/PrimaryLogPG.cc,<<agent_setup>>,13676, <<agent_setup>> " allocated new state, position "
-dout,osd/PrimaryLogPG.cc,<<agent_work>>,13715, <<agent_work>>
-dout,osd/PrimaryLogPG.cc,<<agent_work>>,13825, <<agent_work>> " start pos " agent_state->position
-dout,osd/PrimaryLogPG.cc,<<agent_load_hit_sets>>,13874, <<agent_load_hit_sets>> " loading " p->begin "-"
-dout,osd/PrimaryLogPG.cc,<<agent_maybe_flush>>,13961, <<agent_maybe_flush>> " start_flush() failed " obc->obs.oi
-dout,osd/PrimaryLogPG.cc,<<agent_maybe_evict>>,14021, <<agent_maybe_evict>>
-dout,osd/PrimaryLogPG.cc,<<agent_maybe_evict>>,14026, "agent_state:\n";
-dout,osd/PrimaryLogPG.cc,<<agent_choose_mode>>,14162, <<agent_choose_mode>>
-dout,osd/PrimaryLogPG.cc,<<agent_choose_mode>>,14203, <<agent_choose_mode>> " dirty " ((float )dirty_micro / 1000000.0)
-dout,osd/PrimaryLogPG.cc,<<agent_choose_mode>>,14261, <<agent_choose_mode>> " flush_mode "
-dout,osd/PrimaryLogPG.cc,<<agent_choose_mode>>,14281, <<agent_choose_mode>> " evict_mode "
-dout,osd/PrimaryLogPG.cc,<<agent_choose_mode>>,14311, <<agent_choose_mode>> " evict_effort "
-dout,osd/PrimaryLogPG.cc,<<already_complete>>,14366, <<already_complete>> ": " **i
-dout,osd/PrimaryLogPG.cc,<<already_complete>>,14371, <<already_complete>> ": " **i
-dout,osd/PrimaryLogPG.cc,<<already_complete>>,14376, <<already_complete>> ": " **i
-dout,osd/PrimaryLogPG.cc,<<already_ack>>,14394, <<already_ack>> ": " **i
-dout,osd/PrimaryLogPG.cc,<<already_ack>>,14399, <<already_ack>> ": " **i
-dout,osd/PrimaryLogPG.cc,<<_range_available_for_scrub>>,14423, <<_range_available_for_scrub>> ": scrub delayed, "
-dout,osd/PrimaryLogPG.cc,<<_scrub_finish>>,14867, mode " got "
-dout,osd/PrimaryLogPG.cc,<<rep_repair_primary_object>>,14938, <<rep_repair_primary_object>> " " soid
-dout,osd/PrimaryLogPG.cc,<<rep_repair_primary_object>>,14953, <<rep_repair_primary_object>> ": Need version of replica, objects_get_attr failed: "
-dout,osd/ReplicatedBackend.cc,<<check_recovery_sources>>,158, "check_recovery_sources resetting pulls from osd." i->first
-dout,osd/ReplicatedBackend.cc,<<do_repop_reply>>,547, <<do_repop_reply>> ": tid " ip_op.tid " op "
-dout,osd/ReplicatedBackend.cc,<<do_repop_reply>>,552, <<do_repop_reply>> ": tid " ip_op.tid " (no op) "
-dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,621, <<be_deep_scrub>> " " poid " got "
-dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,631, <<be_deep_scrub>> " " poid " more data, digest so far 0x"
-dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,641, <<be_deep_scrub>> " " poid " done with data, digest 0x"
-dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,656, <<be_deep_scrub>> " " poid " got "
-dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,662, "CRC header " string(hdrbl.c_str(), hdrbl.length())
-dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,697, <<be_deep_scrub>> " " poid
-dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,708, <<be_deep_scrub>> " " poid
-dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,719, <<be_deep_scrub>> " done with " poid " omap_digest "
-dout,osd/ReplicatedBackend.cc,<<do_repop>>,998, <<do_repop>> " " soid
-dout,osd/ReplicatedBackend.cc,<<do_repop>>,1034, <<do_repop>> ": removing object " m->discard_temp_oid
-dout,osd/ReplicatedBackend.cc,<<repop_commit>>,1094, <<repop_commit>> " on op " *m
-dout,osd/ReplicatedBackend.cc,<<prepare_pull>>,1296, "pull " soid
-dout,osd/ReplicatedBackend.cc,<<prepare_pull>>,1306, "pulling soid " soid " from osd " fromshard
-dout,osd/ReplicatedBackend.cc,<<prep_push_to_replica>>,1382, <<prep_push_to_replica>> ": " soid " v" oi.version
-dout,osd/ReplicatedBackend.cc,<<submit_push_complete>>,1575, " clone_range " p->first " "
-dout,osd/ReplicatedBackend.cc,<<handle_push>>,1713, "handle_push "
-dout,osd/ReplicatedBackend.cc,<<build_push_op>>,1818, <<build_push_op>> " " recovery_info.soid
-dout,osd/ReplicatedBackend.cc,<<build_push_op>>,1934, " extent " p.get_start() "~" p.get_len()
-dout,osd/ReplicatedBackend.cc,<<handle_push_reply>>,1989, "huh, i wasn't pushing " soid " to osd." peer
-dout,osd/ReplicatedBackend.cc,<<handle_push_reply>>,1994, "huh, i wasn't pushing " soid " to osd." peer
-dout,osd/ReplicatedBackend.cc,<<handle_push_reply>>,2002, " pushing more from, "
-dout,osd/ReplicatedBackend.cc,<<handle_push_reply>>,2043, "pushed " soid ", still waiting for push ack from "
-dout,osd/Session.cc,<<ack_backoff>>,50, <<ack_backoff>> " " pgid " " id " [" begin ","
-dout,osd/Session.cc,<<ack_backoff>>,56, <<ack_backoff>> " " pgid " " id " [" begin ","
-dout,osd/Session.cc,<<check_backoff>>,90, <<check_backoff>> " session " this " has backoff " *b
-dout,osd/Watch.cc,<<maybe_complete_notify>>,182, "maybe_complete_notify -- "
-dout,osd/Watch.cc,<<start_notify>>,456, <<start_notify>> " " notif->notify_id
-lderr,osd/ClassHandler.cc,<<register_method>>,237, "register_method " name "." mname
-lderr,osd/OSDMap.cc,<<maybe_remove_pg_upmaps>>,1647, <<maybe_remove_pg_upmaps>> " unable to load crush-rule of pg "
-lderr,osd/OSDMap.cc,<<maybe_remove_pg_upmaps>>,1656, <<maybe_remove_pg_upmaps>> " unable to get crush weight_map for "
-lderr,osd/OSDMap.cc,<<maybe_remove_pg_upmaps>>,1666, <<maybe_remove_pg_upmaps>> " unable to load failure-domain-type of pg "
-lderr,osd/OSDMap.cc,<<maybe_remove_pg_upmaps>>,1683, <<maybe_remove_pg_upmaps>> " unable to get parent of raw osd."
-lderr,osd/PG.cc,<<react>>,7883, <<react>> " removed_snaps already contains "
-lderr,osd/PG.cc,<<react>>,7887, <<react>> " removed_snaps already contains "
-lderr,osd/PG.cc,<<react>>,7900, <<react>> " first mimic map, filtering purged_snaps"
-lderr,osd/PG.cc,<<react>>,7920, <<react>> " purged_snaps does not contain "
-lderr,osd/PrimaryLogPG.cc,<<react>>,15108, "get_next_objects_to_trim returned "
-lderr,osdc/Journaler.cc,<<_finish_erase>>,1216, "Failed to delete journal " ino " data: "
-lderr,osdc/Journaler.cc,<<handle_write_error>>,1392, <<handle_write_error>> ": multiple write errors, handler already called"
-lderr,osdc/ObjectCacher.cc,<<audit_buffers>>,376, "AUDIT FAILURE: map position " it->first
-lderr,osdc/ObjectCacher.cc,<<audit_buffers>>,382, "AUDIT FAILURE: " it->first " " *it->second
-lderr,osdc/ObjectCacher.cc,<<audit_buffers>>,393, "AUDIT FAILURE: waiter at " w_it->first
-lderr,osdc/Objecter.cc,<<init>>,382, "error registering admin socket command: "
-lderr,osdc/Objecter.cc,<<handle_osd_backoff>>,3613, <<handle_osd_backoff>> " got " m->pgid " id " m->id
-lderr,osdc/Objecter.cc,<<handle_osd_backoff>>,3643, <<handle_osd_backoff>> " " m->pgid " id " m->id
+ldout,osd/ClassHandler.cc,<<_load_class>>,157, <<_load_class>> " could not stat class " fname   ,,6
+ldout,osd/ClassHandler.cc,<<_load_class>>,160, "_load_class could not open class " fname   ,,7
+ldout,osd/OSDMap.cc,<<propagate_snaps_to_tiers>>,231, <<propagate_snaps_to_tiers>> " from " new_pool.first " to "   ,,14
+ldout,osd/OSDMap.cc,<<clean_temps>>,1561, <<clean_temps>> " removing pg_temp " pg.first   ,,16
+ldout,osd/OSDMap.cc,<<clean_temps>>,1575, <<clean_temps>> " removing pg_temp " pg.first   ,,17
+ldout,osd/OSDMap.cc,<<clean_temps>>,1585, <<clean_temps>> " removing pg_temp " pg.first " "   ,,18
+ldout,osd/OSDMap.cc,<<clean_temps>>,1597, <<clean_temps>> " removing primary_temp " pg.first   ,,19
+ldout,osd/OSDMap.cc,<<clean_temps>>,1609, <<clean_temps>> " removing primary_temp "   ,,20
+dout,osd/ECBackend.cc,<<handle_recovery_push>>,306, <<handle_recovery_push>> ": Adding oid "   ,,2
+dout,osd/ECBackend.cc,<<handle_recovery_push>>,341, <<handle_recovery_push>> ": Removing oid "   ,,3
+dout,osd/ECBackend.cc,<<continue_recovery_op>>,566, <<continue_recovery_op>> ": canceling recovery op for obj " op.hoid   ,,5
+dout,osd/ECBackend.cc,<<continue_recovery_op>>,609, <<continue_recovery_op>> ": before_progress=" op.recovery_progress   ,,7
+dout,osd/ECBackend.cc,<<continue_recovery_op>>,650, <<continue_recovery_op>> ": on_peer_recover on " *i   ,,9
+dout,osd/ECBackend.cc,<<handle_sub_write>>,899, <<handle_sub_write>> ": removing object " *i   ,,16
+dout,osd/ECBackend.cc,<<handle_sub_read>>,1008, <<handle_sub_read>> ": Error " r   ,,25
+dout,osd/ECBackend.cc,<<handle_sub_read>>,1034, <<handle_sub_read>> ": Bad hash for " i->first " digest 0x"   ,,28
+dout,osd/ECBackend.cc,<<handle_sub_read>>,1052, <<handle_sub_read>> ": fulfilling attr request on "   ,,29
+dout,osd/ECBackend.cc,<<handle_sub_read_reply>>,1225, <<handle_sub_read_reply>> " Error(s) ignored for " iter->first   ,,39
+dout,osd/ECBackend.cc,<<filter_read_op>>,1319, <<filter_read_op>> ": canceling " req   ,,42
+dout,osd/ECBackend.cc,<<try_state_to_reads>>,1807, <<try_state_to_reads>> ": blocking " *op   ,,48
+dout,osd/ECBackend.cc,<<try_state_to_reads>>,1815, <<try_state_to_reads>> ": invalidating cache after this op"   ,,49
+dout,osd/ECBackend.cc,<<try_finish_rmw>>,2073, <<try_finish_rmw>> ": clearing pipeline_state "   ,,60
+dout,osd/ECBackend.cc,<<be_deep_scrub>>,2430, <<be_deep_scrub>> " " poid " got "   ,,63
+dout,osd/ECBackend.cc,<<be_deep_scrub>>,2436, <<be_deep_scrub>> " " poid " got "   ,,64
+dout,osd/ECBackend.cc,<<be_deep_scrub>>,2460, "_scan_list " poid " got incorrect size on read 0x"   ,,66
+dout,osd/ECBackend.cc,<<be_deep_scrub>>,2471, "_scan_list " poid " got incorrect hash on read 0x"   ,,67
+dout,osd/OSD.cc,<<agent_entry>>,495, <<agent_entry>>   ,,70
+dout,osd/OSD.cc,<<agent_entry>>,518, "high_count " flush_mode_high_count   ,,72
+dout,osd/OSD.cc,<<agent_entry>>,523, <<agent_entry>> " " pg->pg_id   ,,73
+dout,osd/OSD.cc,<<promote_throttle_recalibrate>>,576, <<promote_throttle_recalibrate>> " " attempts " attempts, promoted "   ,,75
+dout,osd/OSD.cc,<<promote_throttle_recalibrate>>,591, <<promote_throttle_recalibrate>> " po " po " pb " pb " avg_size "   ,,76
+dout,osd/OSD.cc,<<promote_throttle_recalibrate>>,621, <<promote_throttle_recalibrate>> " actual " actual   ,,78
+dout,osd/OSD.cc,<<check_full_status>>,695, <<check_full_status>> " cur ratio " ratio   ,,79
+dout,osd/OSD.cc,<<check_full_status>>,706, <<check_full_status>> " " get_full_state_name(cur_state)   ,,80
+dout,osd/OSD.cc,<<requeue_pg_temp>>,959, <<requeue_pg_temp>> " " old_wanted " + " old_pending " -> "   ,,81
+dout,osd/OSD.cc,<<forget_peer_epoch>>,1041, "forget_peer_epoch osd." peer " as_of " as_of   ,,87
+dout,osd/OSD.cc,<<forget_peer_epoch>>,1045, "forget_peer_epoch osd." peer " as_of " as_of   ,,88
+dout,osd/OSD.cc,<<should_share_map>>,1055, "should_share_map "   ,,89
+dout,osd/OSD.cc,<<should_share_map>>,1063, "client session last_sent_epoch: "   ,,90
+dout,osd/OSD.cc,<<should_share_map>>,1082, name " " con->get_peer_addr()   ,,91
+dout,osd/OSD.cc,<<share_map>>,1099, "share_map "   ,,92
+dout,osd/OSD.cc,<<share_map>>,1113, name " has old map " epoch   ,,93
+dout,osd/OSD.cc,<<share_map>>,1124, name " " con->get_peer_addr()   ,,94
+dout,osd/OSD.cc,<<can_inc_scrubs_pending>>,1160, <<can_inc_scrubs_pending>> " " scrubs_pending " -> " (scrubs_pending+1)   ,,97
+dout,osd/OSD.cc,<<can_inc_scrubs_pending>>,1165, <<can_inc_scrubs_pending>> " " scrubs_pending " + " scrubs_active   ,,98
+dout,osd/OSD.cc,<<inc_scrubs_pending>>,1178, "inc_scrubs_pending " scrubs_pending " -> " (scrubs_pending+1)   ,,99
+dout,osd/OSD.cc,<<dec_scrubs_pending>>,1193, "dec_scrubs_pending " scrubs_pending " -> " (scrubs_pending-1)   ,,101
+dout,osd/OSD.cc,<<inc_scrubs_active>>,1206, "inc_scrubs_active " (scrubs_active-1) " -> " scrubs_active   ,,102
+dout,osd/OSD.cc,<<inc_scrubs_active>>,1211, "inc_scrubs_active " (scrubs_active-1) " -> " scrubs_active   ,,103
+dout,osd/OSD.cc,<<dec_scrubs_active>>,1221, "dec_scrubs_active " scrubs_active " -> " (scrubs_active-1)   ,,104
+dout,osd/OSD.cc,<<send_incremental_map>>,1334, "send_incremental_map " since " -> " to   ,,109
+dout,osd/OSD.cc,<<send_incremental_map>>,1352, " " (to - since) " > max " cct->_conf->osd_map_share_max_epochs   ,,110
+dout,osd/OSD.cc,<<handle_misdirected_op>>,1553, <<handle_misdirected_op>> ": " *pg " no longer have map for "   ,,119
+dout,osd/OSD.cc,<<handle_misdirected_op>>,1563, <<handle_misdirected_op>> ": " *pg " primary changed since "   ,,120
+dout,osd/OSD.cc,<<asok_command>>,2247, "finished manual compaction in "   ,,126
+dout,osd/OSD.cc,<<init>>,2403, "init " dev_path   ,,129
+dout,osd/OSD.cc,<<init>>,2417, "journal looks like " (journal_is_rotational ? "hdd" : "ssd")   ,,131
+dout,osd/OSD.cc,<<init>>,2580, "using " op_queue " op queue with priority op cut off at "    ,,138
+dout,osd/OSD.cc,<<maybe_wait_for_max_pg>>,4025, <<maybe_wait_for_max_pg>> " withhold creation of pg " pgid   ,,174
+dout,osd/OSD.cc,<<resume_creating_pg>>,4058, <<resume_creating_pg>> " pending_creates_from_mon "   ,,175
+dout,osd/OSD.cc,<<resume_creating_pg>>,4085, <<resume_creating_pg>> ": resolicit pg creates from mon since "   ,,177
+dout,osd/OSD.cc,<<resume_creating_pg>>,4094, <<resume_creating_pg>> ": resolicit osdmap from mon since "   ,,178
+dout,osd/OSD.cc,<<resume_creating_pg>>,4102, <<resume_creating_pg>> ": re-subscribe osdmap(onetime) since "   ,,179
+dout,osd/OSD.cc,<<build_initial_pg_history>>,4191, <<build_initial_pg_history>> " " *h " " *pi   ,,182
+dout,osd/OSD.cc,<<_add_heartbeat_peer>>,4312, "_add_heartbeat_peer: new peer osd." p   ,,183
+dout,osd/OSD.cc,<<_add_heartbeat_peer>>,4318, "_add_heartbeat_peer: new peer osd." p   ,,184
+dout,osd/OSD.cc,<<_remove_heartbeat_peer>>,4333, " removing heartbeat peer osd." n   ,,185
+dout,osd/OSD.cc,<<handle_osd_ping>>,4469, "handle_osd_ping from " m->get_source_inst()   ,,193
+dout,osd/OSD.cc,<<handle_osd_ping>>,4502, "Dropping heartbeat from " from   ,,194
+dout,osd/OSD.cc,<<handle_osd_ping>>,4512, "Dropping heartbeat from " from   ,,195
+dout,osd/OSD.cc,<<handle_osd_ping>>,4556, "handle_osd_ping got reply from osd." from   ,,197
+dout,osd/OSD.cc,<<handle_osd_ping>>,4567, "handle_osd_ping got reply from osd." from   ,,198
+dout,osd/OSD.cc,<<handle_osd_ping>>,4582, "handle_osd_ping canceling queued "   ,,199
+dout,osd/OSD.cc,<<handle_osd_ping>>,4589, "handle_osd_ping canceling in-flight "   ,,200
+dout,osd/OSD.cc,<<handle_osd_ping>>,4612, "handle_osd_ping " m->get_source_inst()   ,,201
+dout,osd/OSD.cc,<<heartbeat_check>>,4654, "heartbeat_check we haven't sent ping to osd." p->first   ,,204
+dout,osd/OSD.cc,<<heartbeat_check>>,4659, "heartbeat_check osd." p->first   ,,205
+dout,osd/OSD.cc,<<heartbeat_reset>>,4769, "heartbeat_reset failed hb con " con " for osd." p->second.peer   ,,214
+dout,osd/OSD.cc,<<heartbeat_reset>>,4788, "heartbeat_reset failed hb con " con " for osd." p->second.peer   ,,215
+dout,osd/OSD.cc,<<tick_without_osd_lock>>,4861, <<tick_without_osd_lock>> " max_waiting_epoch " max_waiting_epoch   ,,219
+dout,osd/OSD.cc,<<ms_handle_fast_connect>>,5168, " new session (outgoing) " s " con=" s->con   ,,222
+dout,osd/OSD.cc,<<ms_handle_fast_accept>>,5187, "new session (incoming)" s " con=" con   ,,223
+dout,osd/OSD.cc,<<start_boot>>,5267, "start_boot - have maps " superblock.oldest_map   ,,228
+dout,osd/OSD.cc,<<_preboot>>,5284, <<_preboot>> " _preboot mon has osdmaps "   ,,229
+dout,osd/OSD.cc,<<_is_healthy>>,5372, "is_healthy false -- only " up "/" num " up peers (less than "   ,,233
+dout,osd/OSD.cc,<<_send_boot>>,5435, " client_addr " client_messenger->get_myaddr()   ,,238
+dout,osd/OSD.cc,<<queue_want_up_thru>>,5509, "queue_want_up_thru now " want " (was " up_thru_wanted ")"   ,,239
+dout,osd/OSD.cc,<<queue_want_up_thru>>,5515, "queue_want_up_thru want " want " <= queued " up_thru_wanted   ,,240
+dout,osd/OSD.cc,<<request_full_map>>,5537, <<request_full_map>> " " first ".." last   ,,243
+dout,osd/OSD.cc,<<got_full_map>>,5570, <<got_full_map>> " " e ", requested " requested_full_first   ,,245
+dout,osd/OSD.cc,<<got_full_map>>,5576, <<got_full_map>> " " e ", requested " requested_full_first   ,,246
+dout,osd/OSD.cc,<<got_full_map>>,5584, <<got_full_map>> " " e ", requested " requested_full_first   ,,247
+dout,osd/OSD.cc,<<requeue_failures>>,5600, <<requeue_failures>> " " old_queue " + " old_pending " -> "   ,,248
+dout,osd/OSD.cc,<<handle_scrub>>,6728, "handle_scrub fsid " m->fsid " != " monc->get_fsid()   ,,271
+dout,osd/OSD.cc,<<handle_fast_scrub>>,6770, <<handle_fast_scrub>> " fsid " m->fsid " != " monc->get_fsid()   ,,273
+dout,osd/OSD.cc,<<scrub_time_permit>>,6853, <<scrub_time_permit>> " should run between week day " cct->_conf->osd_scrub_begin_week_day   ,,275
+dout,osd/OSD.cc,<<scrub_time_permit>>,6870, <<scrub_time_permit>> " should run between " cct->_conf->osd_scrub_begin_hour   ,,276
+dout,osd/OSD.cc,<<scrub_time_permit>>,6874, <<scrub_time_permit>> " should run between " cct->_conf->osd_scrub_begin_hour   ,,277
+dout,osd/OSD.cc,<<scrub_load_below_threshold>>,6893, <<scrub_load_below_threshold>> " loadavg per cpu " loadavg_per_cpu   ,,279
+dout,osd/OSD.cc,<<scrub_load_below_threshold>>,6901, <<scrub_load_below_threshold>> " loadavg " loadavgs[0]   ,,280
+dout,osd/OSD.cc,<<scrub_load_below_threshold>>,6908, <<scrub_load_below_threshold>> " loadavg " loadavgs[0]   ,,281
+dout,osd/OSD.cc,<<sched_scrub>>,6940, "sched_scrub " scrub.pgid " scheduled at " scrub.sched_time   ,,285
+dout,osd/OSD.cc,<<sched_scrub>>,6946, <<sched_scrub>> " not scheduling scrub for " scrub.pgid " due to "   ,,286
+dout,osd/OSD.cc,<<sched_scrub>>,6954, "sched_scrub scrubbing " scrub.pgid " at " scrub.sched_time   ,,287
+dout,osd/OSD.cc,<<handle_osd_map>>,7172, "handle_osd_map fsid " m->fsid " != "   ,,290
+dout,osd/OSD.cc,<<handle_osd_map>>,7187, "got osd map from Session " session   ,,292
+dout,osd/OSD.cc,<<handle_osd_map>>,7202, "handle_osd_map epochs [" first "," last "], i have "   ,,293
+dout,osd/OSD.cc,<<handle_osd_map>>,7227, "handle_osd_map message skips epochs "   ,,295
+dout,osd/OSD.cc,<<handle_osd_map>>,7260, <<handle_osd_map>> " waiting for pgs to consume " need   ,,296
+dout,osd/OSD.cc,<<handle_osd_map>>,7337, "got incremental " e   ,,299
+dout,osd/OSD.cc,<<handle_osd_map>>,7341, "my encoded map was:\n";   ,,300
+dout,osd/OSD.cc,<<handle_osd_map>>,7365, <<handle_osd_map>> " still missing full maps " requested_full_first   ,,301
+dout,osd/OSD.cc,<<handle_osd_map>>,7396, <<handle_osd_map>> " recording final pg_pool_t for pool "   ,,302
+dout,osd/OSD.cc,<<_committed_osd_maps>>,7447, " advance to epoch " cur   ,,306
+dout,osd/OSD.cc,<<_committed_osd_maps>>,7481, <<_committed_osd_maps>> " NOUP flag changed in " newmap->get_epoch()   ,,307
+dout,osd/OSD.cc,<<_committed_osd_maps>>,7598, <<_committed_osd_maps>> " marked down "   ,,312
+dout,osd/OSD.cc,<<_committed_osd_maps>>,7625, <<_committed_osd_maps>> " marked down:"   ,,313
+dout,osd/OSD.cc,<<_committed_osd_maps>>,7633, <<_committed_osd_maps>> " marked down:"   ,,314
+dout,osd/OSD.cc,<<_committed_osd_maps>>,7641, <<_committed_osd_maps>> " marked down:"   ,,315
+dout,osd/OSD.cc,<<_committed_osd_maps>>,7678, "handle_osd_ping canceling in-flight failure report for osd."   ,,317
+dout,osd/OSD.cc,<<_committed_osd_maps>>,7689, " msg say newest map is " m->newest_map   ,,319
+dout,osd/OSD.cc,<<check_osdmap_features>>,7720, "crush map has features " features   ,,320
+dout,osd/OSD.cc,<<check_osdmap_features>>,7731, "crush map has features " features   ,,321
+dout,osd/OSD.cc,<<check_osdmap_features>>,7744, "crush map has features " features   ,,322
+dout,osd/OSD.cc,<<require_mon_peer>>,7972, "require_mon_peer received from non-mon "   ,,330
+dout,osd/OSD.cc,<<require_mon_or_mgr_peer>>,7984, "require_mon_or_mgr_peer received from non-mon, non-mgr "   ,,331
+dout,osd/OSD.cc,<<require_osd_peer>>,7995, "require_osd_peer received from non-osd "   ,,332
+dout,osd/OSD.cc,<<require_same_peer_instance>>,8026, "from dead osd." from ", marking down, "   ,,335
+dout,osd/OSD.cc,<<require_same_or_newer_map>>,8057, "require_same_or_newer_map " epoch   ,,336
+dout,osd/OSD.cc,<<require_same_or_newer_map>>,8064, "waiting for newer map epoch " epoch   ,,337
+dout,osd/OSD.cc,<<handle_pg_create>>,8180, "mkpg " on " not acting_primary (" acting_primary   ,,341
+dout,osd/OSD.cc,<<handle_pg_create>>,8197, <<handle_pg_create>> ": got obsolete pg create on pgid "   ,,342
+dout,osd/OSD.cc,<<handle_fast_pg_create>>,8402, <<handle_fast_pg_create>> " " pgid " e" created   ,,346
+dout,osd/OSD.cc,<<handle_pg_query_nopg>>,8609, " pg " pgid " dne, and pg has changed in "   ,,353
+dout,osd/OSD.cc,<<_maybe_queue_recovery>>,8657, <<_maybe_queue_recovery>> " starting " to_start   ,,355
+dout,osd/OSD.cc,<<_recover_now>>,8681, <<_recover_now>> " active " recovery_ops_active   ,,358
+dout,osd/OSD.cc,<<do_recovery>>,8712, "do_recovery wake up at "   ,,359
+dout,osd/OSD.cc,<<do_recovery>>,8729, "Recovery event scheduled at "   ,,360
+dout,osd/OSD.cc,<<do_recovery>>,8751, "do_recovery started " started "/" reserved_pushes   ,,363
+dout,osd/OSD.cc,<<start_recovery_op>>,8770, "start_recovery_op " *pg " " soid   ,,364
+dout,osd/OSD.cc,<<finish_recovery_op>>,8786, "finish_recovery_op " *pg " " soid   ,,366
+dout,osd/OSD.cc,<<release_reserved_pushes>>,8812, <<release_reserved_pushes>> "(" pushes "), recovery_ops_reserved "   ,,368
+dout,osd/OSD.cc,<<enqueue_op>>,8836, "enqueue_op " op " prio " op->get_req()->get_priority()   ,,369
+dout,osd/OSD.cc,<<dequeue_op>>,8895, "dequeue_op " op " prio " op->get_req()->get_priority()   ,,372
+dout,osd/OSD.cc,<<init_op_flags>>,9260, "class " cname " method " mname " "   ,,376
+dout,osd/OSD.cc,<<update_pg_epoch>>,9378, "min was " pg_slots_by_epoch.begin()->epoch   ,,379
+dout,osd/OSD.cc,<<update_pg_epoch>>,9384, "min is now " pg_slots_by_epoch.begin()->epoch   ,,381
+dout,osd/OSD.cc,<<wait_min_pg_epoch>>,9407, need " waiting on "   ,,382
+dout,osd/OSD.cc,<<consume_map>>,9437, new_osdmap->get_epoch()   ,,383
+dout,osd/OSD.cc,<<consume_map>>,9449, <<consume_map>> " " pgid   ,,385
+dout,osd/OSD.cc,<<consume_map>>,9457, <<consume_map>> " " pgid   ,,386
+dout,osd/OSD.cc,<<consume_map>>,9468, <<consume_map>> " " pgid " maps to us, keeping"   ,,387
+dout,osd/OSD.cc,<<consume_map>>,9476, <<consume_map>> " " pgid   ,,388
+dout,osd/OSD.cc,<<_wake_pg_slot>>,9509, <<_wake_pg_slot>> " " pgid   ,,390
+dout,osd/OSD.cc,<<unprime_split_children>>,9638, <<unprime_split_children>> " parent " parent " clearing " i.first   ,,392
+dout,osd/OSD.cc,<<_add_slot_waiter>>,9661, <<_add_slot_waiter>> " " pgid   ,,393
+dout,osd/OSD.cc,<<_add_slot_waiter>>,9667, <<_add_slot_waiter>> " " pgid   ,,394
+dout,osd/OSD.cc,<<_process>>,9718, <<_process>> " " token   ,,397
+dout,osd/OSD.cc,<<_process>>,9725, <<_process>> " " slot->to_process.back()   ,,398
+dout,osd/OSD.cc,<<_process>>,9756, <<_process>> " " token   ,,400
+dout,osd/OSD.cc,<<_process>>,9763, <<_process>> " " token   ,,401
+dout,osd/OSD.cc,<<_process>>,9773, <<_process>> " slot " token " no longer attached to "   ,,402
+dout,osd/OSD.cc,<<_process>>,9780, <<_process>> " " token   ,,403
+dout,osd/OSD.cc,<<_process>>,9800, <<_process>> " " token   ,,405
+dout,osd/OSD.cc,<<_process>>,9804, <<_process>> " " token   ,,406
+dout,osd/OSD.cc,<<_process>>,9817, <<_process>> " " token   ,,407
+dout,osd/OSD.cc,<<_process>>,9821, <<_process>> " " token   ,,408
+dout,osd/OSD.cc,<<_process>>,9839, <<_process>> " " token   ,,410
+dout,osd/OSD.cc,<<_process>>,9843, <<_process>> " " token   ,,411
+dout,osd/OSD.cc,<<_process>>,9849, <<_process>> " " token   ,,412
+dout,osd/OSD.cc,<<_process>>,9854, <<_process>> " " token   ,,413
+dout,osd/OSD.cc,<<_enqueue_front>>,9971, <<_enqueue_front>>   ,,415
+dout,osd/PG.cc,<<proc_master_log>>,407, "proc_master_log for osd." from ": "   ,,424
+dout,osd/PG.cc,<<proc_replica_log>>,442, "proc_replica_log for osd." from ": "   ,,426
+dout,osd/PG.cc,<<proc_replica_log>>,455, " after missing " i->first " need " i->second.need   ,,428
+dout,osd/PG.cc,<<proc_replica_info>>,471, " got info " oinfo " from down osd." from   ,,430
+dout,osd/PG.cc,<<needs_recovery>>,845, <<needs_recovery>> " primary has " missing.num_missing()   ,,433
+dout,osd/PG.cc,<<needs_recovery>>,858, <<needs_recovery>> " osd." peer " doesn't have missing set"   ,,434
+dout,osd/PG.cc,<<needs_recovery>>,863, <<needs_recovery>> " osd." peer " has "   ,,435
+dout,osd/PG.cc,<<all_unfound_are_queried_or_lost>>,1002, "all_unfound_are_queried_or_lost all of might_have_unfound " might_have_unfound   ,,441
+dout,osd/PG.cc,<<build_prior>>,1050, "up_thru " get_osdmap()->get_up_thru(osd->whoami)   ,,442
+dout,osd/PG.cc,<<build_prior>>,1055, "up_thru " get_osdmap()->get_up_thru(osd->whoami)   ,,443
+dout,osd/PG.cc,<<choose_acting>>,1626, <<choose_acting>> " no suitable info found (incomplete backfills?),"   ,,446
+dout,osd/PG.cc,<<choose_acting>>,1685, <<choose_acting>> " want " want " != acting " acting   ,,449
+dout,osd/PG.cc,<<choose_acting>>,1719, "choose_acting want=" want " backfill_targets="   ,,451
+dout,osd/PG.cc,<<op_has_sufficient_caps>>,2114, "op_has_sufficient_caps "   ,,455
+dout,osd/PG.cc,<<_activate_committed>>,2132, "_activate_committed " epoch   ,,456
+dout,osd/PG.cc,<<_activate_committed>>,2137, "_activate_committed " epoch   ,,457
+dout,osd/PG.cc,<<_activate_committed>>,2169, <<_activate_committed>> " flushes in progress, moving "   ,,459
+dout,osd/PG.cc,<<start_recovery_op>>,2444, "start_recovery_op " soid   ,,475
+dout,osd/PG.cc,<<finish_recovery_op>>,2459, "finish_recovery_op " soid   ,,476
+dout,osd/PG.cc,<<release_backoffs>>,2619, <<release_backoffs>> " ? " r " " p->first   ,,479
+dout,osd/PG.cc,<<release_backoffs>>,2625, <<release_backoffs>> " checking " p->first   ,,480
+dout,osd/PG.cc,<<_update_calc_stats>>,2901, <<_update_calc_stats>> " actingset " actingset " upset "   ,,493
+dout,osd/PG.cc,<<_update_calc_stats>>,2932, <<_update_calc_stats>> " shard " pg_whoami   ,,495
+dout,osd/PG.cc,<<_update_calc_stats>>,2965, <<_update_calc_stats>> " shard " peer.first   ,,497
+dout,osd/PG.cc,<<publish_stats_to_osd>>,3198, <<publish_stats_to_osd>> " reporting purged_snaps "   ,,507
+dout,osd/PG.cc,<<publish_stats_to_osd>>,3204, "publish_stats_to_osd " pg_stats_publish.reported_epoch   ,,508
+dout,osd/PG.cc,<<publish_stats_to_osd>>,3228, "publish_stats_to_osd " pg_stats_publish.reported_epoch   ,,509
+dout,osd/PG.cc,<<upgrade>>,3316, <<upgrade>> " " info_struct_v " -> " latest_struct_v   ,,511
+dout,osd/PG.cc,<<requeue_op>>,3907, <<requeue_op>> " " op " (waiting_for_map " p->first ")"   ,,515
+dout,osd/PG.cc,<<requeue_map_waiters>>,3939, <<requeue_map_waiters>> " " p->first " front op "   ,,517
+dout,osd/PG.cc,<<do_replica_scrub_map>>,4143, <<do_replica_scrub_map>> " discarding old from "   ,,528
+dout,osd/PG.cc,<<do_replica_scrub_map>>,4157, "map version is "   ,,530
+dout,osd/PG.cc,<<do_replica_scrub_map>>,4161, <<do_replica_scrub_map>> " waiting_on_whom was " scrubber.waiting_on_whom   ,,531
+dout,osd/PG.cc,<<_request_scrub_map>>,4182, "scrub requesting scrubmap from osd." replica   ,,533
+dout,osd/PG.cc,<<handle_scrub_reserve_request>>,4203, <<handle_scrub_reserve_request>> " ignoring reserve request: Already reserved"   ,,535
+dout,osd/PG.cc,<<build_scrub_map_chunk>>,4527, <<build_scrub_map_chunk>> " [" start "," end ") "   ,,550
+dout,osd/PG.cc,<<build_scrub_map_chunk>>,4574, <<build_scrub_map_chunk>> " done, got " map.objects.size() " items"   ,,553
+dout,osd/PG.cc,<<replica_scrub>>,4655, "replica_scrub discarding old replica_scrub from "   ,,555
+dout,osd/PG.cc,<<chunky_scrub>>,4862, "scrub state " Scrubber::state_string(scrubber.state)   ,,561
+dout,osd/PG.cc,<<chunky_scrub>>,4914, <<chunky_scrub>> " preempted, " scrubber.preempt_left   ,,563
+dout,osd/PG.cc,<<chunky_scrub>>,4975, <<chunky_scrub>> ": scrub blocked somewhere in range "   ,,564
+dout,osd/PG.cc,<<chunky_scrub>>,5041, <<chunky_scrub>> " waiting_on_whom " scrubber.waiting_on_whom   ,,567
+dout,osd/PG.cc,<<chunky_scrub>>,5073, "error: " scrubber.primary_scrubmap_pos.ret   ,,569
+dout,osd/PG.cc,<<chunky_scrub>>,5079, <<chunky_scrub>> " waiting_on_whom was "   ,,570
+dout,osd/PG.cc,<<chunky_scrub>>,5121, <<chunky_scrub>> " waiting on "   ,,573
+dout,osd/PG.cc,<<chunky_scrub>>,5198, "scrub final state " Scrubber::state_string(scrubber.state)   ,,576
+dout,osd/PG.cc,<<scrub_compare_maps>>,5261, <<scrub_compare_maps>> " replica " i " has "   ,,580
+dout,osd/PG.cc,<<scrub_compare_maps>>,5289, <<scrub_compare_maps>> " osd." acting[0] " has "   ,,582
+dout,osd/PG.cc,<<fulfill_log>>,5684, " sending info+missing+log since " query.since   ,,592
+dout,osd/PG.cc,<<old_peering_msg>>,5762, "old_peering_msg reply_epoch " reply_epoch " query_epoch " query_epoch   ,,597
+dout,osd/PG.cc,<<proc_primary_info>>,6054, <<proc_primary_info>> " updating purged_snaps to " oinfo.purged_snaps   ,,602
+dout,osd/PG.cc,<<can_discard_op>>,6177, " changed after " m->get_map_epoch()   ,,604
+dout,osd/PG.cc,<<can_discard_op>>,6184, <<can_discard_op>> " sent before last_force_op_resend "   ,,605
+dout,osd/PG.cc,<<can_discard_op>>,6189, <<can_discard_op>> " pg split in "   ,,606
+dout,osd/PG.cc,<<can_discard_op>>,6195, <<can_discard_op>> " sent before last_force_op_resend_preluminous "   ,,607
+dout,osd/PG.cc,<<can_discard_replica_op>>,6233, "can_discard_replica_op pg changed " info.history   ,,608
+dout,osd/PG.cc,<<handle_activate_map>>,6442, <<handle_activate_map>> ": Dirtying info: last_persisted is "   ,,619
+dout,osd/PG.cc,<<handle_activate_map>>,6447, <<handle_activate_map>> ": Not dirtying info: last_persisted is "   ,,620
+dout,osd/PGBackend.cc,<<recover_delete_object>>,50, <<recover_delete_object>> " will remove " oid " " v " from "   ,,627
+dout,osd/PGBackend.cc,<<handle_recovery_delete_reply>>,166, <<handle_recovery_delete_reply>> " " oid " still missing on at least "   ,,630
+dout,osd/PGBackend.cc,<<handle_recovery_delete_reply>>,173, <<handle_recovery_delete_reply>> " completed recovery, local_missing = "   ,,631
+dout,osd/PGBackend.cc,<<on_change_cleanup>>,322, <<on_change_cleanup>> ": Removing oid "   ,,633
+dout,osd/PGBackend.cc,<<be_scan_list>>,602, <<be_scan_list>> " " poid " got " r   ,,636
+dout,osd/PGBackend.cc,<<be_scan_list>>,605, <<be_scan_list>> " " poid " got " r   ,,637
+dout,osd/PGLog.cc,<<proc_replica_log>>,183, "proc_replica_log for osd." from ": "   ,,639
+dout,osd/PGLog.cc,<<proc_replica_log>>,187, <<proc_replica_log>> ": osd." from " does not overlap, not looking "   ,,640
+dout,osd/PGLog.cc,<<proc_replica_log>>,192, <<proc_replica_log>> ": osd." from " same log head, not looking "   ,,641
+dout,osd/PGLog.cc,<<proc_replica_log>>,210, " before missing " i->first " need " i->second.need   ,,642
+dout,osd/PGLog.cc,<<proc_replica_log>>,220, "merge_log point (usually last shared) is "   ,,643
+dout,osd/PGLog.cc,<<rewind_divergent_log>>,291, "rewind_divergent_log truncate divergent future "    ,,645
+dout,osd/PGLog.cc,<<merge_log>>,324, "merge_log " olog " from osd." fromosd   ,,647
+dout,osd/PGLog.cc,<<merge_log>>,405, "merge_log cut point (usually last shared) is "   ,,653
+dout,osd/PGLog.cc,<<merge_log>>,453, "merge_log result " log " " missing    ,,655
+dout,osd/PGLog.cc,<<merge_log_dups>>,469, "merge_log copying olog dups to log "    ,,656
+dout,osd/PGLog.cc,<<merge_log_dups>>,485, "merge_log extending dups tail to "    ,,657
+dout,osd/PGLog.cc,<<merge_log_dups>>,510, "merge_log extending dups head to "    ,,658
+dout,osd/PGLog.cc,<<merge_log_dups>>,532, "merge_log removed dups overlapping log entries ["    ,,659
+dout,osd/PGLog.cc,<<rebuild_missing_set_with_deletes>>,928, <<rebuild_missing_set_with_deletes>> " extra missing entry: " p.first   ,,660
+dout,osd/PrimaryLogPG.cc,<<on_local_recover>>,378, " got old revert version " recovery_info.version   ,,666
+dout,osd/PrimaryLogPG.cc,<<should_send_op>>,566, <<should_send_op>> " issue_repop shipping empty opt to osd." peer   ,,673
+dout,osd/PrimaryLogPG.cc,<<should_send_op>>,575, <<should_send_op>> " issue_repop shipping empty opt to osd." peer   ,,674
+dout,osd/PrimaryLogPG.cc,<<block_write_on_full_cache>>,707, <<block_write_on_full_cache>> ": blocking object " oid   ,,679
+dout,osd/PrimaryLogPG.cc,<<block_for_clean>>,717, <<block_for_clean>> ": blocking object " oid   ,,680
+dout,osd/PrimaryLogPG.cc,<<block_write_on_snap_rollback>>,726, <<block_write_on_snap_rollback>> ": blocking object " oid.get_head()   ,,681
+dout,osd/PrimaryLogPG.cc,<<block_write_on_degraded_snap>>,738, <<block_write_on_degraded_snap>> ": blocking object " snap.get_head()   ,,682
+dout,osd/PrimaryLogPG.cc,<<maybe_force_recovery>>,803, <<maybe_force_recovery>> " peer " peer " min_version " min_obj->first   ,,684
+dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1222, " pgnls pg=" m->get_pg()   ,,688
+dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1230, " pgnls pg=" m->get_pg() " count " list_size   ,,689
+dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1248, " pgnls lower_bound " lower_bound   ,,691
+dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1253, "outside of PG bounds " pg_start " .. "   ,,692
+dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1302, " pgnls candidate 0x" std::hex candidate.get_hash()   ,,693
+dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1332, "pgnls item 0x" std::hex   ,,694
+dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1360, " pgnls result=" result " outdata.length()="   ,,696
+dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1393, " pgls pg=" m->get_pg()   ,,698
+dout,osd/PrimaryLogPG.cc,<<do_pg_op>>,1494, " pgls result=" result " outdata.length()="   ,,701
+dout,osd/PrimaryLogPG.cc,<<handle_backoff>>,1696, <<handle_backoff>> " backoff ack id " m->id   ,,706
+dout,osd/PrimaryLogPG.cc,<<do_request>>,1713, <<do_request>> " waiting_for_map "   ,,707
+dout,osd/PrimaryLogPG.cc,<<do_request>>,1720, <<do_request>> " min " op->min_epoch   ,,708
+dout,osd/PrimaryLogPG.cc,<<do_request>>,2072, "do_op " *m   ,,709
+dout,osd/PrimaryLogPG.cc,<<do_request>>,2152, <<do_request>> " dup " m->get_reqid()   ,,711
+dout,osd/PrimaryLogPG.cc,<<do_request>>,2226, <<do_request>> ": clone " obc->obs.oi.soid   ,,715
+dout,osd/PrimaryLogPG.cc,<<do_request>>,2236, <<do_request>> ": clone " obc->obs.oi.soid   ,,716
+dout,osd/PrimaryLogPG.cc,<<do_request>>,2303, " provided locator " m->get_object_locator()   ,,718
+dout,osd/PrimaryLogPG.cc,<<do_request>>,2360, <<do_request>> ": object " obc->obs.oi.soid   ,,726
+dout,osd/PrimaryLogPG.cc,<<do_manifest_flush>>,2599, <<do_manifest_flush>> " read fail " " offset: " tgt_offset   ,,732
+dout,osd/PrimaryLogPG.cc,<<do_manifest_flush>>,2624, <<do_manifest_flush>> " offset: " tgt_offset " len: " tgt_length   ,,733
+dout,osd/PrimaryLogPG.cc,<<finish_manifest_flush>>,2638, <<finish_manifest_flush>> " " oid " tid " tid   ,,734
+dout,osd/PrimaryLogPG.cc,<<maybe_handle_cache_detail>>,2730, <<maybe_handle_cache_detail>> " " obc->obs.oi " "   ,,738
+dout,osd/PrimaryLogPG.cc,<<maybe_handle_cache_detail>>,2737, <<maybe_handle_cache_detail>> " (no obc)"   ,,739
+dout,osd/PrimaryLogPG.cc,<<maybe_promote>>,2919, <<maybe_promote>> " missing_oid " missing_oid   ,,747
+dout,osd/PrimaryLogPG.cc,<<do_cache_redirect>>,2977, "sending redirect to pool " pool.info.tier_of " for op "   ,,749
+dout,osd/PrimaryLogPG.cc,<<finish_proxy_read>>,3141, <<finish_proxy_read>> " " oid " tid " tid   ,,751
+dout,osd/PrimaryLogPG.cc,<<finish_proxy_read>>,3151, <<finish_proxy_read>> " tid " tid " != prdop " prdop   ,,753
+dout,osd/PrimaryLogPG.cc,<<finish_proxy_read>>,3156, <<finish_proxy_read>> " oid " oid " != prdop " prdop   ,,754
+dout,osd/PrimaryLogPG.cc,<<do_proxy_chunked_op>>,3386, <<do_proxy_chunked_op>> " chunk_index: " chunks->first   ,,759
+dout,osd/PrimaryLogPG.cc,<<do_proxy_chunked_read>>,3490, <<do_proxy_chunked_read>> " Start do chunk proxy read for " *m   ,,761
+dout,osd/PrimaryLogPG.cc,<<finish_proxy_write>>,3576, <<finish_proxy_write>> " " oid " tid " tid   ,,763
+dout,osd/PrimaryLogPG.cc,<<finish_proxy_write>>,3612, <<finish_proxy_write>> " " oid " tid " tid   ,,766
+dout,osd/PrimaryLogPG.cc,<<promote_object>>,3735, <<promote_object>> " " hoid   ,,768
+dout,osd/PrimaryLogPG.cc,<<promote_object>>,3740, <<promote_object>> " " hoid   ,,769
+dout,osd/PrimaryLogPG.cc,<<promote_object>>,3743, <<promote_object>> " " hoid   ,,770
+dout,osd/PrimaryLogPG.cc,<<execute_ctx>>,3831, " ORDERSNAP flag set and snapc seq " ctx->snapc.seq   ,,772
+dout,osd/PrimaryLogPG.cc,<<execute_ctx>>,3842, <<execute_ctx>> " " soid " " *ctx->ops   ,,773
+dout,osd/PrimaryLogPG.cc,<<execute_ctx>>,3848, <<execute_ctx>> " " soid " " *ctx->ops   ,,774
+dout,osd/PrimaryLogPG.cc,<<log_op_stats>>,4086, "log_op_stats " *m   ,,781
+dout,osd/PrimaryLogPG.cc,<<trim_object>>,4274, coid " old_snaps " old_snaps   ,,786
+dout,osd/PrimaryLogPG.cc,<<trim_object>>,4326, coid " snaps " old_snaps " -> "   ,,789
+dout,osd/PrimaryLogPG.cc,<<trim_object>>,4426, coid " new snapset " snapset " on "   ,,792
+dout,osd/PrimaryLogPG.cc,<<trim_object>>,4471, coid " writing updated snapset on " head_oid   ,,796
+dout,osd/PrimaryLogPG.cc,<<do_tmapup>>,4740, " starting is \n";   ,,806
+dout,osd/PrimaryLogPG.cc,<<do_tmapup>>,4747, "the update command is: \n";   ,,807
+dout,osd/PrimaryLogPG.cc,<<do_tmapup>>,4791, "tmapup warning: key '" key "' < previous key '" last_in_key   ,,811
+dout,osd/PrimaryLogPG.cc,<<do_tmapup>>,4874, " keep trailing " rest.length()   ,,820
+dout,osd/PrimaryLogPG.cc,<<do_tmapup>>,4885, " final is \n";   ,,822
+dout,osd/PrimaryLogPG.cc,<<do_checksum>>,5086, <<do_checksum>> ": length required when chunk size provided"   ,,827
+dout,osd/PrimaryLogPG.cc,<<do_checksum>>,5108, <<do_checksum>> ": length (trimmed to 0x"   ,,829
+dout,osd/PrimaryLogPG.cc,<<do_checksum>>,5129, <<do_checksum>> ": unknown crc type ("   ,,830
+dout,osd/PrimaryLogPG.cc,<<do_read>>,5446, " read got " r " / " op.extent.length   ,,840
+dout,osd/PrimaryLogPG.cc,<<do_sparse_read>>,5543, "sparse-read " miter->first "@" miter->second   ,,845
+dout,osd/PrimaryLogPG.cc,<<do_sparse_read>>,5589, " sparse_read got " total_read " bytes from object "   ,,846
+dout,osd/PrimaryLogPG.cc,<<_get_tmap>>,7577, "unsuccessful at decoding tmap for " ctx->new_obs.oi.soid   ,,848
+dout,osd/PrimaryLogPG.cc,<<_get_tmap>>,7581, "successful at decoding tmap for " ctx->new_obs.oi.soid   ,,849
+dout,osd/PrimaryLogPG.cc,<<_verify_no_head_clones>>,7590, <<_verify_no_head_clones>> " verifying clones are absent "   ,,850
+dout,osd/PrimaryLogPG.cc,<<_verify_no_head_clones>>,7601, <<_verify_no_head_clones>> " cannot evict head before clone "   ,,851
+dout,osd/PrimaryLogPG.cc,<<_verify_no_head_clones>>,7606, <<_verify_no_head_clones>> " cannot evict head, pending promote on clone "   ,,852
+dout,osd/PrimaryLogPG.cc,<<_delete_oid>>,7639, <<_delete_oid>> " has or will have clones but no_whiteout=1"   ,,853
+dout,osd/PrimaryLogPG.cc,<<_delete_oid>>,7642, <<_delete_oid>> " has or will have clones; will whiteout"   ,,854
+dout,osd/PrimaryLogPG.cc,<<_delete_oid>>,7647, <<_delete_oid>> " " soid " whiteout=" (int )whiteout   ,,855
+dout,osd/PrimaryLogPG.cc,<<_rollback_to>>,7732, "_rollback_to attempted to roll back to a missing or backfilling clone "   ,,860
+dout,osd/PrimaryLogPG.cc,<<_rollback_to>>,7779, "_rollback_to deleting head on " soid.oid   ,,861
+dout,osd/PrimaryLogPG.cc,<<_rollback_to>>,7795, "_rollback_to attempted to roll back to a degraded object "   ,,862
+dout,osd/PrimaryLogPG.cc,<<_rollback_to>>,7807, "_rollback_to deleting " soid.oid   ,,863
+dout,osd/PrimaryLogPG.cc,<<make_writeable>>,7881, "make_writeable " soid " snapset=" ctx->new_snapset   ,,866
+dout,osd/PrimaryLogPG.cc,<<make_writeable>>,7993, " cloning v " ctx->obs->oi.version   ,,872
+dout,osd/PrimaryLogPG.cc,<<make_writeable>>,8028, "make_writeable " soid   ,,873
+dout,osd/PrimaryLogPG.cc,<<do_osd_op_effects>>,8117, "do_osd_op_effects applying watch connect on session "   ,,875
+dout,osd/PrimaryLogPG.cc,<<do_osd_op_effects>>,8121, "do_osd_op_effects found existing watch watcher " watcher   ,,876
+dout,osd/PrimaryLogPG.cc,<<do_osd_op_effects>>,8125, "do_osd_op_effects new watcher " watcher   ,,877
+dout,osd/PrimaryLogPG.cc,<<prepare_transaction>>,8249, <<prepare_transaction>> " full, but proceeding due to FULL_FORCE or MDS"   ,,886
+dout,osd/PrimaryLogPG.cc,<<finish_ctx>>,8277, <<finish_ctx>> " " soid " " ctx   ,,889
+dout,osd/PrimaryLogPG.cc,<<finish_ctx>>,8317, " final snapset " ctx->new_snapset   ,,892
+dout,osd/PrimaryLogPG.cc,<<finish_ctx>>,8341, <<finish_ctx>> " encoding snaps from " ctx->new_snapset   ,,894
+dout,osd/PrimaryLogPG.cc,<<apply_stats>>,8386, <<apply_stats>> " " soid " < [" scrubber.start   ,,896
+dout,osd/PrimaryLogPG.cc,<<apply_stats>>,8390, <<apply_stats>> " " soid " >= [" scrubber.start   ,,897
+dout,osd/PrimaryLogPG.cc,<<do_copy_get>>,8653, " cursor.is_complete=" cursor.is_complete()   ,,903
+dout,osd/PrimaryLogPG.cc,<<start_copy>>,8704, <<start_copy>> " " dest   ,,905
+dout,osd/PrimaryLogPG.cc,<<_copy_some_manifest>>,8841, <<_copy_some_manifest>> " oid " obc->obs.oi.soid " num_chunks: " num_chunks   ,,908
+dout,osd/PrimaryLogPG.cc,<<_copy_some_manifest>>,8867, <<_copy_some_manifest>> " tgt_oid: " soid.oid " tgt_offset: "   ,,909
+dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,8901, <<process_copy_chunk>> " " oid " tid " tid   ,,910
+dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,8910, <<process_copy_chunk>> " tid " tid " != cop " cop   ,,912
+dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,8936, <<process_copy_chunk>> " clone snap " *p " has been deleted"   ,,913
+dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,9002, <<process_copy_chunk>> std::hex   ,,917
+dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,9048, "fill_in_final_tx: writing "   ,,918
+dout,osd/PrimaryLogPG.cc,<<process_copy_chunk>>,9073, <<process_copy_chunk>> " deleting partial temp object "   ,,922
+dout,osd/PrimaryLogPG.cc,<<process_copy_chunk_manifest>>,9092, <<process_copy_chunk_manifest>> " " oid " tid " tid   ,,923
+dout,osd/PrimaryLogPG.cc,<<process_copy_chunk_manifest>>,9103, <<process_copy_chunk_manifest>> " tid " tid " != cop " chunk_cop   ,,925
+dout,osd/PrimaryLogPG.cc,<<process_copy_chunk_manifest>>,9162, <<process_copy_chunk_manifest>> " offset: " p.second->cursor.data_offset   ,,928
+dout,osd/PrimaryLogPG.cc,<<_write_copy_chunk>>,9228, <<_write_copy_chunk>> " " cop   ,,930
+dout,osd/PrimaryLogPG.cc,<<finish_promote>>,9364, <<finish_promote>> " " soid " r=" r   ,,936
+dout,osd/PrimaryLogPG.cc,<<finish_promote>>,9393, <<finish_promote>>   ,,939
+dout,osd/PrimaryLogPG.cc,<<finish_promote>>,9411, <<finish_promote>>   ,,941
+dout,osd/PrimaryLogPG.cc,<<finish_promote_manifest>>,9569, <<finish_promote_manifest>> " " soid " r=" r   ,,948
+dout,osd/PrimaryLogPG.cc,<<finish_flush>>,9896, <<finish_flush>> " " oid " tid " tid   ,,949
+dout,osd/PrimaryLogPG.cc,<<finish_flush>>,9905, <<finish_flush>> " tid " tid " != fop " fop   ,,951
+dout,osd/PrimaryLogPG.cc,<<try_flush_mark_clean>>,9951, <<try_flush_mark_clean>> " flushed_version " fop->flushed_version   ,,953
+dout,osd/PrimaryLogPG.cc,<<try_flush_mark_clean>>,10014, <<try_flush_mark_clean>> " waiting on write lock " fop->op " "   ,,959
+dout,osd/PrimaryLogPG.cc,<<try_flush_mark_clean>>,10074, <<try_flush_mark_clean>> " offset: " p.second.offset   ,,961
+dout,osd/PrimaryLogPG.cc,<<repop_all_committed>>,10173, <<repop_all_committed>> ": repop tid " repop->rep_tid " all committed "   ,,963
+dout,osd/PrimaryLogPG.cc,<<issue_repop>>,10261, "issue_repop rep_tid " repop->rep_tid   ,,970
+dout,osd/PrimaryLogPG.cc,<<handle_watch_timeout>>,10668, "handle_watch_timeout waiting for degraded on obj "   ,,988
+dout,osd/PrimaryLogPG.cc,<<handle_watch_timeout>>,10675, "handle_watch_timeout waiting for scrub on obj "   ,,989
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10887, <<find_object_context>> " " oid   ,,991
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10915, <<find_object_context>> " " oid " @" oid.snap   ,,994
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10921, <<find_object_context>> " " oid " @" oid.snap   ,,995
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10933, <<find_object_context>> " " oid " @" oid.snap   ,,996
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10940, <<find_object_context>> " " oid " @" oid.snap   ,,997
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10945, <<find_object_context>> " " oid " @" oid.snap   ,,998
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10956, <<find_object_context>> " " oid " @" oid.snap   ,,999
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10964, <<find_object_context>> " " oid " @" oid.snap   ,,1000
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10974, <<find_object_context>> " " oid " @" oid.snap   ,,1001
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,10980, <<find_object_context>> " " head   ,,1002
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,11000, <<find_object_context>> " no clones with last >= oid.snap "   ,,1003
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,11009, <<find_object_context>> " " soid " missing, try again later"   ,,1004
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,11043, <<find_object_context>> " " soid   ,,1008
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,11057, <<find_object_context>> " " soid " [" first "," last   ,,1010
+dout,osd/PrimaryLogPG.cc,<<find_object_context>>,11062, <<find_object_context>> " " soid " [" first "," last   ,,1011
+dout,osd/PrimaryLogPG.cc,<<recover_missing>>,11213, <<recover_missing>> " " soid   ,,1015
+dout,osd/PrimaryLogPG.cc,<<recover_got>>,11420, "last_complete now " info.last_complete   ,,1026
+dout,osd/PrimaryLogPG.cc,<<recover_got>>,11424, "last_complete now " info.last_complete   ,,1027
+dout,osd/PrimaryLogPG.cc,<<do_update_log_missing_reply>>,11550, <<do_update_log_missing_reply>> " got reply from "   ,,1032
+dout,osd/PrimaryLogPG.cc,<<mark_all_unfound_lost>>,11588, <<mark_all_unfound_lost>> ": log before:\n";   ,,1034
+dout,osd/PrimaryLogPG.cc,<<clear_async_reads>>,11826, "clear ctx: "   ,,1043
+dout,osd/PrimaryLogPG.cc,<<on_activate>>,11914, <<on_activate>> ": bft=" backfill_targets   ,,1048
+dout,osd/PrimaryLogPG.cc,<<on_activate>>,11919, "target shard " *i   ,,1049
+dout,osd/PrimaryLogPG.cc,<<on_pool_change>>,12068, <<on_pool_change>> " requeuing full waiters (not in writeback) "   ,,1056
+dout,osd/PrimaryLogPG.cc,<<start_recovery_ops>>,12257, <<start_recovery_ops>> " needs_recovery: "   ,,1068
+dout,osd/PrimaryLogPG.cc,<<start_recovery_ops>>,12260, <<start_recovery_ops>> " missing_loc: "   ,,1069
+dout,osd/PrimaryLogPG.cc,<<recover_primary>>,12333, <<recover_primary>> " recovering " recovering.size()   ,,1074
+dout,osd/PrimaryLogPG.cc,<<recover_primary>>,12368, <<recover_primary>> " "   ,,1076
+dout,osd/PrimaryLogPG.cc,<<recover_primary>>,12441, " will pull " alternate_need " or " need   ,,1080
+dout,osd/PrimaryLogPG.cc,<<primary_error>>,12497, info.pgid " unexpectedly missing " soid " v" v   ,,1081
+dout,osd/PrimaryLogPG.cc,<<prep_object_replica_deletes>>,12521, "replica delete delayed on " soid   ,,1083
+dout,osd/PrimaryLogPG.cc,<<prep_object_replica_deletes>>,12526, "replica delete got recovery read lock on " soid   ,,1084
+dout,osd/PrimaryLogPG.cc,<<prep_object_replica_pushes>>,12558, "recovery delayed on " soid   ,,1086
+dout,osd/PrimaryLogPG.cc,<<prep_object_replica_pushes>>,12563, "recovery got recovery read lock on " soid   ,,1087
+dout,osd/PrimaryLogPG.cc,<<recover_replicas>>,12671, <<recover_replicas>> ": " soid.get_head()   ,,1095
+dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12759, <<recover_backfill>> " (" max ")"   ,,1098
+dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12787, "peer osd." *i   ,,1099
+dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12876, " BACKFILL removing " check   ,,1104
+dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12926, " BACKFILL keeping " check   ,,1105
+dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12936, " BACKFILL replacing " check   ,,1106
+dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12941, " BACKFILL pushing " backfill_info.begin   ,,1107
+dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12958, "backfill blocking on " backfill_info.begin   ,,1109
+dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12963, "need_ver_targs=" need_ver_targs   ,,1110
+dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,12965, "backfill_targets=" backfill_targets   ,,1111
+dout,osd/PrimaryLogPG.cc,<<recover_backfill>>,13100, " peer " bt   ,,1118
+dout,osd/PrimaryLogPG.cc,<<update_range>>,13157, <<update_range>> ": bi is old, rescanning local backfill_info"   ,,1119
+dout,osd/PrimaryLogPG.cc,<<update_range>>,13178, <<update_range>> ": bi is old, (" bi->version   ,,1121
+dout,osd/PrimaryLogPG.cc,<<update_range>>,13183, <<update_range>> ": updating from version " e.version   ,,1122
+dout,osd/PrimaryLogPG.cc,<<update_range>>,13189, <<update_range>> ": " e.soid " updated to version "   ,,1123
+dout,osd/PrimaryLogPG.cc,<<check_local>>,13278, " checking " p->soid   ,,1133
+dout,osd/PrimaryLogPG.cc,<<hit_set_create>>,13425, <<hit_set_create>> " previous set had approx " unique   ,,1138
+dout,osd/PrimaryLogPG.cc,<<hit_set_create>>,13440, <<hit_set_create>> " target_size " p->target_size   ,,1139
+dout,osd/PrimaryLogPG.cc,<<hit_set_persist>>,13513, <<hit_set_persist>> " backfill target osd." *p   ,,1143
+dout,osd/PrimaryLogPG.cc,<<agent_setup>>,13676, <<agent_setup>> " allocated new state, position "   ,,1146
+dout,osd/PrimaryLogPG.cc,<<agent_work>>,13715, <<agent_work>>   ,,1150
+dout,osd/PrimaryLogPG.cc,<<agent_work>>,13825, <<agent_work>> " start pos " agent_state->position   ,,1162
+dout,osd/PrimaryLogPG.cc,<<agent_load_hit_sets>>,13874, <<agent_load_hit_sets>> " loading " p->begin "-"   ,,1165
+dout,osd/PrimaryLogPG.cc,<<agent_maybe_flush>>,13961, <<agent_maybe_flush>> " start_flush() failed " obc->obs.oi   ,,1172
+dout,osd/PrimaryLogPG.cc,<<agent_maybe_evict>>,14021, <<agent_maybe_evict>>   ,,1179
+dout,osd/PrimaryLogPG.cc,<<agent_maybe_evict>>,14026, "agent_state:\n";   ,,1180
+dout,osd/PrimaryLogPG.cc,<<agent_choose_mode>>,14162, <<agent_choose_mode>>   ,,1188
+dout,osd/PrimaryLogPG.cc,<<agent_choose_mode>>,14203, <<agent_choose_mode>> " dirty " ((float )dirty_micro / 1000000.0)   ,,1189
+dout,osd/PrimaryLogPG.cc,<<agent_choose_mode>>,14261, <<agent_choose_mode>> " flush_mode "   ,,1191
+dout,osd/PrimaryLogPG.cc,<<agent_choose_mode>>,14281, <<agent_choose_mode>> " evict_mode "   ,,1192
+dout,osd/PrimaryLogPG.cc,<<agent_choose_mode>>,14311, <<agent_choose_mode>> " evict_effort "   ,,1193
+dout,osd/PrimaryLogPG.cc,<<already_complete>>,14366, <<already_complete>> ": " **i   ,,1196
+dout,osd/PrimaryLogPG.cc,<<already_complete>>,14371, <<already_complete>> ": " **i   ,,1197
+dout,osd/PrimaryLogPG.cc,<<already_complete>>,14376, <<already_complete>> ": " **i   ,,1198
+dout,osd/PrimaryLogPG.cc,<<already_ack>>,14394, <<already_ack>> ": " **i   ,,1201
+dout,osd/PrimaryLogPG.cc,<<already_ack>>,14399, <<already_ack>> ": " **i   ,,1202
+dout,osd/PrimaryLogPG.cc,<<_range_available_for_scrub>>,14423, <<_range_available_for_scrub>> ": scrub delayed, "   ,,1204
+dout,osd/PrimaryLogPG.cc,<<_scrub_finish>>,14867, mode " got "   ,,1205
+dout,osd/PrimaryLogPG.cc,<<rep_repair_primary_object>>,14938, <<rep_repair_primary_object>> " " soid   ,,1206
+dout,osd/PrimaryLogPG.cc,<<rep_repair_primary_object>>,14953, <<rep_repair_primary_object>> ": Need version of replica, objects_get_attr failed: "   ,,1207
+dout,osd/ReplicatedBackend.cc,<<check_recovery_sources>>,158, "check_recovery_sources resetting pulls from osd." i->first   ,,1212
+dout,osd/ReplicatedBackend.cc,<<do_repop_reply>>,547, <<do_repop_reply>> ": tid " ip_op.tid " op "   ,,1217
+dout,osd/ReplicatedBackend.cc,<<do_repop_reply>>,552, <<do_repop_reply>> ": tid " ip_op.tid " (no op) "   ,,1218
+dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,621, <<be_deep_scrub>> " " poid " got "   ,,1220
+dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,631, <<be_deep_scrub>> " " poid " more data, digest so far 0x"   ,,1221
+dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,641, <<be_deep_scrub>> " " poid " done with data, digest 0x"   ,,1222
+dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,656, <<be_deep_scrub>> " " poid " got "   ,,1223
+dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,662, "CRC header " string(hdrbl.c_str(), hdrbl.length())   ,,1224
+dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,697, <<be_deep_scrub>> " " poid   ,,1225
+dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,708, <<be_deep_scrub>> " " poid   ,,1226
+dout,osd/ReplicatedBackend.cc,<<be_deep_scrub>>,719, <<be_deep_scrub>> " done with " poid " omap_digest "   ,,1227
+dout,osd/ReplicatedBackend.cc,<<do_repop>>,998, <<do_repop>> " " soid   ,,1230
+dout,osd/ReplicatedBackend.cc,<<do_repop>>,1034, <<do_repop>> ": removing object " m->discard_temp_oid   ,,1234
+dout,osd/ReplicatedBackend.cc,<<repop_commit>>,1094, <<repop_commit>> " on op " *m   ,,1239
+dout,osd/ReplicatedBackend.cc,<<prepare_pull>>,1296, "pull " soid   ,,1240
+dout,osd/ReplicatedBackend.cc,<<prepare_pull>>,1306, "pulling soid " soid " from osd " fromshard   ,,1241
+dout,osd/ReplicatedBackend.cc,<<prep_push_to_replica>>,1382, <<prep_push_to_replica>> ": " soid " v" oi.version   ,,1244
+dout,osd/ReplicatedBackend.cc,<<submit_push_complete>>,1575, " clone_range " p->first " "   ,,1248
+dout,osd/ReplicatedBackend.cc,<<handle_push>>,1713, "handle_push "   ,,1249
+dout,osd/ReplicatedBackend.cc,<<build_push_op>>,1818, <<build_push_op>> " " recovery_info.soid   ,,1250
+dout,osd/ReplicatedBackend.cc,<<build_push_op>>,1934, " extent " p.get_start() "~" p.get_len()   ,,1255
+dout,osd/ReplicatedBackend.cc,<<handle_push_reply>>,1989, "huh, i wasn't pushing " soid " to osd." peer   ,,1256
+dout,osd/ReplicatedBackend.cc,<<handle_push_reply>>,1994, "huh, i wasn't pushing " soid " to osd." peer   ,,1257
+dout,osd/ReplicatedBackend.cc,<<handle_push_reply>>,2002, " pushing more from, "   ,,1258
+dout,osd/ReplicatedBackend.cc,<<handle_push_reply>>,2043, "pushed " soid ", still waiting for push ack from "   ,,1260
+dout,osd/Session.cc,<<ack_backoff>>,50, <<ack_backoff>> " " pgid " " id " [" begin ","   ,,1264
+dout,osd/Session.cc,<<ack_backoff>>,56, <<ack_backoff>> " " pgid " " id " [" begin ","   ,,1265
+dout,osd/Session.cc,<<check_backoff>>,90, <<check_backoff>> " session " this " has backoff " *b   ,,1270
+dout,osd/Watch.cc,<<maybe_complete_notify>>,182, "maybe_complete_notify -- "   ,,1281
+dout,osd/Watch.cc,<<start_notify>>,456, <<start_notify>> " " notif->notify_id   ,,1295
+lderr,osd/ClassHandler.cc,<<register_method>>,237, "register_method " name "." mname   ,,1
+lderr,osd/OSDMap.cc,<<maybe_remove_pg_upmaps>>,1647, <<maybe_remove_pg_upmaps>> " unable to load crush-rule of pg "   ,,4
+lderr,osd/OSDMap.cc,<<maybe_remove_pg_upmaps>>,1656, <<maybe_remove_pg_upmaps>> " unable to get crush weight_map for "   ,,5
+lderr,osd/OSDMap.cc,<<maybe_remove_pg_upmaps>>,1666, <<maybe_remove_pg_upmaps>> " unable to load failure-domain-type of pg "   ,,6
+lderr,osd/OSDMap.cc,<<maybe_remove_pg_upmaps>>,1683, <<maybe_remove_pg_upmaps>> " unable to get parent of raw osd."   ,,7
+lderr,osd/PG.cc,<<react>>,7883, <<react>> " removed_snaps already contains "   ,,10
+lderr,osd/PG.cc,<<react>>,7887, <<react>> " removed_snaps already contains "   ,,11
+lderr,osd/PG.cc,<<react>>,7900, <<react>> " first mimic map, filtering purged_snaps"   ,,12
+lderr,osd/PG.cc,<<react>>,7920, <<react>> " purged_snaps does not contain "   ,,13
+lderr,osd/PrimaryLogPG.cc,<<react>>,15108, "get_next_objects_to_trim returned "   ,,14
+lderr,osdc/Journaler.cc,<<_finish_erase>>,1216, "Failed to delete journal " ino " data: "   ,,20
+lderr,osdc/Journaler.cc,<<handle_write_error>>,1392, <<handle_write_error>> ": multiple write errors, handler already called"   ,,25
+lderr,osdc/ObjectCacher.cc,<<audit_buffers>>,376, "AUDIT FAILURE: map position " it->first   ,,26
+lderr,osdc/ObjectCacher.cc,<<audit_buffers>>,382, "AUDIT FAILURE: " it->first " " *it->second   ,,27
+lderr,osdc/ObjectCacher.cc,<<audit_buffers>>,393, "AUDIT FAILURE: waiter at " w_it->first   ,,28
+lderr,osdc/Objecter.cc,<<init>>,382, "error registering admin socket command: "   ,,29
+lderr,osdc/Objecter.cc,<<handle_osd_backoff>>,3613, <<handle_osd_backoff>> " got " m->pgid " id " m->id   ,,30
+lderr,osdc/Objecter.cc,<<handle_osd_backoff>>,3643, <<handle_osd_backoff>> " " m->pgid " id " m->id   ,,31
