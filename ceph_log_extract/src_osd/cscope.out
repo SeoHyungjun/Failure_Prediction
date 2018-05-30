@@ -1,4 +1,4 @@
-cscope 15 $HOME/src/ceph_osd               0002756935
+cscope 15 $HOME/Failure_Prediction/ceph_log_extract/src_osd               0002756966
 	@osd/ClassHandler.cc
 
 4 

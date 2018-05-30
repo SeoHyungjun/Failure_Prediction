@@ -15,6 +15,7 @@ for filename in FILENAMES:
     full_filepath = FILEPATH+filename
     tag = filename
     full_outfilepath = full_filepath+OUTFILE_TAG
+    line_number = 0
     # open file each log-relevant function
     with open(full_filepath, 'r') as infile, open(full_outfilepath, 'w') as outfile:
         csvwriter = csv.writer(outfile, lineterminator='\n')
@@ -55,8 +56,11 @@ for filename in FILENAMES:
                 values.append(msg)
                 values.append('\n')
                 outfile.writelines(values)
-                if words_with_space[-1].strip() != 'dendl;': 
-                    print(values)
-                    with open("deficient_log", 'a') as f:
-                        f.writelines(values)
+                if words_with_space[-1].strip() != 'dendl;':
+                    with open('../' + values[2], 'r') as source_f:
+                        
+                    with open("deficient_log", 'a') as def_f:
+                        def_f.writelines(values)
+                        print(repr(values))
 #                    print(repr(words_with_space[-1].strip()))
+
