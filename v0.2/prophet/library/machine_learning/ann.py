@@ -37,6 +37,7 @@ class ANN(Machine_Learning):
         '''
 
     def input(self):
+        print('input')
         self.x = pd.read_csv(self.train_inputpath)
         self.y = self.x.iloc[:,-1].astype(int)
         self.x = self.x.iloc[:,0:-1]

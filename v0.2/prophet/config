@@ -1,7 +1,7 @@
 # ML_Process section is related in trainer and predictor together.
 [ML_Process]
 ml_num = 2
-ml_names = K_Means, ANN
+ml_names = ANN, CNN
 
 
 # ================================================================== #
@@ -24,21 +24,22 @@ ml_names = K_Means, ANN
 # If you are using two machine learnings, set the enable entry
 # in the FIRST_MODEL and SECOND_MODEL sections to true
 # and set the rest to false.
-[1st_ML]
-enable = true
-ml_name = K_Means 
-ml_dir = K_Means 
-centroid_num = 4 
-train_inputpath = /root/FP_input/in_kmeans.csv 
-max_iters = 1000 
-run_inputpath = /root/FP_input/in_kmeans.csv 
-project_dirpath = ./FP_project 
-trained_centroid_outfile = centroid.csv
-run_result_file = run_result.csv
-trained_ml_dir = traind_ml 
-trained_ml_save_tag = kmeans
 
-[2nd_ML]
+#[1st_ML]
+#enable = true
+#ml_name = K_Means 
+#ml_dir = K_Means 
+#centroid_num = 4 
+#train_inputpath = /root/FP_input/in_kmeans.csv 
+#max_iters = 1000 
+#run_inputpath = /root/FP_input/in_kmeans.csv 
+#project_dirpath = ./FP_project 
+#trained_centroid_outfile = centroid.csv
+#run_result_file = run_result.csv
+#trained_ml_dir = traind_ml 
+#trained_ml_save_tag = kmeans
+
+[1st_ML]
 enable = true
 ml_name = ANN
 ml_dir = ANN
@@ -55,6 +56,29 @@ run_inputpath = /root/FP_input/in_ann.csv
 run_result_file = run_result.csv
 trained_ml_save_tag = ann
 project_dirpath = ./FP_project
+
+[2nd_ML]
+enable = true
+ml_name = CNN
+ml_dir = CNN
+project_dirpath = ./FP_project
+trained_ml_save_tag = cnn
+x_height = 2
+#window_size == x_height
+num_y_type = 2
+filter_sizes = 2,2/1,2
+num_NN_nodes = 2,3
+#2,2/1,2 == [[2,2], [1,2]]
+num_filters = 1
+dev_sample_percentage=0.1
+batch_size = 2
+epochs_num = 1
+evaluate_interval = 2
+save_interval = 100
+train_inputpath = /root/FP_input/in_cnn.csv
+l2_reg_lambda = 0.0
+dropout_keep_prob = 0.5
+run_result_file = run_result_cnn.csv
 
 [3rd_ML]
 enable = false

@@ -1,3 +1,4 @@
 ML_NAME,MODULE_PATH,CLASS_NAME
 K_Means,library/machine_learning/k_means.py,K_Means
 ANN,library/machine_learning/ann.py,ANN
+CNN,library/machine_learning/cnn.py,CNN
