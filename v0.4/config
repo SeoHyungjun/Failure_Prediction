@@ -1,0 +1,44 @@
+# select Machine Learning / Hyperparameter Optimization algorithm
+# this section simply writes down the name of the algorithm
+
+[ML_algorithm]
+#can select three algorithm ex) CNN, SVM, RANDOMFOREST (== RF)
+ML_name = CNN, SVM, RF
+
+[Opt_algorithm]
+opt_name = PSO, BO
+
+
+# ---------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------- #
+
+# choose the Hyperparameters range needed to Machine Learning and Hyperparameters Optimization
+# !!! Unselected algorithm's Hyperparameters are not used !!!
+
+
+
+# The Hyperparameter Optimization Hyperparameter is a single value such number of particle, etc...
+# all Hyperparameter are supplied with default values.
+
+[PSO_Hyperparameter]
+num_particle = 10
+num_generations = 10
+
+[BO_Hyperparameter]
+
+
+# The Machine Learning Hyperparameter is a range value such as kernel size, stride, etc...
+
+[CNN_Hyperparameter]
+
+[SVM_Hyperparameter]
+
+[RF_Hyperparameter]
+
+# Hyperparameters used for verification such as cross-validation
+[Cross-Validation Hyperparameter]
+
+
+# Various values used for Prediction
+[Prediction]
+time_window = 12H
