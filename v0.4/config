@@ -3,10 +3,10 @@
 
 [ML_algorithm]
 #can select three algorithm ex) CNN, SVM, RANDOMFOREST (== RF)
-ML_name = CNN, SVM, RF
+ML_name = SVM
 
 [Opt_algorithm]
-opt_name = PSO, BO
+opt_name = PSO
 
 
 # ---------------------------------------------------------------------------------------------- #
@@ -21,17 +21,24 @@ opt_name = PSO, BO
 # all Hyperparameter are supplied with default values.
 
 [PSO_Hyperparameter]
-num_particle = 10
+num_particles = 10
 num_generations = 10
 
 [BO_Hyperparameter]
 
 
 # The Machine Learning Hyperparameter is a range value such as kernel size, stride, etc...
+# range value must use '~'      //      start_value ~ end_value
 
 [CNN_Hyperparameter]
+#A = 3
+#B = 1.5
+#C = 
 
 [SVM_Hyperparameter]
+# The C value must be greater than zero
+C = 1 ~ 5
+logGamma = -5 ~ 1
 
 [RF_Hyperparameter]
 

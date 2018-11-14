@@ -1,4 +1,5 @@
 import configparser
+import Hyperparameter_Tuner as HPT
 
 class Optimizer:
     def __init__(self, config_file_name):
@@ -30,18 +31,21 @@ class Optimizer:
             else:
                 ml_str = ml.strip().upper()
             for hp in self.configparser[ml_str + '_Hyperparameter']:
-                hp_dict[hp] = self.configparser[ml_str + '_Hyperparameter'][hp]
+                hp_list = []
+                for hp_num in self.configparser[ml_str+ '_Hyperparameter'][hp].split('~'):
+                    hp_list.append(float(hp_num.strip()))
+                hp_dict[hp] = hp_list
             self.ML_algorithm[ml_str] = hp_dict
  
         print(self.ML_algorithm)
  
     def run_Hyperparameter_Tuner(self):
         for opt_al in self.Opt_algorithm.keys():
-            print(opt_al)
-            with Hyperparameter_Tuner(opt_al, self.ML_algorithm) as Hyperparameter_Tuner:
-                d
-
-
+            #with HPT.Hyperparameter_Tuner(opt_al, self.Opt_algorithm[opt_al], self.ML_algorithm) as Hyperparameter_Tuner_class:
+                #Hyperparameter_Tuner_class.run_opt_algorithm()
+            HPT_class = HPT.Hyperparameter_Tuner(opt_al, self.Opt_algorithm[opt_al], self.ML_algorithm)
+            HPT_class.run_opt_algorithm()
+                
 opt = Optimizer('config')
 opt.get_config()
-#opt.run_Hyperparameter_Tuner()
+opt.run_Hyperparameter_Tuner()
