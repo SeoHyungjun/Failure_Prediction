@@ -1,12 +1,17 @@
 import configparser
 import Hyperparameter_Tuner as HPT
 
+#from sklearn.datasets import load_iris
+#from sklearn.model_selection import train_test_split
+
 class Optimizer:
     def __init__(self, config_file_name):
         self.config = config_file_name
 
         self.ML_algorithm = {}
         self.Opt_algorithm = {}
+        #self.iris_dataset = load_iris()
+        #self.iris_x, self.iris_X_test, self.iris_y, self.iris_y_test = train_test_split(self.iris_dataset['data'], self.iris_dataset['target'], random_state=0)
 
     def get_config(self):
         # read config file and save content as attribute
