@@ -4,6 +4,7 @@
 [ML_algorithm]
 #can select three algorithm ex) CNN, SVM, RANDOMFOREST (== RF)
 ML_name = SVM
+#, RANDOMFOREST
 
 [Opt_algorithm]
 opt_name = PSO
@@ -21,7 +22,7 @@ opt_name = PSO
 # all Hyperparameter are supplied with default values.
 
 [PSO_Hyperparameter]
-num_particles = 10
+num_particles = 4
 num_generations = 10
 
 [BO_Hyperparameter]
@@ -37,10 +38,23 @@ num_generations = 10
 
 [SVM_Hyperparameter]
 # The C value must be greater than zero
-C = 1 ~ 5
-logGamma = -5 ~ 1
+C = [2, 50, int]
+logGamma = [-5, 5, int]
+kernel = rbf
+# tol = Tolerance for stopping criterion. -5 mean 1e-5, default value = -3
+# tol = [-5, -1, int]
 
 [RF_Hyperparameter]
+# default : n_estimators = 10
+n_estimators = [5, 15, int]
+# default : max_depth = 0 ( >0 )
+max_depth = [2, 5, int]
+# default = auto
+max_features = [1, 10, int]
+# min_samples_split = (0.0, 1.0]
+#min_samples_split = [0.2, 0.8]
+# min_samples_leaf = (0.0, 0.5]
+#min_samples_leaf = [0.2, 0.4]
 
 # Hyperparameters used for verification such as cross-validation
 [Cross-Validation Hyperparameter]

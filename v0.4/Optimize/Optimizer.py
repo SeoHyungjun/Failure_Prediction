@@ -37,18 +37,30 @@ class Optimizer:
                 ml_str = ml.strip().upper()
             for hp in self.configparser[ml_str + '_Hyperparameter']:
                 hp_list = []
-                for hp_num in self.configparser[ml_str+ '_Hyperparameter'][hp].split('~'):
-                    hp_list.append(float(hp_num.strip()))
-                hp_dict[hp] = hp_list
-            self.ML_algorithm[ml_str] = hp_dict
+                if hp == 'kernel':
+                    for ker in self.configparser[ml_str+'_Hyperparameter'][hp].split(','):
+                        hp_list.append(ker.strip().strip("'").strip("'"))
+                    hp_dict[hp] = hp_list
+
+                else:
+                    hp_num = self.configparser[ml_str+ '_Hyperparameter'][hp].split(',')
+                    if hp_num[2].strip().strip('[').strip(']') == 'int':
+                        hp_list.append(int(hp_num[0].strip().strip('[').strip(']')))
+                        hp_list.append(int(hp_num[1].strip().strip('[').strip(']')))
+                    elif hp_num[2].strip().strip('[').strip(']') == 'int':
+                        hp_list.append(float(hp_num[0].strip().strip('[').strip(']')))
+                        hp_list.append(float(hp_num[1].strip().strip('[').strip(']')))
+                    hp_dict[hp] = hp_list
+                self.ML_algorithm[ml_str] = hp_dict
  
-        print(self.ML_algorithm)
+            print(self.ML_algorithm)
  
     def run_Hyperparameter_Tuner(self):
         for opt_al in self.Opt_algorithm.keys():
             #with HPT.Hyperparameter_Tuner(opt_al, self.Opt_algorithm[opt_al], self.ML_algorithm) as Hyperparameter_Tuner_class:
                 #Hyperparameter_Tuner_class.run_opt_algorithm()
             HPT_class = HPT.Hyperparameter_Tuner(opt_al, self.Opt_algorithm[opt_al], self.ML_algorithm)
+            HPT_class.load_data()
             HPT_class.run_opt_algorithm()
                 
 opt = Optimizer('config')
