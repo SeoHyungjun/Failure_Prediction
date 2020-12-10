@@ -20,8 +20,6 @@ v0.5/data/backblaze/model_data/backblaze_ST4000DM000_2019.csv
 v0.5/data/backblaze/model_data/backblaze_ST12000NM0007_2019.csv
 
 v0.5/data/backblaze/download_data/2019
-v0.5/data/backblaze/download_data/2018/data_Q2_2018
-v0.5/data/backblaze/download_data/2018/data_Q3_2018
-v0.5/data/backblaze/download_data/2018/data_Q4_2018
-v0.5/data/backblaze/download_data/2018/merge
-v0.5/data/backblaze/download_data/2018/select
+
+v0.5/Optimize/result.txt
+v0.5/Optimize/result2.txt
