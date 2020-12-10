@@ -1,0 +1,50 @@
+
+baidu svm rbf 96 2
+
+baidu svm linear 96 2
+
+baidu svm sigmoid 96 2
+
+backblaze svm rbf 96 2
+
+backblaze svm rbf 96 2
+
+backblaze svm linear 96 2
+
+backblaze svm linear 96 2
+
+backblaze svm linear 96 2
+
+backblaze svm linear 96 2
+
+backblaze svm sigmoid 96 2
+
+backblaze rf 96 2
+
+backblaze rf 96 2
+
+backblaze rf 96 2
+
+backblaze svn sigmoid nofs 96 2
+
+backblaze svn sigmoid nofs 96 2
+
+backblaze svn linear nofs 96 2
+
+backblaze svm rbf nofs 96 2
+
+backblaze rf nofs 96 2
+
+backblaze svm rbf nofs 96 2
+
+backblaze gnb nofs 96 2
+
+backblaze gnb nofs 96 2
+
+baidu gnb nofs 96 2
+
+baidu LR nofs 96 2
+
+backblaze LR nofs 96 2
+
+backblaze LR nofs 96 2

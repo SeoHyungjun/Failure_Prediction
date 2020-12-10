@@ -1,0 +1,52 @@
+
+baidu svm rbf 24 1
+
+baidu svm linear 24 1
+
+baidu svm sigmoid 24 1
+
+backblaze svm rbf 24 1
+
+backblaze svm rbf 24 1
+
+backblaze svm linear 24 1
+
+backblaze svm linear 24 1
+
+backblaze svm linear 24 1
+
+backblaze svm linear 24 1
+
+backblaze svm sigmoid 24 1
+
+backblaze rf 24 1
+
+backblaze rf 24 1
+
+backblaze svn sigmoid nofs 24 1
+
+backblaze svn sigmoid nofs 24 1
+
+backblaze svn linear nofs 24 1
+
+backblaze svn linear nofs 24 1
+
+backblaze svn linear nofs 24 1
+
+backblaze svm rbf nofs 24 1
+
+backblaze rf nofs 24 1
+
+backblaze svm rbf nofs 24 1
+
+backblaze gnb nofs 24 1
+
+backblaze gnb nofs 24 1
+
+baidu gnb nofs 24 1
+
+baidu LR nofs 24 1
+
+backblaze LR nofs 24 1
+
+backblaze LR nofs 24 1

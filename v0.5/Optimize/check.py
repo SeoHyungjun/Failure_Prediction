@@ -1,5 +1,6 @@
 import configparser
 import Hyperparameter_Tuner as HPT
+from multiprocessing import Process, Pool
 
 #from sklearn.datasets import load_iris
 #from sklearn.model_selection import train_test_split
@@ -45,27 +46,55 @@ class Optimizer:
                 else:
                     hp_num = self.configparser[ml_str+ '_Hyperparameter'][hp].split(',')
                     if hp_num[2].strip().strip('[').strip(']') == 'int':
-                        print('int')
                         hp_list.append(int(hp_num[0].strip().strip('[').strip(']')))
                         hp_list.append(int(hp_num[1].strip().strip('[').strip(']')))
                     elif hp_num[2].strip().strip('[').strip(']') == 'float':
-                        print('float')
                         hp_list.append(float(hp_num[0].strip().strip('[').strip(']')))
                         hp_list.append(float(hp_num[1].strip().strip('[').strip(']')))
                     hp_dict[hp] = hp_list
                 self.ML_algorithm[ml_str] = hp_dict
-            print('1') 
+ 
             print(self.ML_algorithm)
  
-    def run_Hyperparameter_Tuner(self):
+    def run_Hyperparameter_Tuner(self, date):
         for opt_al in self.Opt_algorithm.keys():
             #with HPT.Hyperparameter_Tuner(opt_al, self.Opt_algorithm[opt_al], self.ML_algorithm) as Hyperparameter_Tuner_class:
                 #Hyperparameter_Tuner_class.run_opt_algorithm()
             HPT_class = HPT.Hyperparameter_Tuner(opt_al, self.Opt_algorithm[opt_al], self.ML_algorithm)
-            #HPT_class.load_data()
-            HPT_class.load_baidu_data()
+            HPT_class.load_data(date)
+            #HPT_class.load_baidu_data(date)
             HPT_class.run_opt_algorithm()
-                
-opt = Optimizer('config')
-opt.get_config()
-opt.run_Hyperparameter_Tuner()
+
+def test(c_list):
+    opt = Optimizer('config')
+    opt.get_config()
+    opt.run_Hyperparameter_Tuner(c_list[0])
+
+    fp2 = open('result2.txt', 'a')
+    fp2.write('\nbackblaze LR nofs ' + str(c_list[0]*24) + ' ' + str(c_list[1]) + '\n')
+    fp = open('result/svm_' +str(c_list[0]*24) + '_' + str(c_list[1]) + '.txt', 'a')
+    fp.write('\nbackblaze LR nofs ' + str(c_list[0]*24) + ' ' + str(c_list[1]) + '\n')
+    fp.close()
+
+if __name__ == '__main__':
+    time = [[1,1], [1,2], [1,3], [1,4], [1,5], 
+            [2,1], [2,2], [2,3], [2,4], [2,5], 
+            [4,1], [4,2], [4,3], [4,4], [4,5], 
+            [8,1], [8,2], [8,3], [8,4], [8,5]]
+    #time = [[8,1]]
+    with Pool(32) as p:
+        p.map(test, time)
+
+'''
+time = [8]
+
+for date in time:
+    for i in range(1, 2):
+        opt = Optimizer('config')
+        opt.get_config()
+        opt.run_Hyperparameter_Tuner(date)
+
+        fp = open('result2.txt', 'a')
+        fp.write('\nbaidu svm rbf ' + str(date*24) + ' ' + str(i) + '\n')
+        fp.close()
+'''
