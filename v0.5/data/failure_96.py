@@ -2,7 +2,7 @@ import csv
 import os
 from random import *
 
-path_dir = '/Failure_Prediction/v0.4/data/failure'
+path_dir = '/gitlfs/Failure_Prediction/v0.4/data/failure'
 file_list = os.listdir(path_dir)
 file_list.sort()
 

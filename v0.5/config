@@ -3,8 +3,8 @@
 
 [ML_algorithm]
 #can select three algorithm ex) CNN, SVM, RANDOMFOREST (== RF)
-ML_name = RF
-#, RANDOMFOREST
+ML_name = LR
+#, RANDOMFOREST, GNB(Gaussian Naive Bayes)
 
 [Opt_algorithm]
 opt_name = PSO
@@ -23,7 +23,7 @@ opt_name = PSO
 
 [PSO_Hyperparameter]
 num_particles = 10
-num_generations = 100
+num_generations = 50
 num_out_fold = 2
 num_in_fold = 2
 
@@ -40,7 +40,7 @@ num_in_fold = 2
 
 [SVM_Hyperparameter]
 # The C value must be greater than zero
-C = [2, 50, int]
+C = [1, 50, int]
 logGamma = [-5, 5, int]
 # default = linear, other = poly, rbf, sigmoid, precomputed
 kernel = rbf
@@ -55,12 +55,22 @@ n_estimators = [1, 1000, int]
 # 1,5
 max_depth = [2, 20, int]
 # default = auto
-max_features = [2, 6, int]
+max_features = [1, 38, int]   
+#backblaze 38, baidu 12?
 #1,10
 # min_samples_split = (0.0, 1.0]
 #min_samples_split = [0.2, 0.8]
 # min_samples_leaf = (0.0, 0.5]
 #min_samples_leaf = [0.2, 0.4]
+
+[GNB_Hyperparameter]
+# default = -9
+log_var_smoothing = [-20, 20, float]
+
+[LR_Hyperparameter]
+log_tol = [-10, 10, float]
+C = [0, 10, float]
+
 
 # Hyperparameters used for verification such as cross-validation
 [Cross-Validation Hyperparameter]
